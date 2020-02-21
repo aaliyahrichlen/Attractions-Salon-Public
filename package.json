@@ -1,16 +1,29 @@
 {
-    "name": "attractionssalon",
-    "version": "0.0.1",
-    "type": "module",
-    "main": "server.js",
-    "scripts": {
-        "start": "node server.js"
-    },
-    "license": "MIT",
-    "devDependencies": {
-        "should": "^7.1.1"
-    },
-    "dependencies": {
-        "request": "^2.67.0"
-    }
+  "name": "attractions-salon",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AddisonBiaggi/Attractions-Salon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AddisonBiaggi/Attractions-Salon/issues"
+  },
+  "homepage": "https://github.com/AddisonBiaggi/Attractions-Salon#readme",
+  "engines": {
+    "node": "13.6.x"
+  },
+  "dependencies": {
+    "foobar": "1.1.0",
+    "http": "0.0.0",
+    "url": "0.11.0"
+  }
 }

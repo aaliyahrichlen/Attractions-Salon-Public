@@ -1,11 +1,5 @@
-# OSX
+/node_modules
+npm-debug.log
 .DS_Store
-
-# Node
-node_modules
-
-# IDEA
-.idea
-
-# npm
+/*.env
 package-lock.json

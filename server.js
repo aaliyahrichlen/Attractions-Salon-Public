@@ -2,6 +2,7 @@ import * as http from 'http';
 import * as url from 'url';
 
 const port = 5000;
+const CONCURRENCY = process.env.WEB_CONCURRENCY || 1;
 
 /* Global variables */
 let listingData, server;
