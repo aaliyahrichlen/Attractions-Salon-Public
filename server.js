@@ -19,6 +19,6 @@ const requestHandler = (request, response) => {
 server = http.createServer(requestHandler);
 
 // Start the server
-server.listen(port, () => {
+server.listen(proccess.env.PORT || port, () => {
     console.log(`Sever started at http://127.0.0.1:${port}`);
 });
