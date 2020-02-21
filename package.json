@@ -1,29 +1,36 @@
 {
-  "name": "attractions-salon",
+  "name": "react_template_repo",
   "version": "1.0.0",
-  "description": "",
-  "type": "module",
-  "main": "server.js",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "mocha server/tests",
+    "install-all": "concurrently \"npm install\" \"cd client && npm install\"",
+    "client": "cd client && npm start",
+    "server": "nodemon server/server.js",
+    "dev": "concurrently \"nodemon server/server.js\" \"cd client && npm run start\"",
+    "build": "cd client && npm build",
+    "start": "node server/server.js",
+    "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AddisonBiaggi/Attractions-Salon.git"
+    "url": "https://github.com/UFWebApps/React_Template_Repo.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AddisonBiaggi/Attractions-Salon/issues"
-  },
-  "homepage": "https://github.com/AddisonBiaggi/Attractions-Salon#readme",
-  "engines": {
-    "node": "13.6.x"
-  },
+  "keywords": [],
+  "author": "Dakota Rennemann",
+  "license": "MIT",
   "dependencies": {
-    "foobar": "1.1.0",
-    "http": "0.0.0",
-    "url": "0.11.0"
-  }
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "gh-pages": "^2.2.0",
+    "mocha": "^6.2.1",
+    "mongoose": "^5.7.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
+  },
+  "homepage": "https://github.com/UFWebApps/React_Template_Repo#readme"
 }
