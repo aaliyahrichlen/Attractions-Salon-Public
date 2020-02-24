@@ -1,5 +1,7 @@
 /node_modules
+/client/node_modules
 npm-debug.log
+/server/config
 .DS_Store
 /*.env
 package-lock.json
