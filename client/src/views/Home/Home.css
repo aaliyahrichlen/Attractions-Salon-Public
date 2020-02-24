@@ -2,17 +2,35 @@ body {
     margin: 0;
 }
 
-.App {
-    text-align: center;
-    background: #282c34;
+.Home {
+    grid-column-start: 1;
+    grid-column-end: span 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
+.home-grid{
+    display: grid;
+    grid-template-columns:  2fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 6fr;
+}
+
+.ContactCard {
+    
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+
+}
+
+/*
 .App-logo {
     height: 40vmin;
 }
 
 .App-header {
-    background-color: #282c34;
+    background-color: #F8E5E5;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -23,5 +41,6 @@ body {
 }
 
 .App-link {
-    color: #09d3ac;
+    columns: #000000;;
 }
+*/
