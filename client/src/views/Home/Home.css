@@ -2,14 +2,20 @@ body {
     margin: 0;
 }
 
-.home {
-    display: grid;
-    grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
-    grid-template-rows: [row1-start] 20px [row1-end] 100px [third-line] auto [last-line];
+.Home {
+    grid-column-start: 1;
+    grid-column-end: span 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
+.home-grid{
+    display: grid;
+    grid-template-columns:  2fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 6fr;
+}
 
-.contact_card {
+.ContactCard {
     
     grid-column-start: 1;
     grid-column-end: 2;
