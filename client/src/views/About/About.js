@@ -3,8 +3,8 @@ import './About.css';
 
 function About() {
     return (
-        <div>
-            About
+        <div class="home">
+            <div></div>
         </div>
     );
 }

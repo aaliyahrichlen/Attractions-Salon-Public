@@ -4,8 +4,10 @@ import ContactCard from './ContactCard';
 //<ContactCard class="ContactCard" />
 function Home() {
     return (
-        <div className="Home">
-            Home
+        <div className="home">
+            <div className="contact_card">
+
+            </div>
         </div>
     );
 }
