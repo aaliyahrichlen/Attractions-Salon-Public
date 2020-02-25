@@ -20,6 +20,9 @@
   "keywords": [],
   "author": "Dakota Rennemann",
   "license": "MIT",
+  "engines": {
+    "node": "13.6.0"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.0",
