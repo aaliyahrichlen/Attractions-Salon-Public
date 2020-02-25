@@ -33,10 +33,18 @@ module.exports.init = () => {
         app.use(express.static(path.join(__dirname, '../../client/build')));
 
         // Handle React routing, return all requests to React app
-        app.get('*', function(req, res) {
+        app.get('*', function (req, res) {
             res.sendFile(path.join(__dirname, '../../client/build', 'index.html'));
         });
     }
+
+    app.get('/images/:image_id', (req, res, next) => {
+
+        let filepath = path.resolve(__dirname + '/../images/' + req.params.image_id);
+
+        res.sendFile(filepath);
+
+    });
 
     return app
 }
