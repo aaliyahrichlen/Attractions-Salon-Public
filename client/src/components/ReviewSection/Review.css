@@ -1,0 +1,7 @@
+.Review {
+    background: #282c34;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 1%;
+}
