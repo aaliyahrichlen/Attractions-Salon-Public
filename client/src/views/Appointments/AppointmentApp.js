@@ -10,6 +10,8 @@ import MenuItem from "material-ui/MenuItem";
 import TextField from "material-ui/TextField";
 import SnackBar from "material-ui/Snackbar";
 import Card from "material-ui/Card";
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {
   Step,
   Stepper,
@@ -21,6 +23,30 @@ import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 
 const API_BASE = "http://localhost:8083/";
+
+const stepMuiTheme = getMuiTheme({
+  raisedButton: {
+    primaryColor: '#f6a5b8',
+  },
+  textField: {
+    focusColor: '#f6a5b8',
+  },
+  radioButton: {
+    checkedColor: '#f6a5b8'
+  },
+  datePicker: {
+    color: '#f6a5b8',
+    textColor: '#ffffff',
+    calendarTextColor: '#000000',
+    selectColor: '#f6a5b8',
+    selectTextColor: '#ffffff',
+    calendarYearBackgroundColor: '#f6a5b8',
+    headerColor: '#f6a5b8',
+  },
+  stepper: {
+      iconColor: '#f6a5b8'
+  }
+})
 
 class AppointmentApp extends Component {
   constructor(props, context) {
@@ -101,14 +127,16 @@ class AppointmentApp extends Component {
   };
   validateEmail(email) {
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    this.setState({email: email})
     return regex.test(email)
-      ? this.setState({ email: email, validEmail: true })
+      ? this.setState({ validEmail: true })
       : this.setState({ validEmail: false });
   }
   validatePhone(phoneNumber) {
     const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+    this.setState({phone: phoneNumber})
     return regex.test(phoneNumber)
-      ? this.setState({ phone: phoneNumber, validPhone: true })
+      ? this.setState({ validPhone: true })
       : this.setState({ validPhone: false });
   }
   checkDisableDate(day) {
@@ -170,7 +198,7 @@ class AppointmentApp extends Component {
   }
 
   renderAppointmentConfirmation() {
-    const spanStyle = { color: "#00C853" };
+    const spanStyle = { color: "#f6a5b8" };
     return (
       <section>
         <p>
@@ -301,6 +329,7 @@ class AppointmentApp extends Component {
               height: smallScreen ? "100vh" : null
             }}
           >
+            <MuiThemeProvider muiTheme={stepMuiTheme}>
             <Stepper
               activeStep={stepIndex}
               orientation="vertical"
@@ -397,7 +426,7 @@ class AppointmentApp extends Component {
                         }
                       />
                       <RaisedButton
-                        style={{ display: "block", backgroundColor: "#00C853" }}
+                        style={{ display: "block", backgroundColor: "#f6a5b8" }}
                         label={
                           contactFormFilled
                             ? "Schedule"
@@ -420,6 +449,7 @@ class AppointmentApp extends Component {
                 </StepContent>
               </Step>
             </Stepper>
+            </MuiThemeProvider>
           </Card>
           <Dialog
             modal={true}
