@@ -3,27 +3,27 @@ import { Card } from 'semantic-ui-react'
 
 const items = [
   {
-    header: 'Project Report - April',
+    header: 'Service title',
     description:
       'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-    meta: 'ROI: 30%',
+    meta: 'Price: ',
     color: 'pink',
     image: 'https://react.semantic-ui.com/images/avatar/large/daniel.jpg'
   },
   {
-    header: 'Project Report - May',
+    header: 'Service title',
     description:
       'Bring to the table win-win survival strategies to ensure proactive domination.',
-    meta: 'ROI: 34%',
+    meta: 'Price: ',
     color: 'pink',
     image: 'https://react.semantic-ui.com/images/avatar/large/daniel.jpg'
   },
   {
-    header: 'Project Report - June',
+    header: 'Service title',
     description:
       'Capitalise on low hanging fruit to identify a ballpark value added activity to beta test.',
-    meta: 'ROI: 27%',
-    color: 'pink',
+      meta: 'Price: ',
+      color: 'pink',
     image: 'https://react.semantic-ui.com/images/avatar/large/daniel.jpg'
   },
 ]
