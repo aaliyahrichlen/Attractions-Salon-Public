@@ -8,4 +8,4 @@ const ContactCard = () => (
     </Container>
 )
 
-export default ContactCard
+export default ContactCard;
