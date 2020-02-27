@@ -28,6 +28,6 @@ const items = [
   },
 ]
 
-const CardGroupProps = () => <Card.Group items={items} />
+const CardGroupProps = () => <Card.Group centered items={items} />
 
 export default CardGroupProps
