@@ -1,11 +1,11 @@
 import React from 'react';
 import './Home.css';
-import ContactCard from './ContactCard';
-//<ContactCard class="ContactCard" />
+import ContactCard from "./Contact/ContactCard"
+
 function Home() {
     return (
         <div className="Home">
-            Home
+            <ContactCard></ContactCard>
         </div>
     );
 }
