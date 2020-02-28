@@ -26,7 +26,7 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
-      <Review />>
+      <Review />
     </div>
   );
 }

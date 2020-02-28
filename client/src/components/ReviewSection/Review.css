@@ -1,7 +1,8 @@
-.Review {
-    background: #282c34;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 1%;
+.reviewHeader {
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    width: 50%;
+    text-align: center;
 }
