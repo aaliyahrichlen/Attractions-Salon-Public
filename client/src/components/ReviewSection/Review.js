@@ -12,7 +12,7 @@ const Review = () => {
 
 
             <ReviewBlock 
-                block={{name: "Jackie Marsh", content: "This is content"}}
+                block={{name: "Melissa", content: "Beautiful building that holds beautiful spirits. Brandi, you are great. Thanks for the great hair cut."}}
             />
             
 

@@ -1,11 +1,9 @@
 .review-block {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
     width: 50%;
-    text-align: center;
-
 }   
 
 .name {
