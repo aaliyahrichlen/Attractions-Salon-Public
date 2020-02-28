@@ -1,0 +1,21 @@
+.review-block {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50%;
+}   
+
+.name {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.stars {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.content {
+    margin-bottom: 30px;
+}

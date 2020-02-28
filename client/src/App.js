@@ -8,6 +8,7 @@ import Login from "./views/Login/Login";
 import Signup from "./views/Signup/Signup";
 import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
+import Review from './components/ReviewSection/Review';
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
+      <Review />
     </div>
   );
 }
