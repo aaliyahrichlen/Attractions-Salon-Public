@@ -1,23 +1,4 @@
-.slides {
-    width: 400px;
-    height: 400px;
-    box-shadow:inset 0px 1px 0px 0px #fbafe3;
-	background:linear-gradient(to bottom, #ff5bb0 5%, #ffadc2 100%);
-	background-color:#ff5bb0;
-	border-radius:9px;
-	border:1px solid #ee1eb5;
-	display:inline-block;
-	cursor:pointer;
-	color:#ffffff;
-	font-family:Trebuchet MS;
-	font-size:15px;
-	font-weight:bold;
-	padding:7px 10px;
-	text-decoration:none;
-	text-shadow:0px 1px 0px #c70067;
-   }
-   
-   .content.carousel {
+.content.carousel {
     width: 500px;
     height: 800px;
    }
