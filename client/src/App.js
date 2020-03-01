@@ -9,7 +9,7 @@ import Signup from "./views/Signup/Signup";
 import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
-
+import LoginHome from "./views/Login/App";
 const App = () => {
   return (
     <div class="app">
@@ -19,7 +19,7 @@ const App = () => {
         <Route exact path="/About" component={About} />
         <Route exact path="/Services" component={Services} />
         <Route exact path="/Appointments" component={Appointments} />
-        <Route exact path="/Login" component={Login} />
+        <Route exact path="/Login" component={LoginHome} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/">
           <Redirect to="/Home" />
