@@ -57,7 +57,7 @@ const SlideShow = () => {
 		}, */
 	]
 	return (
-		<div id = "Slides">
+		<div style={{ width: 500  }}  id = "Slides">
 			<Carousel
 				elements  =  {  pictures  }
 				duration  ={3000}
