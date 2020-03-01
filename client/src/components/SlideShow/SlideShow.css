@@ -1,14 +1,11 @@
-.content.carousel {
+/* .content.carousel {
     width: 500px;
     height: 800px;
-   }
-
-   .content{
+ } */
+#Slides{
     width: 500px;
-    height: 800px;
-   }
-
-   .carousel {
-    width: 500px;
-    height: 800px;
-   }
+    height: 500px;
+}  
+/*   .carousel {
+    width: 500px; 
+}  */

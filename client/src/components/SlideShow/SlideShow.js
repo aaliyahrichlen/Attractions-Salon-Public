@@ -2,6 +2,8 @@ import  React  from  'react';
 import  Carousel  from  'semantic-ui-carousel-react';
 import { Image, Button} from  'semantic-ui-react';
 //import image# from './logo512.png';
+import "./SlideShow.css"
+
 const SlideShow = () => {
     
     let  pictures  = [
@@ -55,7 +57,7 @@ const SlideShow = () => {
 		}, */
 	]
 	return (
-		<div>
+		<div id = "Slides">
 			<Carousel
 				elements  =  {  pictures  }
 				duration  ={3000}
