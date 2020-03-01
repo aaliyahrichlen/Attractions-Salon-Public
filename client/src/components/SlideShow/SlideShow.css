@@ -1,0 +1,18 @@
+/*   .content.carousel {
+    height: 500;
+
+}  */
+#Slides{
+    width: auto;
+    height: 650px;
+    left: auto;
+    margin-right: auto;
+    margin-left: 330px;
+    margin-top: -500px;
+
+
+}  
+image{
+    height: 50px;
+
+}

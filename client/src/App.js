@@ -10,6 +10,7 @@ import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
+
 const App = () => {
   return (
     <div class="app">
@@ -26,7 +27,6 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
-      <Review />
     </div>
   );
 }

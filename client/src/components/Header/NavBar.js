@@ -15,6 +15,7 @@ const NavBar = () => {
                 </Link>
                 {/* Page Links */}
                 <div className="nav-items">
+                    <Link className="nav-link" to='/Home'>Home</Link>
                     <Link className="nav-link" to='/Services'>Services</Link>
                     <Link className="nav-link" to='/About'>About</Link>
                     <Link className="nav-link" to='/Appointments'>Appointments</Link>
