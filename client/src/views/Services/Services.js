@@ -1,6 +1,6 @@
 import React from 'react';
 import './Services.css';
-import CardGroupProps from '../../components/CardGroupProps.js'
+import CardGroupProps from '../../components/CardGroup/CardGroupProps.js'
 
 function Services() {
     return (
