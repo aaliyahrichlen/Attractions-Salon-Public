@@ -1,18 +1,25 @@
-/*   .content.carousel {
-    height: 500;
-
-}  */
+  .content.carousel {
+    background-image: url(http://www.google.com);
+} 
 #Slides{
-    width: auto;
-    height: 650px;
+    max-width: 400px;
+    /*margin-right: auto;
     left: auto;
-    margin-right: auto;
-    margin-left: 330px;
-    margin-top: -500px;
-
-
+    justify-content: start;*/
+    height: 600px;
+    margin-left: 290px;
+    margin-top: -540px; 
+    padding: 20px;
+   
 }  
-image{
-    height: 50px;
-
-}
+/* #hor{
+    height: 800px;
+    width: 800px;
+    margin-left: 290px;
+    margin-top: -540px; 
+    padding: 20px;
+    box-shadow: black;
+} */
+/*Image{
+    size:'tiny'
+}*/
