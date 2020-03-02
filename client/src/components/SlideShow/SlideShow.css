@@ -1,18 +1,17 @@
-/*   .content.carousel {
-    height: 500;
+ /* .content.carousel {
+    left: 500;
 
-}  */
+} */
 #Slides{
-    width: auto;
-    height: 650px;
+    max-width: 800px;
+    /*margin-right: auto;
     left: auto;
-    margin-right: auto;
-    margin-left: 330px;
-    margin-top: -500px;
-
-
+    justify-content: start;*/
+    height: 600px;
+    margin-left: 290px;
+    margin-top: -540px; 
+    padding: 20px;
 }  
-image{
-    height: 50px;
-
-}
+/*Image{
+    size:'tiny'
+}*/
