@@ -13,6 +13,10 @@ import LoginHome from "./views/Login/App";
 
 const App = () => {
   return (
+    <div>
+    <head>
+    <link href="https://fonts.googleapis.com/css2?family=Sofia&family=Spartan:wght@400;700&display=swap" rel="stylesheet"></link>
+    </head>
     <div class="app">
       <NavBar />
       <Switch>
@@ -27,6 +31,7 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
+    </div>
     </div>
   );
 }

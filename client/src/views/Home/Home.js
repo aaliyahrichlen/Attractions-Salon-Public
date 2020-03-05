@@ -6,9 +6,14 @@ import Review from '../../components/ReviewSection/Review';
 function Home() {
     return (
         <div className="Home">
-            <ContactCard></ContactCard>
-            <SlideShow/>
-            <Review/>
+            <div className="col">
+                <ContactCard/>
+                
+                <div className="row">
+                <SlideShow/>
+                    <Review/>
+                </div>
+            </div>
         </div>
     );
 }

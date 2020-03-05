@@ -42,16 +42,16 @@ render()
         <div>
       <form action="Contactform.php" method="post"> 
         <div class = "container">
-            <h2 align = "center">Sign In</h2>
+            <div className="script" align = "center">Sign In</div>
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />
             </div>
             <div class="password">
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
-            <div>
-                <Button onClick={this.login} variant="contained" color="primary" name="submit">Submit</Button>
-                <Button onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</Button>
+            <div className="button">
+                <button class="myButton" onClick={this.login} variant="contained" color="primary" name="submit">Submit</button>
+                <button class="myButton" onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</button>
             </div>
           </div>
         </form>

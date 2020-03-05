@@ -11,7 +11,7 @@ const ReviewBlock = (props) => {
 
         <div className= "review-block">
 
-                <h4 className= "name">{name}</h4>
+                <div className= "name">{name}</div>
                 
                 <div className="stars">
                     <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>

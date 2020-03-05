@@ -57,7 +57,8 @@ const SlideShow = () => {
 		}, */
 	]
 	return (
-		<div  id = "Slides">
+		<div id = "Slides">
+			<div className="shadow">
 			<Carousel
 				elements  =  {  pictures  }
 				duration  ={3000}
@@ -65,6 +66,7 @@ const SlideShow = () => {
 				showNextPrev  =  {false}
 				showIndicators  ={true}
 			/>
+			</div>
 		</div>
 	)
 };

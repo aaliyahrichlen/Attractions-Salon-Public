@@ -7,11 +7,16 @@
     left: auto;
     justify-content: start;*/
     height: 600px;
-    margin-left: 290px;
-    margin-top: -540px; 
+    margin-left: 0px;
+    margin-top: 0px; 
     padding: 20px;
    
 }  
+
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 /* #hor{
     height: 800px;
     width: 800px;

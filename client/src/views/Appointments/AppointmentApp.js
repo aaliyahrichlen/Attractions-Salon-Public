@@ -21,6 +21,7 @@ import {
 } from "material-ui/Stepper";
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
+import './Appointments.css';
 
 const API_BASE = "http://localhost:8083/";
 
