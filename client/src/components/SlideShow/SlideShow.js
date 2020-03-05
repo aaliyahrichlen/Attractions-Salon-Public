@@ -1,5 +1,5 @@
 import  React  from  'react';
-//import  Carousel  from  'semantic-ui-carousel-react';
+import  Carousel  from  'semantic-ui-carousel-react';
 import { Image, Button} from  'semantic-ui-react';
 //import image# from './logo512.png';
 import "./SlideShow.css"
@@ -59,13 +59,13 @@ const SlideShow = () => {
 	return (
 		<div id = "Slides">
 			<div className="shadow">
-			{/* <Carousel
+			<Carousel
 				elements  =  {  pictures  }
 				duration  ={3000}
 				animation  ='slide left'
 				showNextPrev  =  {false}
 				showIndicators  ={true}
-			/> */}
+			/>
 			</div>
 		</div>
 	)
