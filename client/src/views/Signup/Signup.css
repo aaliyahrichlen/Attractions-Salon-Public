@@ -1,0 +1,68 @@
+h1 {
+    font-family: Lobster, 'Times New Roman', monospace;
+    font-size:xxx-large;
+    border-style:groove;
+}
+a {color:lightpink;}
+#wrap{
+    width: 100%;
+}
+
+.right{
+    width: 77%;
+    height: 200px;
+    float: right;
+}
+.tdAlign{
+    text-align: center;
+}
+.container2{
+    max-width: 500px;
+    height:700px, auto;
+    background: lightpink;
+    margin: 50px auto;
+    border-style: ridge;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.input,
+.message .area{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    border:2px solid #e9eaea;
+    font-size: 14px;
+    border-radius: 5px;
+    outline:none;
+    transition: all 0.5s;
+}
+.name .input{
+    width: 48%;
+    float: left;
+    margin-right: 4%;
+}
+.name .input:last-child{
+    margin-right: 0;
+}
+.message .area{
+    height: 200px;
+}
+.input:focus,
+.message .area:focus{
+    border: 2px solid #0575e6; 
+}
+.submitclass{
+    width: 100%;
+    text-align: center;
+}
+.submitclass .button{
+    background: linear-gradient(to right, #0575e6, #021b79);
+    padding: 12px 85px;
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
+    text-transform: capitalize;
+    cursor:pointer;
+    border-radius: 5px;
+}
