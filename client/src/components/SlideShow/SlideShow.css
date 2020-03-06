@@ -1,6 +1,5 @@
-  .content.carousel {
-    background-image: url(http://www.google.com);
-} 
+
+
 #Slides{
     max-width: 400px;
     /*margin-right: auto;
@@ -16,15 +15,3 @@
 .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
-/* #hor{
-    height: 800px;
-    width: 800px;
-    margin-left: 290px;
-    margin-top: -540px; 
-    padding: 20px;
-    box-shadow: black;
-} */
-/*Image{
-    size:'tiny'
-}*/

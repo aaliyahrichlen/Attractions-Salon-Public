@@ -10,7 +10,7 @@
 }
 
 .comp {
-    background: rgb(189, 189, 189);
+    background: #FFFCF3;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -47,7 +47,7 @@
 }
 
 .nav-link {
-    background-color: lightpink;
+    background-color: #FFFCF3;
     color: black;
     padding: 14px 25px;
     text-align: center;
