@@ -3,9 +3,9 @@ import './About.css';
 
 function About() {
     return (
-        <div>
-            About
-        </div>
+        <p>
+            At Attractions Salon, we're dedicated to providing a haircut you'll love with all the comforts of a friend.
+        </p>
     );
 }
 
