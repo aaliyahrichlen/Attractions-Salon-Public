@@ -3,12 +3,14 @@
     margin-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
-    width: 50%;
+    width: 75%;
 }   
 
 .name {
     margin-top: 5px;
     margin-bottom: 5px;
+    font-family: 'Spartan', sans-serif;
+    font-weight: bold;
 }
 
 .stars {
@@ -18,4 +20,5 @@
 
 .content {
     margin-bottom: 30px;
+    font-family: 'Spartan', sans-serif;
 }

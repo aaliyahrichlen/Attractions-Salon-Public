@@ -1,18 +1,17 @@
-/*   .content.carousel {
-    height: 500;
 
-}  */
+
 #Slides{
-    width: auto;
-    height: 650px;
+    max-width: 400px;
+    /*margin-right: auto;
     left: auto;
-    margin-right: auto;
-    margin-left: 330px;
-    margin-top: -500px;
-
-
+    justify-content: start;*/
+    height: 600px;
+    margin-left: 0px;
+    margin-top: 0px; 
+    padding: 20px;
+   
 }  
-image{
-    height: 50px;
 
+.shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

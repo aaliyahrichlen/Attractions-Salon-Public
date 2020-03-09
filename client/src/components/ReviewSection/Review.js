@@ -7,7 +7,7 @@ const Review = () => {
     return (
         <footer className= "Review">
             <div className= "reviewHeader">
-                <h3>Reviews</h3>
+                Reviews
             </div>
 
 

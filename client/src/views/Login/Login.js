@@ -19,17 +19,19 @@ login(e){
     fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
         console.log(u)
     }).catch((err)=>{
+        alert("No user found! Try Signing up!!");
         console.log(err);
     })
 }
 signup(e){
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
-        console.log(u)
+        console.log(u);
     }).catch((err)=>{
         console.log(err);
     })
 }
+
 handleChange(e){
     this.setState({
         [e.target.name] : e.target.value
@@ -40,18 +42,21 @@ render()
 {
     return(
         <div>
-      <form action="Contactform.php" method="post"> 
+            <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
+            <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
+      <form> 
         <div class = "container">
-            <h2 align = "center">Sign In</h2>
+            <div className="script" align = "center">Sign In</div>
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />
             </div>
             <div class="password">
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
-            <div>
-                <Button onClick={this.login} variant="contained" color="primary" name="submit">Submit</Button>
-                <Button onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</Button>
+            <div className="button">
+                <button class="myButton" onClick={this.login} variant="contained" color="primary" name="submit">Login</button>
+                <button class="myButton" onClick={event =>  window.location.href='/Signup'} variant="contained" color="primary" name="submit">Sign Up</button>
+                {/* <Link to="/signup" className="btn btn-primary">Sign up</Link> */}
             </div>
           </div>
         </form>

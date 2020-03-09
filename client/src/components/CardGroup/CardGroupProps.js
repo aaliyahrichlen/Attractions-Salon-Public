@@ -17,7 +17,7 @@ const items = [
     header: 'Nails',
     description:
       'Get your nails done!',
-    meta: 'Price: ',
+    meta: 'Starting price: ',
     color: 'pink',
     image: nails
   },
@@ -25,7 +25,7 @@ const items = [
     header: 'Curls',
     description:
       'Curl your hair!',
-    meta: 'Price: ',
+    meta: 'Starting price: ',
     color: 'pink',
     image: curls
   },
@@ -33,7 +33,7 @@ const items = [
     header: 'Styling',
     description:
       'Style your hair!',
-      meta: 'Price: ',
+      meta: 'Starting price: ',
       color: 'pink',
     image: styling
   },
@@ -41,7 +41,7 @@ const items = [
     header: 'Styling',
     description:
       'Style your hair!',
-      meta: 'Price: ',
+      meta: 'Starting price: ',
       color: 'pink',
     image: stock
   },
@@ -49,7 +49,7 @@ const items = [
     header: 'Styling',
     description:
       'Style your hair!',
-      meta: 'Price: ',
+      meta: 'Starting price: ',
       color: 'pink',
     image: stock2
   },
@@ -57,12 +57,18 @@ const items = [
     header: 'Styling',
     description:
       'Style your hair!',
-      meta: 'Price: ',
+      meta: 'Starting price: ',
       color: 'pink',
     image: curls2
   }
 ]
 
-const CardGroupProps = () => <Card.Group centered items={items} />
+const CardGroupProps = () => {
+  return (
+    <div className="cards">
+    <Card.Group centered items={items}/>
+    </div>
+  );
+}
 
 export default CardGroupProps

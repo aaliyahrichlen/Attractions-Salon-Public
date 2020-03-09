@@ -1,0 +1,104 @@
+h1 {
+    font-family: Lobster, 'Times New Roman', monospace;
+    font-size:xxx-large;
+    border-style:groove;
+}
+a {color:lightpink;}
+#wrap{
+    width: 100%;
+}
+
+.right{
+    width: 77%;
+    height: 200px;
+    float: right;
+}
+.tdAlign{
+    text-align: center;
+}
+.container2{
+    max-width: 500px;
+    height:700px, auto;
+    background: lightpink;
+    margin: 50px auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 20px;
+}
+.input,
+.message .area{
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    border:2px solid #e9eaea;
+    font-size: 14px;
+    border-radius: 5px;
+    outline:none;
+    transition: all 0.5s;
+}
+.name .input{
+    width: 48%;
+    float: left;
+    margin-right: 4%;
+}
+.name .input:last-child{
+    margin-right: 0;
+}
+.message .area{
+    height: 200px;
+}
+.input:focus,
+.message .area:focus{
+    border: 2px solid #0575e6; 
+}
+.submitclass{
+    width: 100%;
+    text-align: center;
+}
+.submitclass .button{
+    background: linear-gradient(to right, #0575e6, #021b79);
+    padding: 12px 85px;
+    font-size: 25px;
+    text-decoration: none;
+    color: white;
+    text-transform: capitalize;
+    cursor:pointer;
+    border-radius: 5px;
+}
+
+.script {
+    font-family: 'Sofia';
+    font-weight: bold;
+    font-size: xx-large;
+    margin-bottom: 30px;
+}
+
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #fbafe3;
+	background:linear-gradient(to bottom, #ff5bb0 5%, #ffadc2 100%);
+	background-color:#ff5bb0;
+	border-radius:9px;
+	border:1px solid #ee1eb5;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: 'Sofia';
+	font-size: large;	
+	padding:7px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #c70067;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #ffadc2 5%, #ff5bb0 100%);
+	background-color:#ffadc2;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+ }
