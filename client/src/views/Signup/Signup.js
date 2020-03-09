@@ -1,4 +1,3 @@
-
 import './Signup.css';
 import React , { Component } from "react";
 import fire from "../Login/config/Fire";
@@ -33,7 +32,11 @@ signup(e){
         });
         console.log(u);
     }).catch((err)=>{
-        alert("A user with same credentials already exits. Please Sign In!!!");
+        if(err.message === "The email address is badly formatted."){
+            alert("Please fill in your details to Sign Up");
+        }else {
+            alert(err.message);
+        }
         console.log(err);
     })
 }
@@ -50,7 +53,6 @@ render()
         <div>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
-      <form> 
         <div class = "container2">
             <div className="script" align = "center">Sign Up</div>
             <div class="name">
@@ -70,12 +72,10 @@ render()
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
             <div className="button">
-                
                 <button class="myButton" onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</button>
                 <button class="myButton" onClick={event =>  window.location.href='/Login'} variant="contained" color="primary" name="submit">Login</button>
             </div>
           </div>
-        </form>
   </div>
     )
 }
