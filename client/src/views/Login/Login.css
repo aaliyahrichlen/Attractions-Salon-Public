@@ -66,3 +66,40 @@ a {color:lightpink;}
     cursor:pointer;
     border-radius: 5px;
 }
+
+.script {
+    font-family: 'Sofia';
+    font-weight: bold;
+    font-size: xx-large;
+    margin-bottom: 30px;
+}
+
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #fbafe3;
+	background:linear-gradient(to bottom, #ff5bb0 5%, #ffadc2 100%);
+	background-color:#ff5bb0;
+	border-radius:9px;
+	border:1px solid #ee1eb5;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: 'Sofia';
+	font-size: large;	
+	padding:7px 10px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #c70067;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #ffadc2 5%, #ff5bb0 100%);
+	background-color:#ffadc2;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+ }
