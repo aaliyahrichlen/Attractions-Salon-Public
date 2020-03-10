@@ -5,8 +5,9 @@ import curls from './curls.jpg'
 import styling from './styling.jpg'
 import stock from './stock.jpg'
 import curls2 from './curls2.jpg'
-import stock2 from './stock2.jfif'
+import stock2 from './stock2.jpg'
 import './CardGroupProps.css';
+
 
 
 

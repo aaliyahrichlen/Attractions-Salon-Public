@@ -19,7 +19,11 @@ login(e){
     fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
         console.log(u)
     }).catch((err)=>{
-        alert("No user found! Try Signing up!!");
+        if(err.message === "The email address is badly formatted."){
+            alert("Please Enter Your E-mail and Password to Sign In");
+        }else {
+            alert(err.message);
+        }
         console.log(err);
     })
 }
@@ -44,22 +48,20 @@ render()
         <div id="logb">
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
-      <form> 
+       
         <div class = "container">
-            <h2 align = "center">Sign In</h2>
+            <div className="script" align = "center">Sign In</div>
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />
             </div>
             <div class="password">
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
-            <div>
-                <Button onClick={this.login} variant="contained" color="primary" name="submit">Login</Button>
-                <Button onClick={event =>  window.location.href='/Signup'} variant="contained" color="primary" name="submit">Sign Up</Button>
-                {/* <Link to="/signup" className="btn btn-primary">Sign up</Link> */}
+            <div className="button">
+                <button class="myButton" onClick={this.login} variant="contained" color="primary" name="submit">Login</button>
+                <button class="myButton" onClick={event =>  window.location.href="/Signup"} variant="contained" color="primary">Sign Up</button>
             </div>
-          </div>
-        </form>
+        </div>
   </div>
     )
 }
