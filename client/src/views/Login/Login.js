@@ -41,7 +41,7 @@ handleChange(e){
 render()
 {
     return(
-        <div>
+        <div id="logb">
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
       <form> 
