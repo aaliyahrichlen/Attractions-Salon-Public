@@ -49,7 +49,7 @@ render()
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
        
-        <div class = "container">
+        <div class = "container1">
             <div className="script" align = "center">Sign In</div>
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />

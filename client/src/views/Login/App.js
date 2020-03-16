@@ -3,7 +3,7 @@ import fire from './config/Fire';
 import Home from './Home';
 import Login from './Login';
 import Signup from '../Signup/Signup';
-
+import AdminDash from "../AdminDash/AdminDash";
 class App extends Component {
   constructor() {
     super();
@@ -21,6 +21,7 @@ class App extends Component {
     fire.auth().onAuthStateChanged((user) => {
       console.log(user);
       if (user) {
+        //alert("User name is " + user.email);
         this.setState({ user });
         localStorage.setItem('user', user.uid);
       } else {
@@ -31,7 +32,7 @@ class App extends Component {
   }
   render() {
     return (
-     <div> {this.state.user ? ( <Home/>) : (<Login/>)} </div>
+     <div> {this.state.user ? ( <AdminDash/>) : (<Login/>)} </div>
     );
   }
 }
