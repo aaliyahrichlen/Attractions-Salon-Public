@@ -14,61 +14,37 @@ const AdminDash = () => {
     const [folder, setFolder] = useState(null);
     const [imagesURL, setImagesURL] = useState([]);
     const [imageNames, setImageNames] = useState([]);
-
-    
-	//const [onlyOnce, setOnlyOnce] = useState(true); 
+	const [picturesArray, setPicturesArray] = useState([]); 
 	
 
     const handleChange = e => {
         if(e.target.files[0]){
             setImage(e.target.files[0]);
             setFolder(e.target.id);
-        }
-        
+        }   
     };
+
+    
+	useEffect(() =>{
+		var storageRef = storage.ref(`images/${folder}/`);
+		//var listRef = storageRef.child(`images/${folder}/`);
+		storageRef.listAll().then(function(res) {
+		res.items.forEach(function(itemRef) {
+            console.log(itemRef.name);
+            setImageNames(imageNames => imageNames.concat(itemRef));
+            var singleUrl = itemRef.getDownloadURL().then(function(url){
+				setImagesURL(imagesURL => imagesURL.concat(url));
+			});
+		});
+		}).catch(function(error) {
+			console.log(error);// Uh-oh, an error occurred!
+		});
+    },[folder]); //I think this changes twice because first it gets set and then updated when I press the button
+
 
     const handleUpload = (e) => {
         
             var fireRef = fire.database().ref("images");
-            //Plan - Get names of images from the fireStorage and save it in an variable array. Use that array to fill the database with names and URL.
-            var storageRef = storage.ref();
-		    var listRef = storageRef.child('images/slideshow/');
-            // setImageNames([]);
-            // fireRef.on("child_added", snap => {
-            //     var n = snap.child("name").val();
-            //     alert(n);
-            //     setImageNames(imageName => imageName.concat(n)); //need to find a way to add these names in this array. 
-            // })
-            
-            listRef.listAll().then(function(res) {
-            res.items.forEach(function(itemRef) {
-                console.log(itemRef.name);
-                var singleUrl = itemRef.getDownloadURL().then(function(url){
-                    console.log("THIS IS 1st output" + url);
-                    var a = itemRef.name;
-                    console.log(a);
-                    setImagesURL(imagesURL => imagesURL.concat(url));
-                    setImageNames(imageNames => [...imageNames, {
-                        id: itemRef.name,
-                        value: url
-                        }
-                    ]); //itemRef gives us names - need to find a way to add these names in this array. 
-                }).then(function (e){
-
-                    alert(imageNames);
-                    imageNames.map(image => {
-                        alert("Image id " + image.id);
-                    });
-                })
-                // All the items under listRef.
-            });
-            }).catch(function(error) {
-            // Uh-oh, an error occurred!
-            });
-            
-
-        
-            
             setShow(true);
             const uploadTask = storage.ref(`images/${folder}/${image.name}`).put(image);
             uploadTask.on("state_changed", snapshot => {
@@ -81,9 +57,6 @@ const AdminDash = () => {
                 storage.ref(`images/${folder}/`).child(image.name).getDownloadURL().then(url => 
                 {
                     setUrl(url);
-                    alert(folder);
-                    setImagesURL(url);
-                    setImageNames(image.name);
                     //writing to database prob: Duplicate entries!
                     // var fireRef = fire.database().ref("images");
                     // fireRef.push().set({
@@ -159,25 +132,5 @@ const AdminDash = () => {
             </div>
         </div>
     );
-
 };
-// const [imagesURL, setImageURL] = useState([]); 
-
-//     var storageRef = storage.ref();
-// 	var listRef = storageRef.child('images/slideshow/');
-// 	listRef.listAll().then(function(res) {
-// 	res.prefixes.forEach(function(folderRef) {
-// 		// All the prefixes under listRef.
-// 		// You may call listAll() recursively on them.
-// 	});
-// 	res.items.forEach(function(itemRef) {
-// 		var singleUrl = itemRef.getDownloadURL().then(function(url){
-// 			console.log(url);
-// 			setImageURL(urls => urls.concat(url));
-// 		});
-// 		// All the items under listRef.
-// 	});
-// 	}).catch(function(error) {
-// 	// Uh-oh, an error occurred!
-// 	});
 export default AdminDash;

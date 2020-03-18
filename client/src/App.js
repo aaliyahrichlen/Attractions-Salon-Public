@@ -11,7 +11,9 @@ import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Card from "./components/DashCards/Card";
-//import 'bootstrap/dist/css/bootstrap.min.css';
+
+import DeleteImage from "./views/DeleteImage/DeleteImage";
+{/* remove this above line */}
 const App = () => {
   return (
     <div>
@@ -28,6 +30,8 @@ const App = () => {
         <Route exact path="/Login" component={LoginHome} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/Card" component={Card}/>
+        <Route exact path="/delete" component={DeleteImage}/>
+         {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
         </Route>
