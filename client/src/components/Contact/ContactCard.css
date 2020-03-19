@@ -7,9 +7,8 @@
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-family:Trebuchet MS;
-	font-size:15px;
-	font-weight:bold;
+	font-family: 'Sofia';
+	font-size: large;	
 	padding:7px 10px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #c70067;
@@ -23,8 +22,34 @@
 	top:1px;
 }
 
-.wrapper {
+.card {
+	margin-top: 20px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.head {
+	font-family: 'Sofia';
+	font-weight: bold;
+	font-size: x-large;
+}
+
+.infoHead {
+	font-family: 'Sofia';
+	font-weight: bold;
+	font-size: larger;
+}
+
+.infoBody {
+	font-family: 'Spartan', sans-serif;
+}
+
+.button {
 	display: flex;
 	align-items: center;
 	justify-content: center;
   }
+
+  .ui.card,
+.ui.cards>.card {
+  background-color: lightpink;
+}

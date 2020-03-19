@@ -1,7 +1,14 @@
 import  React  from  'react';
 import  Carousel  from  'semantic-ui-carousel-react';
 import { Image, Button} from  'semantic-ui-react';
-//import image# from './logo512.png';
+import image1 from './Photos/fb1.jpg';
+import image2 from './Photos/stock1.jpeg';
+import image3 from './Photos/stock2.jpeg'
+import image4 from './Photos/stock3.jpeg'
+import image5 from './Photos/stock4.jpeg'
+import image6 from './Photos/stock5.jpeg'
+import image7 from './Photos/stock6.jpeg'
+
 import "./SlideShow.css"
 
 const SlideShow = () => {
@@ -9,43 +16,43 @@ const SlideShow = () => {
     let  pictures  = [
 			{
 			render:()=>{
-				return <Button  ><Image size='medium' src="http://bit.ly/391CoDq" />
+				return <Button  ><Image size='large' src={image1} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button  id = "hor"><Image size='large' src="http://bit.ly/2uuNotY" />
+				return <Button><Image size='medium' src={image2} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button  ><Image size='medium' src="https://images.pexels.com/photos/718978/pexels-photo-718978.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+				return <Button  ><Image size='medium' src={image3} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button ><Image size='medium' src="https://images.pexels.com/photos/794062/pexels-photo-794062.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+				return <Button ><Image size='medium' src={image4} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button ><Image size='medium' src="https://images.pexels.com/photos/3617660/pexels-photo-3617660.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+				return <Button ><Image size='medium' src={image5} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button ><Image size='large'src="https://images.pexels.com/photos/3276685/pexels-photo-3276685.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+				return <Button ><Image size='large'src={image6} />
         </Button>
 			}
 		},
 		{
 			render:()=>{
-				return <Button ><Image size='medium' src="https://images.pexels.com/photos/936075/pexels-photo-936075.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+				return <Button ><Image size='medium' src={image7} />
         </Button>
 			}
 		},
@@ -57,7 +64,8 @@ const SlideShow = () => {
 		}, */
 	]
 	return (
-		<div  id = "Slides">
+		<div id = "Slides">
+			<div className="shadow">
 			<Carousel
 				elements  =  {  pictures  }
 				duration  ={3000}
@@ -65,6 +73,7 @@ const SlideShow = () => {
 				showNextPrev  =  {false}
 				showIndicators  ={true}
 			/>
+			</div>
 		</div>
 	)
 };

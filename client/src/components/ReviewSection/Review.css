@@ -1,9 +1,16 @@
 .reviewHeader {
-    margin-top: 100px;
+    margin-top: 50px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 50px;
-    width: 50%;
+    margin-bottom: 0px;
+    width: 25%;
     text-align: center;
+    font-family: 'Sofia';
+    font-size: xx-large;
+    font-weight: bold;
+}
 
+.Review {
+    background-color: lightpink;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

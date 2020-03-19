@@ -4,7 +4,7 @@ import CardGroupProps from '../../components/CardGroup/CardGroupProps.js'
 
 function Services() {
     return (
-        <div class ="center">
+        <div id="servb" class ="center">
             <CardGroupProps />
         </div>
     );
