@@ -1,4 +1,5 @@
 const express = require('./config/express.js')
+const api = require('./routes/api/index');
  
 // Use env port or default
 const port = process.env.PORT || 5000;
