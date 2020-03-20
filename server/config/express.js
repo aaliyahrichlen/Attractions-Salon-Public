@@ -4,6 +4,7 @@ const path = require('path'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     exampleRouter = require('../routes/examples.server.routes');
+    api = require('../routes/api/index');
 
 module.exports.init = () => {
     /* 
@@ -11,7 +12,7 @@ module.exports.init = () => {
         - reference README for db uri
     */
     mongoose.connect(process.env.DB_URI || require('./config').db.uri, {
-        useNewUrlParser: true
+        useNewUrlParser: true, useUnifiedTopology: true
     });
     mongoose.set('useCreateIndex', true);
     mongoose.set('useFindAndModify', false);
@@ -22,11 +23,28 @@ module.exports.init = () => {
     // enable request logging for development debugging
     app.use(morgan('dev'));
 
-    // body parsing middleware
+    // body parsing middlewareE
     app.use(bodyParser.json());
 
+    //This enabled CORS, Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) 
+    //on a web page to be requested from another domain outside the domain from which the first resource was served
+
+    app.all('/*', function(req, res, next) {
+        // CORS headers
+        res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+        // Set custom headers for CORS
+        res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+        if (req.method == 'OPTIONS') {
+        res.status(200).end();
+        } else {
+        next();
+        }
+    });
+
     // add a router
-    app.use('/api/example', exampleRouter);
+    // app.use('/api/example', exampleRouter);
+    app.use('/api', api);
 
     if (process.env.NODE_ENV === 'production') {
         // Serve any static files

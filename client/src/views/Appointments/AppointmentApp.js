@@ -23,7 +23,7 @@ import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 import './Appointments.css';
 
-const API_BASE = "http://localhost:8083/";
+const API_BASE = "http://localhost:6163/";
 
 const stepMuiTheme = getMuiTheme({
   raisedButton: {
@@ -105,6 +105,7 @@ class AppointmentApp extends Component {
       )
       .catch(err => {
         console.log(err);
+        console.log(API_BASE + "api/appointmentCreate")
         return this.setState({
           confirmationSnackbarMessage: "Appointment failed to save.",
           confirmationSnackbarOpen: true

@@ -19,7 +19,8 @@ const appointmentSchema = new Schema({
   email: String,
   phone: Number,
   slots:{type: ObjectId, ref: 'Slot'},
-  created_at: Date
+  created_at: Date,
+  confirmed: Boolean
 });
 
 const Appointment = model('Appointment', appointmentSchema);
