@@ -1,6 +1,9 @@
 const Model = require('../models/index');
 const { Appointment, Slot } = Model;
-// const Nexmo = require("nexmo");
+const twilio_creds = require('../config/config').sms
+const accountSid = twilio_creds.sid;
+const authToken = twilio_creds.auth_token;
+const client = require('twilio')(accountSid, authToken);
 
 const appointmentController = {
   all(req, res) {
@@ -24,18 +27,6 @@ const appointmentController = {
       slots: newslot._id
     });
 
-    // const nexmo = new Nexmo({
-    //   apiKey: "YOUR_API_KEY",
-    //   apiSecret: "YOUR_API_SECRET"
-    // });
-
-    let msg =
-      requestBody.name +
-      " " +
-      "this message is to confirm your appointment at" +
-      " " +
-      requestBody.appointment;
-
     // and saves the record to
     // the data base
     newappointment.save((err, saved) => {
@@ -45,16 +36,13 @@ const appointmentController = {
         .populate("slots")
         .exec((err, appointment) => res.json(appointment));
 
-      // const from = VIRTUAL_NUMBER;
-      // const to = RECIPIENT_NUMBER;
-
-      // nexmo.message.sendSms(from, to, msg, (err, responseData) => {
-      //   if (err) {
-      //     console.log(err);
-      //   } else {
-      //     console.dir(responseData);
-      //   }
-      // });
+        console.log(authToken);
+        client.messages
+          .create({
+            body: requestBody.name + " this message is to confirm your appointment at " + requestBody.slot_date,
+            from: twilio_creds.tx_phone_num,
+            to: twilio_creds.rx_phone_num
+          });
     });
   }
 };
