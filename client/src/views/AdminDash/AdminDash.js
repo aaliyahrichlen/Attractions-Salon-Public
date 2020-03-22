@@ -14,7 +14,8 @@ const AdminDash = () => {
     const [imagesURL, setImagesURL] = useState([]);
     const [imageNames, setImageNames] = useState([]);
     const [picturesArray, setPicturesArray] = useState([]);
-    const [name, setName] = useState(null);
+    const [name, setName] = useState('');
+    const [nameArray, setNameArray] = useState([]);
 
 
     const handleChange = e => {
@@ -26,6 +27,7 @@ const AdminDash = () => {
 
     const handleTextChange = e => {
         setName(e.target.value);
+
     };
     const handlePriceChange = e => {
         console.log(e.target.value);
@@ -47,7 +49,12 @@ const AdminDash = () => {
             console.log(error); // Uh-oh, an error occurred!
         });
     }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
+    useEffect(() => {
+        setNameArray(nameArray => nameArray.concat(name));
 
+    }, [name]); // I think this changes twice because first it gets set and then updated when I press the button
+
+    
 
     const handleUpload = (e) => {
 
@@ -76,16 +83,27 @@ const AdminDash = () => {
 
     const handleNameUpload = (e) => {
         e.preventDefault();
+        console.log(name);
+        console.log(nameArray);
+
         var db = fire.database();
         var ref = db.ref("text");
 
         var usersRef = ref.child("services");
         usersRef.set({
             service1: {
-                name: name,
+                name: nameArray[1],
                 price: "Alan Turing"
             },
             service2: {
+                name: nameArray[2],
+                price: "Grace Hopper"
+            },
+            service3: {
+                name: nameArray[3],
+                price: "Alan Turing"
+            },
+            service4: {
                 name: "December 9, 1906",
                 price: "Grace Hopper"
             }
@@ -179,9 +197,25 @@ const AdminDash = () => {
                             content={
                                 <form>
                             <label>
-                            Name 1:<inputtype="text"name="name"onChange={handleTextChange}/>
-                            </label><buttononClick={handleNameUpload}>
-                            Upload</button></form>
+                            Name 1:
+                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            </label>
+
+                            <label>
+                            Name 2:
+                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            </label>
+                            
+                            <label>
+                            Name 3:
+                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            </label>
+
+                            <button
+                            onClick={handleNameUpload}>
+                            Upload
+                            </button>
+                            </form>
                             }
                             on='click'
                             position='top right'/>

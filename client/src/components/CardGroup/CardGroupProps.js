@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {Card} from 'semantic-ui-react'
 import nails from './nails.jpg'
 import curls from './curls.jpg'
@@ -11,58 +11,44 @@ import fire from "../../views/Login/config/Fire";
 
 
 const CardGroupProps = () => {
-    const [serviceName1, setServiceName1] = useState(null);
-
+    const [serviceName1, setServiceName1] = useState('');
+    const [nameArray, setNameArray] = useState([]);
     useEffect(() => {
         var db = fire.database();
-        var ref = db.ref("text/services/service1/name");
-        ref.on('value', snapshot => {
-            var name1 = snapshot.val();
-            setServiceName1(name1);
+        var ref = db.ref("text/services");
+        ref.on("value", function(userSnapshot) {
+            userSnapshot.forEach(function(snapshot) {
+                setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
+            
+            });
         });
-    });
+    },[]);
+    console.log(nameArray);
 
-    const items = [
+ 
+    var items = [
         {
-            header: serviceName1,
+            header: nameArray[0],
             description: 'Get your nails done!',
             meta: 'Starting price: ',
             color: 'pink',
             image: nails
         },
         {
-            header: 'Curls',
+            header: nameArray[1],
             description: 'Curl your hair!',
             meta: 'Starting price: ',
             color: 'pink',
             image: curls
         },
         {
-            header: 'Styling',
-            description: 'Style your hair!',
-            meta: 'Starting price: ',
+            header: nameArray[2],
+            description: 'ok',
+            meta: '3 ',
             color: 'pink',
-            image: styling
-        },
-        {
-            header: 'Styling',
-            description: 'Style your hair!',
-            meta: 'Starting price: ',
-            color: 'pink',
-            image: stock
-        }, {
-            header: 'Styling',
-            description: 'Style your hair!',
-            meta: 'Starting price: ',
-            color: 'pink',
-            image: stock2
-        }, {
-            header: 'Styling',
-            description: 'Style your hair!',
-            meta: 'Starting price: ',
-            color: 'pink',
-            image: curls2
+            image: curls
         }
+ 
     ]
     return (
         <div className="cards">
