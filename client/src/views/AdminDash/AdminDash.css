@@ -1,0 +1,41 @@
+.box {
+    float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: aqua;
+    width: 100%;
+    height: auto;
+}   
+.co {
+    margin-bottom: 30px;
+    font-family: 'Spartan', sans-serif;
+}
+
+.pageDivide{
+    width: 50%;
+    height: auto;
+    background-color: burlywood;
+}
+
+.leftPage{
+    margin: 10px;
+    margin-right: 5px;
+    border: white;
+    border-style:solid;
+    width: 47%;
+    height: 700px;
+    float: left;
+    background: blue;
+}
+.rightPage{
+    margin: 10px;
+    margin-left: 5px;
+    border: white;
+    border-style:solid;
+    width: 47%;
+    height: 700px;
+    float: right;
+    background: green;
+}
