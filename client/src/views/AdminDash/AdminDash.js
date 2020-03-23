@@ -16,6 +16,8 @@ const AdminDash = () => {
     const [picturesArray, setPicturesArray] = useState([]);
     const [name, setName] = useState('');
     const [nameArray, setNameArray] = useState([]);
+    const [price, setPrice] = useState('');
+    const [priceArray, setPriceArray] = useState([]);
 
 
     const handleChange = e => {
@@ -30,7 +32,7 @@ const AdminDash = () => {
 
     };
     const handlePriceChange = e => {
-        console.log(e.target.value);
+        setPrice(e.target.value);
     };
 
 
@@ -49,10 +51,22 @@ const AdminDash = () => {
             console.log(error); // Uh-oh, an error occurred!
         });
     }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
+
     useEffect(() => {
+        if(name === '')
+    {}
+    else
         setNameArray(nameArray => nameArray.concat(name));
 
     }, [name]); // I think this changes twice because first it gets set and then updated when I press the button
+
+    useEffect(() => {
+        if(price === '')
+        {}
+        else
+            setPriceArray(priceArray => priceArray.concat(price));
+
+    }, [price]); // I think this changes twice because first it gets set and then updated when I press the button
 
     
 
@@ -81,10 +95,25 @@ const AdminDash = () => {
         });
     };
 
-    const handleNameUpload = (e) => {
+    const handleTextUpload = (e) => {
         e.preventDefault();
+        if(nameArray.length < 7 || priceArray.length <7)
+        {
+            
+        console.log(nameArray);
+        
+        console.log(priceArray);
+            alert("Must fill all entries!");
+            setNameArray([]);
+            setPriceArray([]);
+
+        }
+
+        else{
         console.log(name);
         console.log(nameArray);
+        
+        console.log(priceArray);
 
         var db = fire.database();
         var ref = db.ref("text");
@@ -92,23 +121,37 @@ const AdminDash = () => {
         var usersRef = ref.child("services");
         usersRef.set({
             service1: {
-                name: nameArray[1],
-                price: "Alan Turing"
+                name: nameArray[0],
+                price: priceArray[0]
             },
             service2: {
-                name: nameArray[2],
-                price: "Grace Hopper"
+                name: nameArray[1],
+                price: priceArray[1]
             },
             service3: {
-                name: nameArray[3],
-                price: "Alan Turing"
+                name: nameArray[2],
+                price: priceArray[2]
             },
             service4: {
-                name: "December 9, 1906",
-                price: "Grace Hopper"
+                name: nameArray[3],
+                price: priceArray[3]
+            },
+            service5: {
+                name: nameArray[4],
+                price: priceArray[4]
+            },
+            service6: {
+                name: nameArray[5],
+                price: priceArray[5]
+            },
+            service7: {
+                name: nameArray[6],
+                price: priceArray[6]
             }
         });
-
+    }
+    setNameArray([]);
+    setPriceArray([]);
     };
 
     const logout = () => {
@@ -198,23 +241,41 @@ const AdminDash = () => {
                                 <form>
                             <label>
                             Name 1:
-                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            <input type="text"name="name1"onBlur={handleTextChange}/>
                             </label>
 
                             <label>
                             Name 2:
-                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            <input type="text"name="name2"onBlur={handleTextChange}/>
                             </label>
                             
                             <label>
                             Name 3:
-                            <input type="text"name="name"onBlur={handleTextChange}/>
+                            <input type="text"name="name3"onBlur={handleTextChange}/>
                             </label>
 
-                            <button
-                            onClick={handleNameUpload}>
-                            Upload
-                            </button>
+                            <label>
+                            Name 4:
+                            <input type="text"name="name4"onBlur={handleTextChange}/>
+                            </label>
+
+                            <label>
+                            Name 5:
+                            <input type="text"name="name5"onBlur={handleTextChange}/>
+                            </label>
+
+
+                            <label>
+                            Name 6:
+                            <input type="text"name="name6"onBlur={handleTextChange}/>
+                            </label>
+
+                            <label>
+                            Name 7:
+                            <input type="text"name="name7"onBlur={handleTextChange}/>
+                            </label>
+
+                          
                             </form>
                             }
                             on='click'
@@ -223,6 +284,72 @@ const AdminDash = () => {
                         <br/>
                     </Card.Body>
                 </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <h2>Change text for your services!</h2>
+                        <Popup trigger={
+                                <Button
+                            color='pink'
+                            content='Change Prices!'/>
+                            }
+                            content={
+                                <form>
+                            <label>
+                            Price 1:
+                            <input type="text"name="price1"onBlur={handlePriceChange}/>
+                            </label>
+
+                            <label>
+                            Price 2:
+                            <input type="text"name="price2"onBlur={handlePriceChange}/>
+                            </label>
+                            
+                            <label>
+                            Price 3:
+                            <input type="text"name="price3"onBlur={handlePriceChange}/>
+                            </label>
+
+                            <label>
+                            Price 4:
+                            <input type="text"name="price4"onBlur={handlePriceChange}/>
+                            </label>
+
+                            <label>
+                            Price 5:
+                            <input type="text"name="price5"onBlur={handlePriceChange}/>
+                            </label>
+
+
+                            <label>
+                            Price 6:
+                            <input type="text"name="price6"onBlur={handlePriceChange}/>
+                            </label>
+
+                            <label>
+                            Price 7:
+                            <input type="text"name="price7"onBlur={handlePriceChange}/>
+                            </label>
+
+                         
+                            </form>
+                            }
+                            
+                            on='click'
+                            position='top right'/>
+                        <br/>
+                        <br/>
+                      
+                    </Card.Body>
+                </Card>
+                <button
+                            onClick={handleTextUpload}>
+                            Upload
+                            </button>
             </div>
         </div>
     );

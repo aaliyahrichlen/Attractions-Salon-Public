@@ -13,41 +13,76 @@ import fire from "../../views/Login/config/Fire";
 const CardGroupProps = () => {
     const [serviceName1, setServiceName1] = useState('');
     const [nameArray, setNameArray] = useState([]);
+    const [priceArray, setPriceArray] = useState([]);
+
+    var price = 'Starting price: ';
     useEffect(() => {
         var db = fire.database();
         var ref = db.ref("text/services");
         ref.on("value", function(userSnapshot) {
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
+                setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
+
             
             });
         });
     },[]);
     console.log(nameArray);
+    console.log(priceArray);
 
  
     var items = [
         {
             header: nameArray[0],
             description: 'Get your nails done!',
-            meta: 'Starting price: ',
+            meta: price + priceArray[0],
             color: 'pink',
             image: nails
         },
         {
             header: nameArray[1],
             description: 'Curl your hair!',
-            meta: 'Starting price: ',
+            meta: price + priceArray[1],
             color: 'pink',
             image: curls
         },
         {
             header: nameArray[2],
-            description: 'ok',
-            meta: '3 ',
+            description: 'Style3',
+            meta: price + priceArray[2],
+            color: 'pink',
+            image: curls
+        },
+        {
+            header: nameArray[3],
+            description: 'Service4',
+            meta: price + priceArray[3],
+            color: 'pink',
+            image: nails
+        },
+        {
+            header: nameArray[4],
+            description: 'Service5',
+            meta: price + priceArray[4],
+            color: 'pink',
+            image: curls
+        },
+        {
+            header: nameArray[5],
+            description: 'Service6',
+            meta: price + priceArray[5],
+            color: 'pink',
+            image: curls
+        },
+        {
+            header: nameArray[6],
+            description: 'Service7',
+            meta: price + priceArray[6],
             color: 'pink',
             image: curls
         }
+ 
  
     ]
     return (
