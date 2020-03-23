@@ -69,10 +69,10 @@ class AppointmentApp extends Component {
     };
   }
   componentDidMount() {
-    axios.get(API_BASE + `api/retrieveSlots`).then(response => {
-      console.log("response via db: ", response.data);
-      this.handleDBReponse(response.data);
-    });
+    // axios.get(API_BASE + `api/retrieveSlots`).then(response => {
+    //   console.log("response via db: ", response.data);
+    //   this.handleDBReponse(response.data);
+    // });
   }
   handleSetAppointmentDate(date) {
     this.setState({ appointmentDate: date, confirmationTextVisible: true });
@@ -172,12 +172,6 @@ class AppointmentApp extends Component {
           {
             currentSchedule[dateString][slot_time] = true
           }
-          // !currentSchedule[slot_date]
-          //   ? (currentSchedule[dateString] = Array(8).fill(false))
-          //   : null;
-          // Array.isArray(currentSchedule[dateString])
-          //   ? (currentSchedule[dateString][slot_time] = true)
-          //   : null;
           return currentSchedule;
         }, initialSchedule);
 
