@@ -57,6 +57,7 @@ class AppointmentApp extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      stylistName: "",
       schedule: [],
       confirmationModalOpen: false,
       appointmentMeridiem: 0,
@@ -78,11 +79,6 @@ class AppointmentApp extends Component {
   handleSetAppointmentDate(date) {
     this.setState({ appointmentDate: date, confirmationTextVisible: true });
   }
-
-  handleSetAppointmentSlot(slot) {
-    console.log(slot)
-    this.setState({ appointmentSlot: slot });
-  }
   handleSetAppointmentMeridiem(meridiem) {
     this.setState({ appointmentMeridiem: meridiem });
   }
@@ -92,7 +88,7 @@ class AppointmentApp extends Component {
       name: this.state.firstName + " " + this.state.lastName,
       email: this.state.email,
       phone: this.state.phone,
-      slot_date: moment(this.state.appointmentDate).format("YYYY-DD-MM"),
+      slot_date: moment(this.state.appointmentDate).format("MM/DD/YYYY"),
       slot_time: this.state.appointmentSlot
     };
     axios
@@ -113,21 +109,6 @@ class AppointmentApp extends Component {
         });
       });
   }
-  
-  handleNext = () => {
-    const { stepIndex } = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2
-    });
-  };
-
-  handlePrev = () => {
-    const { stepIndex } = this.state;
-    if (stepIndex > 0) {
-      this.setState({ stepIndex: stepIndex - 1 });
-    }
-  };
   validateEmail(email) {
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({email: email})
@@ -159,7 +140,7 @@ class AppointmentApp extends Component {
     return this.setState({ validTime: false });
   }
   checkDisableDate(day) {
-    const dateString = moment(day).format("YYYY-DD-MM");
+    const dateString = moment(day).format("MM/DD/YYYY");
     return (
       this.state.schedule[dateString] === true ||
       moment(day)
@@ -173,13 +154,13 @@ class AppointmentApp extends Component {
     const appointments = response;
     const today = moment().startOf("day"); //start of today 12 am
     const initialSchedule = {};
-    initialSchedule[today.format("YYYY-DD-MM")] = true;
+    initialSchedule[today.format("MM/DD/YYYY")] = true;
     const schedule = !appointments.length
       ? initialSchedule
       : appointments.reduce((currentSchedule, appointment) => {
           const { slot_date, slot_time } = appointment;
-          const dateString = moment(slot_date, "YYYY-DD-MM").format(
-            "YYYY-DD-MM"
+          const dateString = moment(slot_date, "MM/DD/YYYY").format(
+            "MM/DD/YYYY"
           );
           if(!currentSchedule[slot_date])
           {
@@ -227,6 +208,9 @@ class AppointmentApp extends Component {
           Email: <span style={spanStyle}>{this.state.email}</span>
         </p>
         <p>
+          Stylist: <span style={spanStyle}>{!this.state.stylistName ? "No Preference" : this.state.stylistName}</span>
+        </p>
+        <p>
           Appointment:{" "}
           <span style={spanStyle}>
             {moment(this.state.appointmentDate).format(
@@ -250,7 +234,7 @@ class AppointmentApp extends Component {
       const slots = [...Array(8).keys()];
       return slots.map(slot => {
         const appointmentDateString = moment(this.state.appointmentDate).format(
-          "YYYY-DD-MM"
+          "MM/DD/YYYY"
         );
         const time1 = moment()
           .hour(9)
@@ -262,7 +246,7 @@ class AppointmentApp extends Component {
           .add(slot + 1, "hours");
         const scheduleDisabled = this.state.schedule[appointmentDateString]
           ? this.state.schedule[
-              moment(this.state.appointmentDate).format("YYYY-DD-MM")
+              moment(this.state.appointmentDate).format("MM/DD/YYYY")
             ][slot]
           : false;
         const meridiemDisabled = this.state.appointmentMeridiem
@@ -311,6 +295,7 @@ class AppointmentApp extends Component {
           mode={smallScreen ? "portrait" : "landscape"}
           onChange={(n, date) => this.handleSetAppointmentDate(date)}
           shouldDisableDate={day => this.checkDisableDate(day)}
+          formatDate={(date) => moment(date).format('MM/DD/YYYY')}
         />
       </div>
     );
@@ -425,7 +410,7 @@ class AppointmentApp extends Component {
                         hintText="youraddress@mail.com"
                         floatingLabelText="Email"
                         errorText={
-                          data.validEmail ? null : "Enter a valid email address"
+                          !data.email || data.validEmail ? null : "Enter a valid email address"
                         }
                         onChange={(evt, newValue) =>
                           this.validateEmail(newValue)
@@ -438,10 +423,20 @@ class AppointmentApp extends Component {
                         hintText="+2348995989"
                         floatingLabelText="Phone"
                         errorText={
-                          data.validPhone ? null : "Enter a valid phone number"
+                          !data.phone || data.validPhone ? null : "Enter a valid phone number"
                         }
                         onChange={(evt, newValue) =>
                           this.validatePhone(newValue)
+                        }
+                      />
+                      <TextField
+                        value={data.stylistName}
+                        style={{ display: "block" }}
+                        name="stylist"
+                        hintText="No Preference"
+                        floatingLabelText="Stylist"
+                        onChange={(evt, newValue) =>
+                          this.setState({ stylistName: newValue })
                         }
                       />
                       <RaisedButton
