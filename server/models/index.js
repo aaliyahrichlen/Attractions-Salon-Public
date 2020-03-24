@@ -10,7 +10,7 @@ const appointmentSchema = new Schema({
   email: String,
   phone: Number,
   slot_time: String,
-  slot_date: Date,
+  slot_date: String,
   created_at: Date,
   confirmation_code: String,
   confirmed: Boolean

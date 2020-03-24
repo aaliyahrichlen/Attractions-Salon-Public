@@ -40,7 +40,7 @@ const appointmentController = {
 
         client.messages
           .create({
-            body: requestBody.name+ saved.email + " this message is to confirm your appointment at " + requestBody.slot_date,
+            body: requestBody.name + " this message is to confirm your appointment at " + requestBody.slot_date,
             from: twilio_creds.tx_phone_num,
             to: twilio_creds.rx_phone_num
           });
