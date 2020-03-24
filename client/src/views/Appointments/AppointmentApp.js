@@ -59,11 +59,12 @@ class AppointmentApp extends Component {
       email: "",
       schedule: [],
       confirmationModalOpen: false,
-      appointmentDateSelected: false,
       appointmentMeridiem: 0,
       validEmail: true,
       validPhone: true,
+      validTime: false,
       finished: false,
+      appointmentTime: null,
       smallScreen: window.innerWidth < 768,
       stepIndex: 0
     };
@@ -140,6 +141,22 @@ class AppointmentApp extends Component {
     return regex.test(phoneNumber)
       ? this.setState({ validPhone: true })
       : this.setState({ validPhone: false });
+  }
+  validateAppointmentTime(time, meridiem) {
+    const regex = /^(0[0-9]|[1][0-2]|[0-9]):([0-5][0-9])$/;
+    let fullTime = time + ' ' + (meridiem == 0 ? 'am' : 'pm');
+    this.setState({appointmentTime: time})
+    if(regex.test(time))
+    {
+      var currentTime= moment(fullTime, 'HH:mm a');
+      var startTime = moment('08:59 am', "HH:mm a");
+      var endTime = moment('05:00 pm', "HH:mm a");
+      if(currentTime.isBetween(startTime , endTime))
+      {
+        return this.setState({ validTime: true });
+      }
+    }
+    return this.setState({ validTime: false });
   }
   checkDisableDate(day) {
     const dateString = moment(day).format("YYYY-DD-MM");
@@ -344,31 +361,37 @@ class AppointmentApp extends Component {
                   Choose an available time for your appointment
                 </StepButton>
                 <StepContent>
+                <TextField
+                        value={data.appointmentTime}
+                        style={{ display: "block" }}
+                        name="apt-time"
+                        hintText="HH:MM"
+                        floatingLabelText="Time"
+                        errorText={
+                          !data.appointmentTime || data.validTime ? null : "Enter a valid appointment time"
+                        }
+                        onChange={(evt, newValue) =>
+                          this.validateAppointmentTime(newValue, this.state.appointmentMeridiem)
+                        }
+                      />
                   <SelectField
                     floatingLabelText="AM/PM"
                     value={data.appointmentMeridiem}
-                    onChange={(evt, key, payload) =>
-                      this.handleSetAppointmentMeridiem(payload)
-                    }
+                    onChange={(evt, key, payload) => {
+                      this.handleSetAppointmentMeridiem(payload);
+                      if(this.state.appointmentTime)
+                      {
+                        this.validateAppointmentTime(this.state.appointmentTime,payload);
+                      }
+                    }}
                     selectionRenderer={value => (value ? "PM" : "AM")}
                   >
                     <MenuItem value={0} primaryText="AM" />
                     <MenuItem value={1} primaryText="PM" />
                   </SelectField>
-                  <RadioButtonGroup
-                    style={{
-                      marginTop: 15,
-                      marginLeft: 15
-                    }}
-                    name="appointmentTimes"
-                    defaultSelected={data.appointmentSlot}
-                    onChange={(evt, val) => this.handleSetAppointmentSlot(val)}
-                  >
-                    {this.renderAppointmentTimes()}
-                  </RadioButtonGroup>
                 </StepContent>
               </Step>
-              <Step disabled={ !Number.isInteger(this.state.appointmentSlot) }>
+              <Step disabled={ !this.state.validTime }>
               <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
                   Share your contact information with us and we'll send you a reminder
                 </StepButton>
