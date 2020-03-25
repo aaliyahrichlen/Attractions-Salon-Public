@@ -84,12 +84,15 @@ class AppointmentApp extends Component {
   }
   handleSubmit() {
     this.setState({ confirmationModalOpen: false });
+    let fullDate = moment(moment(this.state.appointmentDate).format("MM/DD/YYYY") + ' ' + this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm'), "MM/DD/YYYY HH:mm a")
     const newAppointment = {
       name: this.state.firstName + " " + this.state.lastName,
       email: this.state.email,
       phone: this.state.phone,
-      slot_date: moment(this.state.appointmentDate).format("MM/DD/YYYY"),
-      slot_time: this.state.appointmentSlot
+      stylist: this.state.stylistName,
+      slot_date: fullDate
+      // slot_date: moment(this.state.appointmentDate).format("MM/DD/YYYY"),
+      // slot_time: this.state.appointmentSlot
     };
     axios
       .post(API_BASE + "api/appointmentCreate", newAppointment)
@@ -219,11 +222,7 @@ class AppointmentApp extends Component {
           </span>{" "}
           at{" "}
           <span style={spanStyle}>
-            {moment()
-              .hour(9)
-              .minute(0)
-              .add(this.state.appointmentSlot, "hours")
-              .format("h:mm a")}
+            {this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm')}
           </span>
         </p>
       </section>

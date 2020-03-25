@@ -4,6 +4,7 @@ const twilio_creds = require('../config/config').sms
 const accountSid = twilio_creds.sid;
 const authToken = twilio_creds.auth_token;
 const client = require('twilio')(accountSid, authToken);
+var moment = require('moment')
 
 const appointmentController = {
   all(req, res) {
@@ -18,11 +19,14 @@ const appointmentController = {
       name: requestBody.name,
       email: requestBody.email,
       phone: requestBody.phone,
-      slot_time: requestBody.slot_time,
+      stylist: requestBody.stylist,
       slot_date: requestBody.slot_date,
       created_at: Date.now(),
-      confirmed: false
+      confirmed: false,
+      confirmation_code: ''
     });
+
+    //Create a confirmation code
 
     // and saves the record to
     // the data base
@@ -31,10 +35,15 @@ const appointmentController = {
       // after a successful save
       Appointment.find({ _id: saved._id })
         .exec((err, appointment) => res.json(appointment));
-
+        
+        let msgBody = requestBody.name + " this message is to confirm your appointment on " + moment(requestBody.slot_date).format("MMMM Do YYYY [at] h:mm a'");
+        if(requestBody.stylist)
+        {
+          msgBody += " with " + requestBody.stylist;
+        }
         client.messages
           .create({
-            body: requestBody.name + " this message is to confirm your appointment at " + requestBody.slot_date,
+            body: msgBody,
             from: twilio_creds.tx_phone_num,
             to: twilio_creds.rx_phone_num
           });
