@@ -78,8 +78,6 @@ const appointmentController = {
         transporter.sendMail(emailOptions, function(error, info){
           if (error) {
             console.error(error);
-          } else {
-            console.log('Email sent: ' + info.response);
           }
         });
     });
