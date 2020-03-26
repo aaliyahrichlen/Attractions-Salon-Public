@@ -1,12 +1,12 @@
-const Model = require('../models/index');
-const {Appointment} = Model;
+const {Appointment} = require('../models/index');
 const twilio_creds = require('../config/config').sms
 const accountSid = twilio_creds.sid;
 const authToken = twilio_creds.auth_token;
 const client = require('twilio')(accountSid, authToken);
-var moment = require('moment')
-var randomstring = require('randomstring')
-var async = require('async')
+const moment = require('moment')
+const randomstring = require('randomstring')
+const async = require('async')
+const {transporter} =  require('./../models/email')
 
 const appointmentController = {
   all(req, res) {
@@ -48,20 +48,40 @@ const appointmentController = {
       Appointment.find({ _id: saved._id })
         .exec((err, appointment) => res.json(appointment));
         
-        let msgBody = requestBody.name + " this message is to confirm your appointment on " + moment(requestBody.slot_date).format("MMMM Do YYYY [at] h:mm a");
+        let msgBody = 'Brandi,\n' + requestBody.name + " is requesting an appointment on " + moment(requestBody.slot_date).format("MMMM Do YYYY [at] h:mm a");
         if(requestBody.stylist)
         {
-          msgBody += " with " + requestBody.stylist;
+          msgBody += " with the stylist " + requestBody.stylist;
+        }else{
+          msgBody += " with no preferred stylist"
         }
-        msgBody += '.';
+        msgBody += '.\n';
+        //Add client info
+        msgBody += '\nClient Email: ' + saved.email;
+        msgBody += '\nClient Phone Number: ' + saved.phone;
         //Add confirmation link
-        msgBody += '\nPlease click here to confirm this appointment: ' + 'http://localhost:6163/api/confirm/' + saved.confirmation_code
+        msgBody += '\n\nPlease click here to confirm this appointment: ' + 'http://localhost:6163/api/confirm/' + saved.confirmation_code
+        //Send twilio message
         client.messages
           .create({
             body: msgBody,
             from: twilio_creds.tx_phone_num,
             to: twilio_creds.rx_phone_num
           });
+        //Send email
+        let emailOptions = {
+          from: transporter.options.auth.user,
+          to: saved.email,
+          subject: 'Attractions Salon Appointment Confirmation',
+          text: msgBody
+        };
+        transporter.sendMail(emailOptions, function(error, info){
+          if (error) {
+            console.error(error);
+          } else {
+            console.log('Email sent: ' + info.response);
+          }
+        });
     });
   },
   confirm(req, res) {
