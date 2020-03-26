@@ -1,5 +1,5 @@
 const {Appointment} = require('../models/index');
-const client = require('twilio')(process.env.SMS_SID || require('../config/config').sms.sid, process.env.SMS_AUTH_TOKEN || require('../config/config').sms.sid);
+const client = require('twilio')(process.env.SMS_SID || require('../config/config').sms.sid, process.env.SMS_AUTH_TOKEN || require('../config/config').sms.auth_token);
 const moment = require('moment')
 const randomstring = require('randomstring')
 const async = require('async')
@@ -58,13 +58,13 @@ const appointmentController = {
         msgBody += '\nClient Phone Number: ' + saved.phone;
         //Add confirmation link
         msgBody += '\n\nPlease click here to confirm this appointment: ' +  (process.env.WEB_URL || 'http://localhost') + ':' + (process.env.PORT || 6163) + '/api/confirm/' + saved.confirmation_code
-        //Send twilio message
+        //Send twilio 
         client.messages
           .create({
             body: msgBody,
             from: process.env.SMS_TX_PHONE_NUM || require('../config/config').sms.tx_phone_num,
             to: process.env.SMS_RX_PHONE_NUM || require('../config/config').sms.rx_phone_num
-          });
+          })
         //Send email
         let emailOptions = {
           from: transporter.options.auth.user,
