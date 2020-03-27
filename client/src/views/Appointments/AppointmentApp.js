@@ -113,6 +113,8 @@ class AppointmentApp extends Component {
       });
   }
   validateEmail(email) {
+    console.log("prod" + process.env.REACT_APP_PRODUCTION)
+    console.log('api_base' + API_BASE)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({email: email})
     return regex.test(email)
