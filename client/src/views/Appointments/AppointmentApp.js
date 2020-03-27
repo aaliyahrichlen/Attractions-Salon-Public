@@ -114,7 +114,9 @@ class AppointmentApp extends Component {
       });
   }
   validateEmail(email) {
-    console.log(process.env.WEB_URL)
+    console.log("HOST" + process.env.HOST)
+    console.log("PORT" + process.env.PORT)
+    console.log("REACT_APP_WEB_URL" + process.env.REACT_APP_WEB_URL)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({email: email})
     return regex.test(email)
