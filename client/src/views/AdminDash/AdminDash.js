@@ -146,69 +146,70 @@ const AdminDash = () => {
     return (
         <div>
             <div>
-                <h1>Welcome to Home</h1>
-                <button onClick={logout}>Logout</button>
+            <div className="adminHead">Admin Dashboard</div>
+                <button className="adButton" onClick={logout}>Logout</button>
             </div>
             <div class="leftPage">
                 <div class="box">
-                    <h2>Upload Image for Your Logo!</h2>
+                    <div className="admHead">Upload Image for Your Logo!</div>
                     {/*logos*/}
                     <img src={url}/> {/* alt="logoImage" */}
                     <br/> {
                     show && <progress value={progressBar}
                         max="100"/>}
-                }
+                
                     <br/>
-                    <input id="logos" type="file"
+                    <input className="adButton" id="logos" type="file"
                         onChange={handleChange}/>
                     <br/>
-                    <button id='1'
+                    <button className="adButton" id='1'
                         onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <h2>Upload Images for Your Slideshow!</h2>
+                    <div className="admHead">Upload Images for Your Slideshow!</div>
                     {/*slideshow*/}
                     <img src={url}/>
                     <br/> {
                     show && <progress value={progressBar}
                         max="100"/>}
-                }
+                
                     <br/>
-                    <input id="slideshow" type="file"
+                    <input className="adButton" id="slideshow" type="file"
                         onChange={handleChange}/>
                     <br/>
-                    <button onClick={handleUpload}>Upload</button>
+                    <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <h2>Upload Images for Your Services!</h2>
+                    <div className="admHead">Upload Images for Your Services!</div>
                     {/*services*/}
                     <img src={url}/>
                     <br/> {
                     show && <progress value={progressBar}
                         max="100"/>}
-                }
+                
                     <br/>
-                    <input id="services" type="file"
+                    <input className="adButton" id="services" type="file"
                         onChange={handleChange}/>
                     <br/>
-                    <button onClick={handleUpload}>Upload</button>
+                    <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <h2>Upload Images for Your About page!</h2>
+                    <div className="admHead">Upload Images for Your About page!</div>
                     {/*About*/}
                     <img src={url}/>
                     <br/> {
                     show && <progress value={progressBar}
                         max="100"/>}
-                }
+                
                     <br/>
-                    <input id="about" type="file"
+                    <input className="adButton" id="about" type="file"
                         onChange={handleChange}/>
                     <br/>
-                    <button onClick={handleUpload}>Upload</button>
+                    <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
             </div>
             <div className="rightPage">
+                <div className="adminHead">Edit service details!</div>
                 <Card style={
                     {width: '18rem'}
                 }>
@@ -216,57 +217,148 @@ const AdminDash = () => {
                         src={url}/>
                     <Card.Body>
                         <Card.Title></Card.Title>
-                        <h2>Change text for your services!</h2>
-                        <Popup trigger={
-                                <Button
-                            color='pink'
-                            content='Change Names!'/>
-                            }
-                            content={
-                                <form>
+                        <div className="admHead">Service 1</div>
+                        
+                                <form onSubmit={handleTextUpload}>
                             <label>
                             Name 1:
                             <input type="text"name="name1"onBlur={handleTextChange(0)}/>
                             </label>
+                            <label>
+                            Price 1:
+                            <input type="text"name="price1"onBlur={handlePriceChange(0)}/>
+                            </label>
+                            <input type="submit" value="Upload"></input>
 
+                         
+                            </form>
+                      
+                    </Card.Body>
+                </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <div className="admHead">Service 2</div>
+                        
+                                <form onSubmit={handleTextUpload}>
                             <label>
                             Name 2:
                             <input type="text"name="name2"onBlur={handleTextChange(1)}/>
                             </label>
-                            
+                            <label>
+                            Price 2:
+                            <input type="text"name="price2"onBlur={handlePriceChange(1)}/>
+                            </label>
+                            <input type="submit" value="Upload"></input>
+
+                         
+                            </form>
+                      
+                    </Card.Body>
+                </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <div className="admHead">Service 3</div>
+                        
+                                <form onSubmit={handleTextUpload}>   
                             <label>
                             Name 3:
                             <input type="text"name="name3"onBlur={handleTextChange(2)}/>
                             </label>
+                            <label>
+                            Price 3:
+                            <input type="text"name="price3"onBlur={handlePriceChange(2)}/>
+                            </label>
+                            <input type="submit" value="Upload"></input>
 
+                         
+                            </form>
+                      
+                    </Card.Body>
+                </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <div className="admHead">Service 4</div>
+                        
+                                <form onSubmit={handleTextUpload}>
                             <label>
                             Name 4:
                             <input type="text"name="name4"onBlur={handleTextChange(3)}/>
                             </label>
+                            <label>
+                            Price 4:
+                            <input type="text"name="price4"onBlur={handlePriceChange(3)}/>
+                            </label>
+                            <input type="submit" value="Upload"></input>
 
+                         
+                            </form>
+                      
+                    </Card.Body>
+                </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <div className="admHead">Service 5</div>
+                        
+                                <form onSubmit={handleTextUpload}>
                             <label>
                             Name 5:
                             <input type="text"name="name5"onBlur={handleTextChange(4)}/>
                             </label>
+                            <label>
+                            Price 5:
+                            <input type="text"name="price5"onBlur={handlePriceChange(4)}/>
+                            </label>
+                            <input type="submit" value="Upload"></input>
 
+                         
+                            </form>
+                      
+                    </Card.Body>
+                </Card>
+                <Card style={
+                    {width: '18rem'}
+                }>
+                    <Card.Img variant="top"
+                        src={url}/>
+                    <Card.Body>
+                        <Card.Title></Card.Title>
+                        <div className="admHead">Service 6</div>
+                        
+                                <form onSubmit={handleTextUpload}>
 
                             <label>
                             Name 6:
                             <input type="text"name="name6"onBlur={handleTextChange(5)}/>
                             </label>
-
                             <label>
-                            Name 7:
-                            <input type="text"name="name7"onBlur={handleTextChange(6)}/>
+                            Price 6:
+                            <input type="text"name="price6"onBlur={handlePriceChange(5)}/>
                             </label>
+                            <input type="submit" value="Upload"></input>
 
-                          
+                         
                             </form>
-                            }
-                            on='click'
-                            position='top right'/>
-                        <br/>
-                        <br/>
+                      
                     </Card.Body>
                 </Card>
                 <Card style={
@@ -276,65 +368,25 @@ const AdminDash = () => {
                         src={url}/>
                     <Card.Body>
                         <Card.Title></Card.Title>
-                        <h2>Change text for your services!</h2>
-                        <Popup trigger={
-                                <Button
-                            color='pink'
-                            content='Change Prices!'/>
-                            }
-                            content={
-                                <form>
+                        <div className="admHead">Service 7</div>
+                        
+                                <form onSubmit={handleTextUpload}>
                             <label>
-                            Price 1:
-                            <input type="text"name="price1"onBlur={handlePriceChange(0)}/>
+                            Name 7:
+                            <input type="text"name="name7"onBlur={handleTextChange(6)}/>
                             </label>
-
-                            <label>
-                            Price 2:
-                            <input type="text"name="price2"onBlur={handlePriceChange(1)}/>
-                            </label>
-                            
-                            <label>
-                            Price 3:
-                            <input type="text"name="price3"onBlur={handlePriceChange(2)}/>
-                            </label>
-
-                            <label>
-                            Price 4:
-                            <input type="text"name="price4"onBlur={handlePriceChange(3)}/>
-                            </label>
-
-                            <label>
-                            Price 5:
-                            <input type="text"name="price5"onBlur={handlePriceChange(4)}/>
-                            </label>
-
-
-                            <label>
-                            Price 6:
-                            <input type="text"name="price6"onBlur={handlePriceChange(5)}/>
-                            </label>
-
                             <label>
                             Price 7:
                             <input type="text"name="price7"onBlur={handlePriceChange(6)}/>
                             </label>
+                            <input type="submit" value="Upload"></input>
 
                          
                             </form>
-                            }
-                            
-                            on='click'
-                            position='top right'/>
-                        <br/>
-                        <br/>
                       
                     </Card.Body>
                 </Card>
-                <button
-                            onClick={handleTextUpload}>
-                            Upload
-                            </button>
+                
             </div>
         </div>
     );

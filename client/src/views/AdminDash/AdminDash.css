@@ -4,9 +4,11 @@
     margin-bottom: 10px;
     margin-right: auto;
     margin-left: auto;
-    background-color: aqua;
-    width: 100%;
-    height: auto;
+    background-color: lightpink;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 400px;
+    height: 250px;
+
 }   
 .co {
     margin-bottom: 30px;
@@ -19,23 +21,73 @@
     background-color: burlywood;
 }
 
+/*background: blue;
+border: white;
+border-style:solid;*/
 .leftPage{
     margin: 10px;
     margin-right: 5px;
-    border: white;
-    border-style:solid;
     width: 47%;
-    height: 700px;
+
     float: left;
-    background: blue;
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
 }
+
+/*border: white;
+border-style:solid;
+   height: 700px;
+background: green;*/
 .rightPage{
     margin: 10px;
     margin-left: 5px;
-    border: white;
-    border-style:solid;
     width: 47%;
-    height: 700px;
     float: right;
-    background: green;
+    background-color: lightpink;
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.adminHead {
+    font-family: 'Sofia';
+    font-size: xx-large;
+    margin: 10px;
+}
+
+.admHead {
+    font-family: 'Spartan', sans-serif;
+    font-size: large;
+    margin: 10px;
+    text-align: center;
+}
+
+.adButton {
+    margin: 10px;
+    
+}
+
+.adTop {
+    display: inline-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+}
+.row {
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+justify-content: space-evenly;
+align-content: flex-start;
+align-items: start;
 }
