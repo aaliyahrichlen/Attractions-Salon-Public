@@ -57,7 +57,7 @@ const appointmentController = {
         msgBody += '\nClient Email: ' + saved.email;
         msgBody += '\nClient Phone Number: ' + saved.phone;
         //Add confirmation link
-        msgBody += '\n\nPlease click here to confirm this appointment: ' +  (process.env.WEB_URL || 'http://localhost') + ':' + (process.env.PORT || 6163) + '/api/confirm/' + saved.confirmation_code
+        msgBody += '\n\nPlease click here to confirm this appointment: ' +  (process.env.WEB_URL || 'http://localhost:6163') + '/api/confirm/' + saved.confirmation_code
         //Send twilio 
         client.messages
           .create({
@@ -80,10 +80,9 @@ const appointmentController = {
     });
   },
   confirm(req, res) {
-    Appointment.findOne({ confirmation_code: req.params.confirmId }).exec((err, appointment) => {
-        if(appointment)
+    Appointment.updateOne({ confirmation_code: req.params.confirmId }, { confirmed: true }).exec((err, appointment) => {
+        if(appointment.n)
         {
-          appointment.confirmed = true;
           res.json("Confirmed")
         }else{
           res.json("Failed to Confirm")
