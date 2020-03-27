@@ -22,7 +22,6 @@ import {
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 import './Appointments.css';
-require('dotenv').config()
 
 const API_BASE = (process.env.WEB_URL || 'http://localhost') + ':' + (process.env.PORT || 6163) + '/';
 
