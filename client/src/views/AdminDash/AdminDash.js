@@ -14,12 +14,10 @@ const AdminDash = () => {
     const [imagesURL, setImagesURL] = useState([]);
     const [imageNames, setImageNames] = useState([]);
     const [picturesArray, setPicturesArray] = useState([]);
-    const [name, setName] = useState('');
     const [nameArray, setNameArray] = useState([]);
-    const [price, setPrice] = useState('');
     const [priceArray, setPriceArray] = useState([]);
 
-
+    var tempIndex =0;
     const handleChange = e => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -27,14 +25,30 @@ const AdminDash = () => {
         }
     };
 
-    const handleTextChange = e => {
-        setName(e.target.value);
+    const handleTextChange =index => e => {
+        let newArray = [...nameArray];
+        newArray[index] = e.target.value;
+        setNameArray(newArray);
 
     };
-    const handlePriceChange = e => {
-        setPrice(e.target.value);
+    const handlePriceChange = index=> e => {
+        let newArray = [...priceArray];
+        newArray[index] = e.target.value;
+        setPriceArray(newArray);
     };
+    useEffect(() => {
+        var db = fire.database();
+        var ref = db.ref("text/services");
+        ref.on("value", function(userSnapshot) {
+            userSnapshot.forEach(function(snapshot) {
+                setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
+                setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
 
+            
+            });
+        });
+    },[]);
+      
 
     useEffect(() => {
         var storageRef = storage.ref(`images/${folder}/`);
@@ -52,22 +66,8 @@ const AdminDash = () => {
         });
     }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
 
-    useEffect(() => {
-        if(name === '')
-    {}
-    else
-        setNameArray(nameArray => nameArray.concat(name));
-
-    }, [name]); // I think this changes twice because first it gets set and then updated when I press the button
-
-    useEffect(() => {
-        if(price === '')
-        {}
-        else
-            setPriceArray(priceArray => priceArray.concat(price));
-
-    }, [price]); // I think this changes twice because first it gets set and then updated when I press the button
-
+    
+    
     
 
     const handleUpload = (e) => {
@@ -97,20 +97,7 @@ const AdminDash = () => {
 
     const handleTextUpload = (e) => {
         e.preventDefault();
-        if(nameArray.length < 7 || priceArray.length <7)
-        {
-            
-        console.log(nameArray);
-        
-        console.log(priceArray);
-            alert("Must fill all entries!");
-            setNameArray([]);
-            setPriceArray([]);
-
-        }
-
-        else{
-        console.log(name);
+   
         console.log(nameArray);
         
         console.log(priceArray);
@@ -149,9 +136,7 @@ const AdminDash = () => {
                 price: priceArray[6]
             }
         });
-    }
-    setNameArray([]);
-    setPriceArray([]);
+    
     };
 
     const logout = () => {
@@ -241,38 +226,38 @@ const AdminDash = () => {
                                 <form>
                             <label>
                             Name 1:
-                            <input type="text"name="name1"onBlur={handleTextChange}/>
+                            <input type="text"name="name1"onBlur={handleTextChange(0)}/>
                             </label>
 
                             <label>
                             Name 2:
-                            <input type="text"name="name2"onBlur={handleTextChange}/>
+                            <input type="text"name="name2"onBlur={handleTextChange(1)}/>
                             </label>
                             
                             <label>
                             Name 3:
-                            <input type="text"name="name3"onBlur={handleTextChange}/>
+                            <input type="text"name="name3"onBlur={handleTextChange(2)}/>
                             </label>
 
                             <label>
                             Name 4:
-                            <input type="text"name="name4"onBlur={handleTextChange}/>
+                            <input type="text"name="name4"onBlur={handleTextChange(3)}/>
                             </label>
 
                             <label>
                             Name 5:
-                            <input type="text"name="name5"onBlur={handleTextChange}/>
+                            <input type="text"name="name5"onBlur={handleTextChange(4)}/>
                             </label>
 
 
                             <label>
                             Name 6:
-                            <input type="text"name="name6"onBlur={handleTextChange}/>
+                            <input type="text"name="name6"onBlur={handleTextChange(5)}/>
                             </label>
 
                             <label>
                             Name 7:
-                            <input type="text"name="name7"onBlur={handleTextChange}/>
+                            <input type="text"name="name7"onBlur={handleTextChange(6)}/>
                             </label>
 
                           
@@ -301,38 +286,38 @@ const AdminDash = () => {
                                 <form>
                             <label>
                             Price 1:
-                            <input type="text"name="price1"onBlur={handlePriceChange}/>
+                            <input type="text"name="price1"onBlur={handlePriceChange(0)}/>
                             </label>
 
                             <label>
                             Price 2:
-                            <input type="text"name="price2"onBlur={handlePriceChange}/>
+                            <input type="text"name="price2"onBlur={handlePriceChange(1)}/>
                             </label>
                             
                             <label>
                             Price 3:
-                            <input type="text"name="price3"onBlur={handlePriceChange}/>
+                            <input type="text"name="price3"onBlur={handlePriceChange(2)}/>
                             </label>
 
                             <label>
                             Price 4:
-                            <input type="text"name="price4"onBlur={handlePriceChange}/>
+                            <input type="text"name="price4"onBlur={handlePriceChange(3)}/>
                             </label>
 
                             <label>
                             Price 5:
-                            <input type="text"name="price5"onBlur={handlePriceChange}/>
+                            <input type="text"name="price5"onBlur={handlePriceChange(4)}/>
                             </label>
 
 
                             <label>
                             Price 6:
-                            <input type="text"name="price6"onBlur={handlePriceChange}/>
+                            <input type="text"name="price6"onBlur={handlePriceChange(5)}/>
                             </label>
 
                             <label>
                             Price 7:
-                            <input type="text"name="price7"onBlur={handlePriceChange}/>
+                            <input type="text"name="price7"onBlur={handlePriceChange(6)}/>
                             </label>
 
                          
