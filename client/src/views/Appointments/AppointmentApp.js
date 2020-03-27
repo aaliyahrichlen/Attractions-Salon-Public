@@ -23,7 +23,7 @@ import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 import './Appointments.css';
 
-const API_BASE = (process.env.WEB_URL || 'http://localhost') + ':' + (process.env.PORT || 6163) + '/';
+const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
 const stepMuiTheme = getMuiTheme({
   raisedButton: {
@@ -95,7 +95,7 @@ class AppointmentApp extends Component {
       // slot_time: this.state.appointmentSlot
     };
     axios
-      .post(API_BASE + "api/appointmentCreate", newAppointment)
+      .post(API_BASE + "/api/appointmentCreate", newAppointment)
       .then(response =>
         this.setState({
           confirmationSnackbarMessage: "Appointment succesfully added!",
@@ -105,7 +105,7 @@ class AppointmentApp extends Component {
       )
       .catch(err => {
         console.log(err);
-        console.log(API_BASE + "api/appointmentCreate")
+        console.log("api/appointmentCreate")
         return this.setState({
           confirmationSnackbarMessage: "Appointment failed to save.",
           confirmationSnackbarOpen: true
@@ -113,9 +113,6 @@ class AppointmentApp extends Component {
       });
   }
   validateEmail(email) {
-    console.log("HOST" + process.env.HOST)
-    console.log("PORT" + process.env.PORT)
-    console.log("REACT_APP_WEB_URL" + process.env.REACT_APP_WEB_URL)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({email: email})
     return regex.test(email)
