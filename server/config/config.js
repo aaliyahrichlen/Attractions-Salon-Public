@@ -14,6 +14,7 @@ module.exports = {
     email: {
         service: 'gmail',
         user: 'attractions.salon.noreply@gmail.com',
-        pass: 'M.vqYjFdJT!s";9tb'
+        pass: 'M.vqYjFdJT!s";9tb',
+        rx_address: 'nzinn08@gmail.com'
     }
 };
