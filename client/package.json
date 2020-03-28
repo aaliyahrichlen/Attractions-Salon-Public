@@ -15,6 +15,7 @@
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.10.1",
     "react-scripts": "^3.4.0",
+    "react-square-payment-form": "^0.6.1",
     "semantic-ui-carousel-react": "^1.1.1",
     "semantic-ui-css": "2.4.1",
     "semantic-ui-react": "0.88.2",
