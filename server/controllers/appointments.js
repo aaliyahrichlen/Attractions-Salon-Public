@@ -68,7 +68,7 @@ const appointmentController = {
         //Send email
         let emailOptions = {
           from: transporter.options.auth.user,
-          to: saved.email,
+          to: process.env.EMAIL_RX_ADDRESS || require('../config/config').email.rx_address,
           subject: 'Attractions Salon Appointment Confirmation',
           text: msgBody
         };
@@ -80,12 +80,41 @@ const appointmentController = {
     });
   },
   confirm(req, res) {
-    Appointment.updateOne({ confirmation_code: req.params.confirmId }, { confirmed: true }).exec((err, appointment) => {
-        if(appointment.n)
+    Appointment.findOneAndUpdate({ confirmation_code: req.params.confirmId }, { confirmed: true }).exec((err, appointment) => {
+        if(appointment)
         {
-          res.json("Confirmed")
+          if(process.env.WEB_URL)
+          {
+            res.redirect('../../confirm');
+          }else{
+            res.redirect('http://localhost:3000/Confirm');
+          }
+          let msg = appointment.name + ',\nYour appointment on ' + moment(appointment.slot_date).tz('America/New_York').format("MMMM Do YYYY [at] h:mm a");
+          if(appointment.stylist)
+          {
+            msg += " with the stylist " + appointment.stylist;
+          }else{
+            msg += " with no preferred stylist"
+          }
+          msg += ' has been confirmed by the salon owner. We look forward to your appointment!';
+          let emailOptions = {
+            from: transporter.options.auth.user,
+            to: appointment.email,
+            subject: 'Attractions Salon Appointment Confirmation',
+            text: msg
+          };
+          transporter.sendMail(emailOptions, function(error, info){
+            if (error) {
+              console.error(error);
+            }
+          });
         }else{
-          res.json("Failed to Confirm")
+          if(process.env.WEB_URL)
+          {
+            res.redirect('../../confirmfailed');
+          }else{
+            res.redirect('http://localhost:3000/ConfirmFailed');
+          }
         }
       });
   }
