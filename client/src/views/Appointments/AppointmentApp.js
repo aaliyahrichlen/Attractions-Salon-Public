@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
 import FlatButton from "material-ui/FlatButton";
-import moment from "moment";
+import moment from "moment-timezone";
 import DatePicker from "material-ui/DatePicker";
 import Dialog from "material-ui/Dialog";
 import SelectField from "material-ui/SelectField";
@@ -23,7 +23,7 @@ import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 import './Appointments.css';
 
-const API_BASE = "http://localhost:8083/";
+const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
 const stepMuiTheme = getMuiTheme({
   raisedButton: {
@@ -57,45 +57,45 @@ class AppointmentApp extends Component {
       firstName: "",
       lastName: "",
       email: "",
+      stylistName: "",
       schedule: [],
       confirmationModalOpen: false,
-      appointmentDateSelected: false,
       appointmentMeridiem: 0,
       validEmail: true,
       validPhone: true,
+      validTime: false,
       finished: false,
+      appointmentTime: null,
       smallScreen: window.innerWidth < 768,
       stepIndex: 0
     };
   }
   componentDidMount() {
-    axios.get(API_BASE + `api/retrieveSlots`).then(response => {
-      console.log("response via db: ", response.data);
-      this.handleDBReponse(response.data);
-    });
+    // axios.get(API_BASE + `api/retrieveSlots`).then(response => {
+    //   console.log("response via db: ", response.data);
+    //   this.handleDBReponse(response.data);
+    // });
   }
   handleSetAppointmentDate(date) {
     this.setState({ appointmentDate: date, confirmationTextVisible: true });
-  }
-
-  handleSetAppointmentSlot(slot) {
-    console.log(slot)
-    this.setState({ appointmentSlot: slot });
   }
   handleSetAppointmentMeridiem(meridiem) {
     this.setState({ appointmentMeridiem: meridiem });
   }
   handleSubmit() {
     this.setState({ confirmationModalOpen: false });
+    let fullDate = moment(moment(this.state.appointmentDate).format("MM/DD/YYYY") + ' ' + this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm'), "MM/DD/YYYY HH:mm a").tz('America/New_York')
     const newAppointment = {
       name: this.state.firstName + " " + this.state.lastName,
       email: this.state.email,
       phone: this.state.phone,
-      slot_date: moment(this.state.appointmentDate).format("YYYY-DD-MM"),
-      slot_time: this.state.appointmentSlot
+      stylist: this.state.stylistName,
+      slot_date: fullDate
+      // slot_date: moment(this.state.appointmentDate).format("MM/DD/YYYY"),
+      // slot_time: this.state.appointmentSlot
     };
     axios
-      .post(API_BASE + "api/appointmentCreate", newAppointment)
+      .post(API_BASE + "/api/appointmentCreate", newAppointment)
       .then(response =>
         this.setState({
           confirmationSnackbarMessage: "Appointment succesfully added!",
@@ -105,28 +105,16 @@ class AppointmentApp extends Component {
       )
       .catch(err => {
         console.log(err);
+        console.log("api/appointmentCreate")
         return this.setState({
           confirmationSnackbarMessage: "Appointment failed to save.",
           confirmationSnackbarOpen: true
         });
       });
   }
-  
-  handleNext = () => {
-    const { stepIndex } = this.state;
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2
-    });
-  };
-
-  handlePrev = () => {
-    const { stepIndex } = this.state;
-    if (stepIndex > 0) {
-      this.setState({ stepIndex: stepIndex - 1 });
-    }
-  };
   validateEmail(email) {
+    console.log("prod" + process.env.REACT_APP_PRODUCTION)
+    console.log('api_base' + API_BASE)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({email: email})
     return regex.test(email)
@@ -140,8 +128,24 @@ class AppointmentApp extends Component {
       ? this.setState({ validPhone: true })
       : this.setState({ validPhone: false });
   }
+  validateAppointmentTime(time, meridiem) {
+    const regex = /^(0[0-9]|[1][0-2]|[0-9]):([0-5][0-9])$/;
+    let fullTime = time + ' ' + (meridiem == 0 ? 'am' : 'pm');
+    this.setState({appointmentTime: time})
+    if(regex.test(time))
+    {
+      var currentTime= moment(fullTime, 'HH:mm a');
+      var startTime = moment('08:59 am', "HH:mm a");
+      var endTime = moment('05:00 pm', "HH:mm a");
+      if(currentTime.isBetween(startTime , endTime))
+      {
+        return this.setState({ validTime: true });
+      }
+    }
+    return this.setState({ validTime: false });
+  }
   checkDisableDate(day) {
-    const dateString = moment(day).format("YYYY-DD-MM");
+    const dateString = moment(day).format("MM/DD/YYYY");
     return (
       this.state.schedule[dateString] === true ||
       moment(day)
@@ -155,13 +159,13 @@ class AppointmentApp extends Component {
     const appointments = response;
     const today = moment().startOf("day"); //start of today 12 am
     const initialSchedule = {};
-    initialSchedule[today.format("YYYY-DD-MM")] = true;
+    initialSchedule[today.format("MM/DD/YYYY")] = true;
     const schedule = !appointments.length
       ? initialSchedule
       : appointments.reduce((currentSchedule, appointment) => {
           const { slot_date, slot_time } = appointment;
-          const dateString = moment(slot_date, "YYYY-DD-MM").format(
-            "YYYY-DD-MM"
+          const dateString = moment(slot_date, "MM/DD/YYYY").format(
+            "MM/DD/YYYY"
           );
           if(!currentSchedule[slot_date])
           {
@@ -171,12 +175,6 @@ class AppointmentApp extends Component {
           {
             currentSchedule[dateString][slot_time] = true
           }
-          // !currentSchedule[slot_date]
-          //   ? (currentSchedule[dateString] = Array(8).fill(false))
-          //   : null;
-          // Array.isArray(currentSchedule[dateString])
-          //   ? (currentSchedule[dateString][slot_time] = true)
-          //   : null;
           return currentSchedule;
         }, initialSchedule);
 
@@ -215,6 +213,9 @@ class AppointmentApp extends Component {
           Email: <span style={spanStyle}>{this.state.email}</span>
         </p>
         <p>
+          Stylist: <span style={spanStyle}>{!this.state.stylistName ? "No Preference" : this.state.stylistName}</span>
+        </p>
+        <p>
           Appointment:{" "}
           <span style={spanStyle}>
             {moment(this.state.appointmentDate).format(
@@ -223,11 +224,7 @@ class AppointmentApp extends Component {
           </span>{" "}
           at{" "}
           <span style={spanStyle}>
-            {moment()
-              .hour(9)
-              .minute(0)
-              .add(this.state.appointmentSlot, "hours")
-              .format("h:mm a")}
+            {this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm')}
           </span>
         </p>
       </section>
@@ -238,7 +235,7 @@ class AppointmentApp extends Component {
       const slots = [...Array(8).keys()];
       return slots.map(slot => {
         const appointmentDateString = moment(this.state.appointmentDate).format(
-          "YYYY-DD-MM"
+          "MM/DD/YYYY"
         );
         const time1 = moment()
           .hour(9)
@@ -250,7 +247,7 @@ class AppointmentApp extends Component {
           .add(slot + 1, "hours");
         const scheduleDisabled = this.state.schedule[appointmentDateString]
           ? this.state.schedule[
-              moment(this.state.appointmentDate).format("YYYY-DD-MM")
+              moment(this.state.appointmentDate).format("MM/DD/YYYY")
             ][slot]
           : false;
         const meridiemDisabled = this.state.appointmentMeridiem
@@ -299,6 +296,7 @@ class AppointmentApp extends Component {
           mode={smallScreen ? "portrait" : "landscape"}
           onChange={(n, date) => this.handleSetAppointmentDate(date)}
           shouldDisableDate={day => this.checkDisableDate(day)}
+          formatDate={(date) => moment(date).format('MM/DD/YYYY')}
         />
       </div>
     );
@@ -349,31 +347,37 @@ class AppointmentApp extends Component {
                   Choose an available time for your appointment
                 </StepButton>
                 <StepContent>
+                <TextField
+                        value={data.appointmentTime}
+                        style={{ display: "block" }}
+                        name="apt-time"
+                        hintText="HH:MM"
+                        floatingLabelText="Time"
+                        errorText={
+                          !data.appointmentTime || data.validTime ? null : "Enter a valid appointment time"
+                        }
+                        onChange={(evt, newValue) =>
+                          this.validateAppointmentTime(newValue, this.state.appointmentMeridiem)
+                        }
+                      />
                   <SelectField
                     floatingLabelText="AM/PM"
                     value={data.appointmentMeridiem}
-                    onChange={(evt, key, payload) =>
-                      this.handleSetAppointmentMeridiem(payload)
-                    }
+                    onChange={(evt, key, payload) => {
+                      this.handleSetAppointmentMeridiem(payload);
+                      if(this.state.appointmentTime)
+                      {
+                        this.validateAppointmentTime(this.state.appointmentTime,payload);
+                      }
+                    }}
                     selectionRenderer={value => (value ? "PM" : "AM")}
                   >
                     <MenuItem value={0} primaryText="AM" />
                     <MenuItem value={1} primaryText="PM" />
                   </SelectField>
-                  <RadioButtonGroup
-                    style={{
-                      marginTop: 15,
-                      marginLeft: 15
-                    }}
-                    name="appointmentTimes"
-                    defaultSelected={data.appointmentSlot}
-                    onChange={(evt, val) => this.handleSetAppointmentSlot(val)}
-                  >
-                    {this.renderAppointmentTimes()}
-                  </RadioButtonGroup>
                 </StepContent>
               </Step>
-              <Step disabled={ !Number.isInteger(this.state.appointmentSlot) }>
+              <Step disabled={ !this.state.validTime }>
               <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
                   Share your contact information with us and we'll send you a reminder
                 </StepButton>
@@ -407,7 +411,7 @@ class AppointmentApp extends Component {
                         hintText="youraddress@mail.com"
                         floatingLabelText="Email"
                         errorText={
-                          data.validEmail ? null : "Enter a valid email address"
+                          !data.email || data.validEmail ? null : "Enter a valid email address"
                         }
                         onChange={(evt, newValue) =>
                           this.validateEmail(newValue)
@@ -420,10 +424,20 @@ class AppointmentApp extends Component {
                         hintText="+2348995989"
                         floatingLabelText="Phone"
                         errorText={
-                          data.validPhone ? null : "Enter a valid phone number"
+                          !data.phone || data.validPhone ? null : "Enter a valid phone number"
                         }
                         onChange={(evt, newValue) =>
                           this.validatePhone(newValue)
+                        }
+                      />
+                      <TextField
+                        value={data.stylistName}
+                        style={{ display: "block" }}
+                        name="stylist"
+                        hintText="No Preference"
+                        floatingLabelText="Stylist"
+                        onChange={(evt, newValue) =>
+                          this.setState({ stylistName: newValue })
                         }
                       />
                       <RaisedButton
