@@ -10,6 +10,7 @@ import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
+import Confirmation from "./views/Confirmation/Confirmation"
 
 import DeleteImage from "./views/DeleteImage/DeleteImage";
 {/* remove this above line */}
@@ -29,6 +30,7 @@ const App = () => {
         <Route exact path="/Login" component={LoginHome} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/delete" component={DeleteImage}/>
+        <Route exact path="/confirm" component={Confirmation}/>
          {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
