@@ -145,20 +145,25 @@ const AdminDash = () => {
 
     return (
         <div>
-            <div>
-            <div className="adminHead">Admin Dashboard</div>
-                <button className="adButton" onClick={logout}>Logout</button>
+            <div className="header">
+                <div className="headLeft">
+                    <div className="adminHead">Admin Dashboard</div>
+                </div>
+                <div className="headRight">
+                    <button className="adButton" onClick={logout}>Logout</button>
+                </div>
             </div>
             <div class="leftPage">
                 <div class="box">
-                    <div className="admHead">Upload Image for Your Logo!</div>
+                    <div className="admHead">Upload an image for your logo!</div>
                     {/*logos*/}
-                    <img src={url}/> {/* alt="logoImage" */}
-                    <br/> {
+                    <img src={url}/> 
+                    {/* alt="logoImage" */}
+                     {
                     show && <progress value={progressBar}
                         max="100"/>}
                 
-                    <br/>
+                    
                     <input className="adButton" id="logos" type="file"
                         onChange={handleChange}/>
                     <br/>
@@ -166,42 +171,42 @@ const AdminDash = () => {
                         onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <div className="admHead">Upload Images for Your Slideshow!</div>
+                    <div className="admHead">Upload images for your homepage slideshow!</div>
                     {/*slideshow*/}
                     <img src={url}/>
-                    <br/> {
+                     {
                     show && <progress value={progressBar}
                         max="100"/>}
                 
-                    <br/>
+                    
                     <input className="adButton" id="slideshow" type="file"
                         onChange={handleChange}/>
                     <br/>
                     <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <div className="admHead">Upload Images for Your Services!</div>
+                    <div className="admHead">Upload images for your services!</div>
                     {/*services*/}
                     <img src={url}/>
-                    <br/> {
+                     {
                     show && <progress value={progressBar}
                         max="100"/>}
                 
-                    <br/>
+                    
                     <input className="adButton" id="services" type="file"
                         onChange={handleChange}/>
                     <br/>
                     <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
-                    <div className="admHead">Upload Images for Your About page!</div>
+                    <div className="admHead">Upload images for your about page!</div>
                     {/*About*/}
                     <img src={url}/>
-                    <br/> {
+                     {
                     show && <progress value={progressBar}
                         max="100"/>}
                 
-                    <br/>
+                    
                     <input className="adButton" id="about" type="file"
                         onChange={handleChange}/>
                     <br/>
@@ -210,183 +215,106 @@ const AdminDash = () => {
             </div>
             <div className="rightPage">
                 <div className="adminHead">Edit service details!</div>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 1</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-                            <label>
-                            Name 1:
-                            <input type="text"name="name1"onBlur={handleTextChange(0)}/>
-                            </label>
-                            <label>
-                            Price 1:
-                            <input type="text"name="price1"onBlur={handlePriceChange(0)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 2</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-                            <label>
-                            Name 2:
-                            <input type="text"name="name2"onBlur={handleTextChange(1)}/>
-                            </label>
-                            <label>
-                            Price 2:
-                            <input type="text"name="price2"onBlur={handlePriceChange(1)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 3</div>
-                        
-                                <form onSubmit={handleTextUpload}>   
-                            <label>
-                            Name 3:
-                            <input type="text"name="name3"onBlur={handleTextChange(2)}/>
-                            </label>
-                            <label>
-                            Price 3:
-                            <input type="text"name="price3"onBlur={handlePriceChange(2)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 4</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-                            <label>
-                            Name 4:
-                            <input type="text"name="name4"onBlur={handleTextChange(3)}/>
-                            </label>
-                            <label>
-                            Price 4:
-                            <input type="text"name="price4"onBlur={handlePriceChange(3)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 5</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-                            <label>
-                            Name 5:
-                            <input type="text"name="name5"onBlur={handleTextChange(4)}/>
-                            </label>
-                            <label>
-                            Price 5:
-                            <input type="text"name="price5"onBlur={handlePriceChange(4)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 6</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-
-                            <label>
-                            Name 6:
-                            <input type="text"name="name6"onBlur={handleTextChange(5)}/>
-                            </label>
-                            <label>
-                            Price 6:
-                            <input type="text"name="price6"onBlur={handlePriceChange(5)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                <Card style={
-                    {width: '18rem'}
-                }>
-                    <Card.Img variant="top"
-                        src={url}/>
-                    <Card.Body>
-                        <Card.Title></Card.Title>
-                        <div className="admHead">Service 7</div>
-                        
-                                <form onSubmit={handleTextUpload}>
-                            <label>
-                            Name 7:
-                            <input type="text"name="name7"onBlur={handleTextChange(6)}/>
-                            </label>
-                            <label>
-                            Price 7:
-                            <input type="text"name="price7"onBlur={handlePriceChange(6)}/>
-                            </label>
-                            <input type="submit" value="Upload"></input>
-
-                         
-                            </form>
-                      
-                    </Card.Body>
-                </Card>
-                
+                <div className="formContainer">
+                        <div className="formBox">
+                            <div className="admHead">Service 1</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name1"onBlur={handleTextChange(0)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price1"onBlur={handlePriceChange(0)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 2</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name2"onBlur={handleTextChange(1)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price2"onBlur={handlePriceChange(1)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 3</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name3"onBlur={handleTextChange(2)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price3"onBlur={handlePriceChange(2)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 4</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name4"onBlur={handleTextChange(3)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price4"onBlur={handlePriceChange(3)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 5</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name5"onBlur={handleTextChange(4)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price5"onBlur={handlePriceChange(4)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 6</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name6"onBlur={handleTextChange(5)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price6"onBlur={handlePriceChange(5)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">Service 7</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Name:<br/>
+                                <input className="buf" type="text"name="name7"onBlur={handleTextChange(6)}/>
+                                </label> <br/>
+                                <label className="buf">
+                                Price:<br/>
+                                <input className="buf" type="text"name="price7"onBlur={handlePriceChange(6)}/>
+                                </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                </div>
             </div>
         </div>
     );
