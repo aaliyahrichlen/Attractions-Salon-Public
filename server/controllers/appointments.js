@@ -1,6 +1,6 @@
 const {Appointment} = require('../models/index');
 const client = require('twilio')(process.env.SMS_SID || require('../config/config').sms.sid, process.env.SMS_AUTH_TOKEN || require('../config/config').sms.auth_token);
-const moment = require('moment')
+const moment = require('moment-timezone')
 const randomstring = require('randomstring')
 const async = require('async')
 const {transporter} =  require('./../models/email')
@@ -45,7 +45,7 @@ const appointmentController = {
       Appointment.find({ _id: saved._id })
         .exec((err, appointment) => res.json(appointment));
         
-        let msgBody = 'Brandi,\n' + requestBody.name + " is requesting an appointment on " + moment(requestBody.slot_date).format("MMMM Do YYYY [at] h:mm a");
+        let msgBody = 'Brandi,\n' + requestBody.name + " is requesting an appointment on " + moment(requestBody.slot_date).tz('America/New_York').format("MMMM Do YYYY [at] h:mm a");
         if(requestBody.stylist)
         {
           msgBody += " with the stylist " + requestBody.stylist;
