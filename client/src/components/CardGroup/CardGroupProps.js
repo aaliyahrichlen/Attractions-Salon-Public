@@ -11,7 +11,6 @@ import fire from "../../views/Login/config/Fire";
 
 
 const CardGroupProps = () => {
-    const [serviceName1, setServiceName1] = useState('');
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
 
@@ -28,9 +27,6 @@ const CardGroupProps = () => {
             });
         });
     },[]);
-    console.log(nameArray);
-    console.log(priceArray);
-
  
     var items = [
         {

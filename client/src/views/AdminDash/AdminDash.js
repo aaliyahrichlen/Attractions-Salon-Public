@@ -16,6 +16,7 @@ const AdminDash = () => {
     const [picturesArray, setPicturesArray] = useState([]);
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
+    const [about, setAbout] = useState("");
 
     var tempIndex =0;
     const handleChange = e => {
@@ -26,6 +27,7 @@ const AdminDash = () => {
     };
 
     const handleTextChange =index => e => {
+        
         let newArray = [...nameArray];
         newArray[index] = e.target.value;
         setNameArray(newArray);
@@ -35,6 +37,11 @@ const AdminDash = () => {
         let newArray = [...priceArray];
         newArray[index] = e.target.value;
         setPriceArray(newArray);
+    };
+    const handleAboutChange = e =>{
+
+        setAbout(e.target.value);
+
     };
     useEffect(() => {
         var db = fire.database();
@@ -46,6 +53,13 @@ const AdminDash = () => {
 
             
             });
+        });
+    },[]);
+    useEffect(() => {
+        var db = fire.database();
+        var ref = db.ref("text/about");
+        ref.on("value", function(snapshot) {
+                setAbout(snapshot.val());
         });
     },[]);
       
@@ -98,9 +112,6 @@ const AdminDash = () => {
     const handleTextUpload = (e) => {
         e.preventDefault();
    
-        console.log(nameArray);
-        
-        console.log(priceArray);
 
         var db = fire.database();
         var ref = db.ref("text");
@@ -136,6 +147,8 @@ const AdminDash = () => {
                 price: priceArray[6]
             }
         });
+        var aboutRef = ref.child("about");
+        aboutRef.set(about);
     
     };
 
@@ -311,6 +324,16 @@ const AdminDash = () => {
                                 Price:<br/>
                                 <input className="buf" type="text"name="price7"onBlur={handlePriceChange(6)}/>
                                 </label><br/>
+                                <input className="buf" type="submit" value="Save"></input>                         
+                            </form> 
+                        </div>
+                        <div className="formBox">
+                            <div className="admHead">About</div>
+                            <form  onSubmit={handleTextUpload}>
+                                <label className="buf">
+                                Text:<br/>
+                                <input className="buf" type="text"name="name7"onBlur={handleAboutChange}/>
+                                </label> <br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
                         </div>
