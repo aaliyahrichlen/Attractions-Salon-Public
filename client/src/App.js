@@ -10,7 +10,7 @@ import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
-import Payments from "./components/Payments/PaymentPage";
+import Payments from "./views/Payments/PaymentPage";
 import Confirmation from "./views/Confirmation/Confirmation"
 import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
 
@@ -22,7 +22,7 @@ const App = () => {
     <head>
     <link href="https://fonts.googleapis.com/css2?family=Sofia&family=Spartan:wght@400;700&display=swap" rel="stylesheet"></link>
     </head>
-    <div className="app">
+    <div class="app">
       <NavBar />
       <Switch>
         <Route exact path="/Home" component={Home} />
