@@ -16,9 +16,9 @@ const AdminDash = () => {
     const [picturesArray, setPicturesArray] = useState([]);
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
+    const [descArray, setDescArray] = useState([]);
     const [about, setAbout] = useState("");
 
-    var tempIndex =0;
     const handleChange = e => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -38,6 +38,11 @@ const AdminDash = () => {
         newArray[index] = e.target.value;
         setPriceArray(newArray);
     };
+    const handleDescChange = index=> e => {
+        let newArray = [...descArray];
+        newArray[index] = e.target.value;
+        setDescArray(newArray);
+    };
     const handleAboutChange = e =>{
 
         setAbout(e.target.value);
@@ -50,8 +55,7 @@ const AdminDash = () => {
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
-
-            
+                setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
             });
         });
     },[]);
@@ -120,31 +124,39 @@ const AdminDash = () => {
         usersRef.set({
             service1: {
                 name: nameArray[0],
-                price: priceArray[0]
+                price: priceArray[0],
+                description: descArray[0]
             },
             service2: {
                 name: nameArray[1],
-                price: priceArray[1]
+                price: priceArray[1],
+                description: descArray[1]
             },
             service3: {
                 name: nameArray[2],
-                price: priceArray[2]
+                price: priceArray[2],
+                description: descArray[2]
             },
             service4: {
                 name: nameArray[3],
-                price: priceArray[3]
+                price: priceArray[3],
+                description: descArray[3]
             },
             service5: {
                 name: nameArray[4],
-                price: priceArray[4]
+                price: priceArray[4],
+                description: descArray[4]
+
             },
             service6: {
                 name: nameArray[5],
-                price: priceArray[5]
+                price: priceArray[5],
+                description: descArray[5]
             },
             service7: {
                 name: nameArray[6],
-                price: priceArray[6]
+                price: priceArray[6],
+                description: descArray[6]
             }
         });
         var aboutRef = ref.child("about");
@@ -240,6 +252,10 @@ const AdminDash = () => {
                                 Price:<br/>
                                 <input className="buf" type="text"name="price1"onBlur={handlePriceChange(0)}/>
                                 </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc1"onBlur={handleDescChange(0)}/>
+                                </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
                         </div>
@@ -253,6 +269,10 @@ const AdminDash = () => {
                                 <label className="buf">
                                 Price:<br/>
                                 <input className="buf" type="text"name="price2"onBlur={handlePriceChange(1)}/>
+                                </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc2"onBlur={handleDescChange(1)}/>
                                 </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
@@ -268,6 +288,10 @@ const AdminDash = () => {
                                 Price:<br/>
                                 <input className="buf" type="text"name="price3"onBlur={handlePriceChange(2)}/>
                                 </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc3"onBlur={handleDescChange(2)}/>
+                                </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
                         </div>
@@ -281,6 +305,10 @@ const AdminDash = () => {
                                 <label className="buf">
                                 Price:<br/>
                                 <input className="buf" type="text"name="price4"onBlur={handlePriceChange(3)}/>
+                                </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc4"onBlur={handleDescChange(3)}/>
                                 </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
@@ -296,6 +324,10 @@ const AdminDash = () => {
                                 Price:<br/>
                                 <input className="buf" type="text"name="price5"onBlur={handlePriceChange(4)}/>
                                 </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc5"onBlur={handleDescChange(4)}/>
+                                </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
                         </div>
@@ -309,6 +341,10 @@ const AdminDash = () => {
                                 <label className="buf">
                                 Price:<br/>
                                 <input className="buf" type="text"name="price6"onBlur={handlePriceChange(5)}/>
+                                </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc6"onBlur={handleDescChange(5)}/>
                                 </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
@@ -324,6 +360,10 @@ const AdminDash = () => {
                                 Price:<br/>
                                 <input className="buf" type="text"name="price7"onBlur={handlePriceChange(6)}/>
                                 </label><br/>
+                                <label className="buf">
+                                Description:<br/>
+                                <input className="buf" type="text"name="desc7"onBlur={handleDescChange(6)}/>
+                                </label><br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
                         </div>
@@ -332,7 +372,7 @@ const AdminDash = () => {
                             <form  onSubmit={handleTextUpload}>
                                 <label className="buf">
                                 Text:<br/>
-                                <input className="buf" type="text"name="name7"onBlur={handleAboutChange}/>
+                                <input className="buf" type="text"name="name8"onBlur={handleAboutChange}/>
                                 </label> <br/>
                                 <input className="buf" type="submit" value="Save"></input>                         
                             </form> 
