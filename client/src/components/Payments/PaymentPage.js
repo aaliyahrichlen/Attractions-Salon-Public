@@ -8,7 +8,7 @@ import {
   CreditCardSubmitButton
 } from 'react-square-payment-form'
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 class PaymentPage extends React.Component {
 

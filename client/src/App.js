@@ -10,6 +10,7 @@ import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
+import Payments from "./components/Payments/PaymentPage";
 import Confirmation from "./views/Confirmation/Confirmation"
 import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
 
@@ -21,7 +22,7 @@ const App = () => {
     <head>
     <link href="https://fonts.googleapis.com/css2?family=Sofia&family=Spartan:wght@400;700&display=swap" rel="stylesheet"></link>
     </head>
-    <div class="app">
+    <div className="app">
       <NavBar />
       <Switch>
         <Route exact path="/Home" component={Home} />
@@ -31,6 +32,8 @@ const App = () => {
         <Route exact path="/Login" component={LoginHome} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/delete" component={DeleteImage}/>
+        <Route exact path="/Payments" component={Payments} />
+
         <Route exact path="/confirm" component={Confirmation}/>
         <Route exact path="/confirmfailed" component={ConfirmationFailed}/>
          {/* remove this above line */}
