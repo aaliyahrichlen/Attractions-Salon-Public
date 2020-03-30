@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import './About.css';
 import salonImg from './salon.jpg'
 import {storage} from "../../views/Login/config/Fire";
+import fire from "../Login/config/Fire";
 function About() {
     const [imagesURL, setImagesURL] = useState([]);
+    const [text, setText] = useState("");
     useEffect(() =>{
 
 		var storageRef = storage.ref();
@@ -18,7 +20,13 @@ function About() {
 		});
 		}).catch(function(error) {
 			console.log(error);// Uh-oh, an error occurred!
-		});
+        });
+        
+        var db = fire.database();
+        var ref = db.ref("text/about");
+        ref.on("value", function(snapshot) {
+                setText(snapshot.val());
+        });
 
 	},[]);
     return (
