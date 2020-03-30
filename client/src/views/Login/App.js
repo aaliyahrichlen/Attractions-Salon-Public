@@ -39,7 +39,7 @@ class App extends Component {
 
   displayPage() {
     if(this.state.user != null){
-      if(this.state.user.email === "soham.kale2412@gmail.com"){ //change this to attractionSalonweb@gmail.com
+      if(this.state.user.email === "admin@gmail.com"){ //change this to attractionSalonweb@gmail.com
         return <AdminDash/>
       }else {
         return <Profile/>
