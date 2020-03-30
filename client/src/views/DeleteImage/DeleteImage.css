@@ -1,0 +1,75 @@
+/* .cardDeck{
+    display: 'flex';
+    flex-direction: 'row';
+}
+.card{
+    flex: 7;
+}
+.rowDelete {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    orientation: center;
+    margin-left: 1%;
+    margin-right: 1%;
+    align-items: center;
+    width: 98%;
+  } */
+
+
+  .pinkBackground{
+      background-color: pink;
+  }
+  .wrapper{
+      width: 95%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+  }
+  .item{
+      color:white;
+      padding: 10px;
+  }
+  .centeraligned{
+      text-align: center;
+  }
+
+  .wrapper:nth-child(){
+      background: red;
+      color: white;
+    grid-template-columns: 2fr, 2fr
+  }
+
+/* .rowDeleteCard{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    orientation: center;
+    align-items: center;
+    width: 98%;
+}
+  
+  .columnDelete {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
+
+  .largecolumnDelete {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 5;
+  }
+
+  .blue-columnDelete{
+      background-color: blue;
+      height: 100px;
+  }
+  .pink-columnDelete{
+    background-color: pink;
+    height: 100px;
+} */

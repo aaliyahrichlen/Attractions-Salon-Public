@@ -1,5 +1,6 @@
 import React , { Component } from "react";
 import fire from "./config/Fire";
+import * as firebase from 'firebase';
 import "./Login.css";
 //import Button from '@material-ui/core/Button';
 class Login extends Component{
@@ -16,19 +17,24 @@ constructor(props)
 }
 login(e){
     e.preventDefault();
+    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function() {
+    }).catch(function(error){
+        console.log(error);
+    })
+
     fire.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
-        console.log(u)
     }).catch((err)=>{
         if(err.message === "The email address is badly formatted."){
             alert("Please Enter Your E-mail and Password to Sign In");
         }else {
             alert(err.message);
         }
-        console.log(err);
     })
+    
 }
 signup(e){
     e.preventDefault();
+    
     fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
         console.log(u);
     }).catch((err)=>{

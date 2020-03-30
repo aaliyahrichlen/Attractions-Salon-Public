@@ -1,19 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Popup} from 'semantic-ui-react';
+import {Button, Popup, Image} from 'semantic-ui-react';
 import fire from "../Login/config/Fire";
 import {storage} from "../Login/config/Fire";
 import "./AdminDash.css";
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
-const AdminDash = () => {
+import AdminDashCard from "../../components/Cards/AdminDashCard";
+const AdminDash = (props) => {
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState(null);
     const [progressBar, setProgressBar] = useState(0);
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState([false, false, false, false] );
     const [folder, setFolder] = useState(null);
     const [imagesURL, setImagesURL] = useState([]);
     const [imageNames, setImageNames] = useState([]);
-    const [picturesArray, setPicturesArray] = useState([]);
+    const [urlArray, setUrlArray] = useState([null, null, null, null]);
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
     const [about, setAbout] = useState("");
@@ -50,8 +51,6 @@ const AdminDash = () => {
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
-
-            
             });
         });
     },[]);
@@ -65,6 +64,7 @@ const AdminDash = () => {
       
 
     useEffect(() => {
+       
         var storageRef = storage.ref(`images/${folder}/`);
         // var listRef = storageRef.child(`images/${folder}/`);
         storageRef.listAll().then(function (res) {
@@ -80,14 +80,9 @@ const AdminDash = () => {
         });
     }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
 
-    
-    
-    
 
     const handleUpload = (e) => {
-
         var fireRef = fire.database().ref("images");
-        setShow(true);
         const uploadTask = storage.ref(`images/${folder}/${
             image.name
         }`).put(image);
@@ -99,6 +94,19 @@ const AdminDash = () => {
         }, () => {
             storage.ref(`images/${folder}/`).child(image.name).getDownloadURL().then(url => {
                 setUrl(url);
+                if(folder === "logos"){
+                    setUrlArray([url, null, null, null]);
+                    setShow([true, false, false, false]);
+                }else if(folder === "slideshow"){
+                    setUrlArray([null, url, null, null]);
+                    setShow([false, true, false, false]);
+                }else if (folder === "services"){
+                    setUrlArray([null, null, url, null]);
+                    setShow([false, false, true, false]);
+                }else if (folder === "about"){
+                    setUrlArray([null, null, null, url]);
+                    setShow([false, false, false, true]);
+                }
                 // writing to database prob: Duplicate entries!
                 // var fireRef = fire.database().ref("images");
                 // fireRef.push().set({
@@ -164,64 +172,59 @@ const AdminDash = () => {
                 </div>
                 <div className="headRight">
                     <button className="adButton" onClick={logout}>Logout</button>
+                    <button className="adButton" onClick={event =>  window.location.href='/delete'}>Delete Images</button>
                 </div>
             </div>
             <div class="leftPage">
+                {/* <div>
+                    <AdminDashCard handleUpload = {handleUpload}
+                    handleChange = {handleChange}
+                    URL = {urlArray[0]}/>
+                </div> */}
                 <div class="box">
                     <div className="admHead">Upload an image for your logo!</div>
                     {/*logos*/}
-                    <img src={url}/> 
+                    <img class="ui fluid image" src={urlArray[0]}></img>
+                    {/* <img src={urlArray[0]}/>  */}
                     {/* alt="logoImage" */}
-                     {
-                    show && <progress value={progressBar}
-                        max="100"/>}
-                
-                    
-                    <input className="adButton" id="logos" type="file"
-                        onChange={handleChange}/>
+                     { show[0] && <progress value={progressBar} max="100"/>}
+ 
+                    <input className="adButton" id="logos" type="file" onChange={handleChange}/>
                     <br/>
-                    <button className="adButton" id='1'
-                        onClick={handleUpload}>Upload</button>
+                    <button className="adButton" id='1' onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your homepage slideshow!</div>
                     {/*slideshow*/}
-                    <img src={url}/>
-                     {
-                    show && <progress value={progressBar}
-                        max="100"/>}
-                
+                    <img class="ui fluid image" src={urlArray[1]}></img>
+                    {/* <img src={urlArray[1]}/> */}
+                     { show[1] && <progress value={progressBar} max="100"/> }
+
                     
-                    <input className="adButton" id="slideshow" type="file"
-                        onChange={handleChange}/>
+                    <input className="adButton" id="slideshow" type="file" onChange={handleChange}/>
                     <br/>
                     <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your services!</div>
                     {/*services*/}
-                    <img src={url}/>
-                     {
-                    show && <progress value={progressBar}
-                        max="100"/>}
+                    <img class="ui fluid image" src={urlArray[2]}></img>
+                    {/* <img src={urlArray[2]}/> */}
+                     { show[2] && <progress value={progressBar} max="100"/>}
                 
                     
-                    <input className="adButton" id="services" type="file"
-                        onChange={handleChange}/>
+                    <input className="adButton" id="services" type="file" onChange={handleChange}/>
                     <br/>
                     <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your about page!</div>
                     {/*About*/}
-                    <img src={url}/>
-                     {
-                    show && <progress value={progressBar}
-                        max="100"/>}
-                
-                    
-                    <input className="adButton" id="about" type="file"
-                        onChange={handleChange}/>
+                    <img class="ui fluid image" src={urlArray[3]}></img>
+                    {/* <img src={urlArray[3]}/> */}
+                     { show[3] && <progress value={progressBar} max="100"/>}
+
+                    <input className="adButton" id="about" type="file" onChange={handleChange}/>
                     <br/>
                     <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
