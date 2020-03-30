@@ -80,7 +80,7 @@ const appointmentController = {
     });
   },
   confirm(req, res) {
-    Appointment.findOneAndUpdate({ confirmation_code: req.params.confirmId }, { confirmed: true }).exec((err, appointment) => {
+    Appointment.findOneAndUpdate({ confirmation_code: req.params.confirmId, confirmed: false }, { confirmed: true }).exec((err, appointment) => {
         if(appointment)
         {
           if(process.env.WEB_URL)
@@ -109,12 +109,24 @@ const appointmentController = {
             }
           });
         }else{
-          if(process.env.WEB_URL)
-          {
-            res.redirect('../../confirmfailed');
-          }else{
-            res.redirect('http://localhost:3000/ConfirmFailed');
-          }
+          Appointment.findOne({ confirmation_code: req.params.confirmId }).exec((err, new_appointment) => {
+            if(new_appointment)
+            {
+              if(process.env.WEB_URL)
+              {
+                res.redirect('../../confirmedalready');
+              }else{
+                res.redirect('http://localhost:3000/ConfirmedAlready');
+              }
+            }else{
+              if(process.env.WEB_URL)
+              {
+                res.redirect('../../confirmfailed');
+              }else{
+                res.redirect('http://localhost:3000/ConfirmFailed');
+              }
+            }
+          });
         }
       });
   }
