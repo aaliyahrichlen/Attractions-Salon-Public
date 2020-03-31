@@ -105,19 +105,16 @@ const SlideShow = () => {
 	// 	}, */
 	// ]
 	return (
-		<div id = "Slides">
-			<div className="shadow">
-			<Carousel
-				
-				elements  =  { picturesArray }
-				duration  ={4000}
-				animation  ='slide left'
-				showNextPrev  =  {false}
-				showIndicators  ={true}
-			/>
-			</div>
+		<div id="slide" className="shadow">
+		<Carousel
+			elements  =  { picturesArray }
+			duration  ={4000}
+			animation  ='slide left'
+			showNextPrev  =  {false}
+			showIndicators  ={true}
+		/>
 		</div>
-	)
+)
 };
 
 export default SlideShow;
