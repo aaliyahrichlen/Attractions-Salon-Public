@@ -1,4 +1,6 @@
 import 'react-square-payment-form/lib/default.css'
+import './PaymentPage.css';
+
 import {
   SquarePaymentForm,
   CreditCardNumberInput,
@@ -49,8 +51,9 @@ class PaymentPage extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id = "pay">
         <h1>Payment Page</h1>
+        <div className="payments">
 
         <SquarePaymentForm
           sandbox={true}
@@ -82,7 +85,7 @@ class PaymentPage extends React.Component {
 
 
         </SquarePaymentForm>
-
+        </div>
         <div className="sq-error-message">
           {this.state.errorMessages.map(errorMessage =>
             <li key={`sq-error-${errorMessage}`}>{errorMessage}</li>

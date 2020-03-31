@@ -7,14 +7,18 @@ import Review from '../../components/ReviewSection/Review';
 
 function Home() {
     return (
+        <div>
         <div className="Home">
             <div className="col">
                 <ContactCard/>
-                <div className="row">
-                <SlideShow/>
-                    <Review/>
-                </div>
             </div>
+                <div className="slides">
+                <SlideShow/>
+                </div>
+        </div>
+        <div className = "review">
+            <Review/>
+        </div>
         </div>
     );
 }
