@@ -26,5 +26,6 @@ import 'firebase/storage'
   const fire = firebase.initializeApp(firebaseConfig);
 
   const storage = firebase.storage();
+  const db = firebase.database();
 
-  export {storage, fire as default };
+  export {db, storage, fire as default };
