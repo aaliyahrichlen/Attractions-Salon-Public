@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {Button, Popup, Image} from 'semantic-ui-react';
 import fire from "../Login/config/Fire";
 import {storage} from "../Login/config/Fire";
+import {db} from "../Login/config/Fire";
+
 import "./AdminDash.css";
 import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -19,7 +21,8 @@ const AdminDash = (props) => {
     const [priceArray, setPriceArray] = useState([]);
     const [descArray, setDescArray] = useState([]);
     const [about, setAbout] = useState("");
-
+    const [cardNumber, setCardNumber] = useState(0);
+    
     const handleChange = e => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -28,39 +31,53 @@ const AdminDash = (props) => {
     };
 
     const handleTextChange =index => e => {
-        
-        let newArray = [...nameArray];
+        var str = String(e.target.value);
+        if(str.replace(/\s/g, '').length)
+       { let newArray = [...nameArray];
         newArray[index] = e.target.value;
         setNameArray(newArray);
+       }
 
     };
     const handlePriceChange = index=> e => {
+        var str = String(e.target.value);
+        if(str.replace(/\s/g, '').length){
         let newArray = [...priceArray];
         newArray[index] = e.target.value;
         setPriceArray(newArray);
+        }
     };
     const handleDescChange = index=> e => {
+        var str = String(e.target.value);
+        if(str.replace(/\s/g, '').length){
         let newArray = [...descArray];
         newArray[index] = e.target.value;
         setDescArray(newArray);
+        }
     };
     const handleAboutChange = e =>{
-
+        var str = String(e.target.value);
+        if(str.replace(/\s/g, '').length){
         setAbout(e.target.value);
-
+        }
     };
     useEffect(() => {
         var db = fire.database();
         var ref = db.ref("text/services");
         ref.on("value", function(userSnapshot) {
+            setDescArray([]);
+            setNameArray([]);
+            setPriceArray([]);
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
+                
 
             });
         });
     },[]);
+
     useEffect(() => {
         var db = fire.database();
         var ref = db.ref("text/about");
@@ -68,6 +85,9 @@ const AdminDash = (props) => {
                 setAbout(snapshot.val());
         });
     },[]);
+    useEffect(() => {
+       setCardNumber(nameArray.length)
+    },[nameArray]);
       
 
     useEffect(() => {
@@ -123,7 +143,72 @@ const AdminDash = (props) => {
             })
         });
     };
+const addService =() =>{
+    setCardNumber(cardNumber+1);
+    setNameArray(nameArray => nameArray.concat(""));
+    setPriceArray(priceArray => priceArray.concat(""));
+    setDescArray(descArray => descArray.concat(""));
+};
+const deleteService = index => e=>{
+    e.preventDefault();
+    nameArray.splice(index, 1);
+    setNameArray([...nameArray]);
+    
+    priceArray.splice(index, 1);
+    setPriceArray([...priceArray]);
+    
+    descArray.splice(index, 1);
+    setDescArray([...descArray]);
 
+    setCardNumber(cardNumber - 1);
+
+    var db = fire.database();
+    var ref = db.ref("text");
+    var usersRef = ref.child("services");
+    usersRef.remove();
+    for (let i = 0; i < cardNumber-1; i++) 
+    { 
+        usersRef.push().set({
+    
+            name: nameArray[i],
+            price: priceArray[i],
+            description: descArray[i]
+    });
+
+    }
+
+};
+
+
+const createForm = () =>{
+    let formBoxes = [];
+    for (let i = 0; i < cardNumber; i++) 
+    {
+        formBoxes.push(   
+                            
+        <div className="formBox" key={i}>
+        <div className="admHead">{nameArray[i]}</div>
+        <form  onSubmit={handleTextUpload}>
+            <label className="buf">
+            Name:<br/>
+            <input className="buf" type="text"name="name"onBlur={handleTextChange(i)}/>
+            </label> <br/>
+            <label className="buf">
+            Price: {priceArray[i]}<br/>
+            <input className="buf" type="text"name="price"onBlur={handlePriceChange(i)}/>
+            </label><br/>
+            <label className="buf">
+            Description: {descArray[i]}<br/>
+            <input className="buf" type="text"name="desc"onBlur={handleDescChange(i)}/>
+            </label><br/>
+            <input className="buf" type="submit" value="Save"></input>                         
+        </form> 
+        <button onClick={deleteService(i)}> Delete Service </button>
+    </div>)
+    }
+    
+    return formBoxes;
+};
     const handleTextUpload = (e) => {
         e.preventDefault();
    
@@ -132,47 +217,20 @@ const AdminDash = (props) => {
         var ref = db.ref("text");
 
         var usersRef = ref.child("services");
-        usersRef.set({
-            service1: {
-                name: nameArray[0],
-                price: priceArray[0],
-                description: descArray[0]
-            },
-            service2: {
-                name: nameArray[1],
-                price: priceArray[1],
-                description: descArray[1]
-            },
-            service3: {
-                name: nameArray[2],
-                price: priceArray[2],
-                description: descArray[2]
-            },
-            service4: {
-                name: nameArray[3],
-                price: priceArray[3],
-                description: descArray[3]
-            },
-            service5: {
-                name: nameArray[4],
-                price: priceArray[4],
-                description: descArray[4]
-
-            },
-            service6: {
-                name: nameArray[5],
-                price: priceArray[5],
-                description: descArray[5]
-            },
-            service7: {
-                name: nameArray[6],
-                price: priceArray[6],
-                description: descArray[6]
-            }
+        usersRef.remove();
+       
+        for (let i = 0; i < cardNumber; i++) 
+        { 
+            usersRef.push().set({
+        
+                name: nameArray[i],
+                price: priceArray[i],
+                description: descArray[i]
+            
         });
-        var aboutRef = ref.child("about");
-        aboutRef.set(about);
-    
+
+         }
+
     };
 
     const logout = () => {
@@ -247,132 +305,8 @@ const AdminDash = (props) => {
             <div className="rightPage">
                 <div className="adminHead">Edit service details!</div>
                 <div className="formContainer">
-                        <div className="formBox">
-                            <div className="admHead">Service 1</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name1"onBlur={handleTextChange(0)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price1"onBlur={handlePriceChange(0)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc1"onBlur={handleDescChange(0)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 2</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name2"onBlur={handleTextChange(1)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price2"onBlur={handlePriceChange(1)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc2"onBlur={handleDescChange(1)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 3</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name3"onBlur={handleTextChange(2)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price3"onBlur={handlePriceChange(2)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc3"onBlur={handleDescChange(2)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 4</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name4"onBlur={handleTextChange(3)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price4"onBlur={handlePriceChange(3)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc4"onBlur={handleDescChange(3)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 5</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name5"onBlur={handleTextChange(4)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price5"onBlur={handlePriceChange(4)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc5"onBlur={handleDescChange(4)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 6</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name6"onBlur={handleTextChange(5)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price6"onBlur={handlePriceChange(5)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc6"onBlur={handleDescChange(5)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
-                        <div className="formBox">
-                            <div className="admHead">Service 7</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Name:<br/>
-                                <input className="buf" type="text"name="name7"onBlur={handleTextChange(6)}/>
-                                </label> <br/>
-                                <label className="buf">
-                                Price:<br/>
-                                <input className="buf" type="text"name="price7"onBlur={handlePriceChange(6)}/>
-                                </label><br/>
-                                <label className="buf">
-                                Description:<br/>
-                                <input className="buf" type="text"name="desc7"onBlur={handleDescChange(6)}/>
-                                </label><br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
+                    {createForm()}
+                    <button onClick={addService}> Add service</button>
                         <div className="formBox">
                             <div className="admHead">About</div>
                             <form  onSubmit={handleTextUpload}>
