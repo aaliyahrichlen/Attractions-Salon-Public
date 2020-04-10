@@ -42,7 +42,7 @@ const ContactCard = (props) => {
                 </div>
                 <div>
                 <form action='Appointments' className="button">
-                    <button href="#" class="myButton">Scehdule an appointment!</button>
+                    <button href="#" class="myButton">Request an appointment!</button>
                 </form>
                 </div>
             </div>
