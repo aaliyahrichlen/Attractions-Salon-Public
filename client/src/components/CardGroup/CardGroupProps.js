@@ -53,10 +53,10 @@ const CardGroupProps = () => {
         items.push(
         {
             header: nameArray[i],
-            meta: price + priceArray[i],
             color: 'pink',
             image: nails,
             description: descriptionArray[i],
+            extra: price + priceArray[i],
             key: i
 
         }
