@@ -14,9 +14,11 @@ import React, { Component } from 'react';
 
 class PaymentPage extends React.Component {
 
+
   constructor(props) {
     super(props)
     this.state = {
+      amount : "25.00",
       errorMessages: [],
     }
   }
@@ -29,30 +31,72 @@ class PaymentPage extends React.Component {
 
     this.setState({ errorMessages: [] })
     alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
+
+    //insert email trigger request to send invoice of payment
+
+
   }
 
   createVerificationDetails() {
     return {
-      amount: '100.00',
+      amount: this.state.amount,
       currencyCode: "USD",
       intent: "CHARGE",
       billingContact: {
         familyName: "Smith",
         givenName: "John",
         email: "jsmith@example.com",
-        country: "GB",
-        city: "London",
-        addressLines: ["1235 Emperor's Gate"],
-        postalCode: "SW7 4JA",
+        //country: "GB",
+        //city: "London",
+        //addressLines: ["1235 Emperor's Gate"],
+        //postalCode: "SW7 4JA",
         phone: "020 7946 0532"
       }
     }
   }
 
+  newSelection = (e) => {
+      this.setState({amount:e.target.value})
+  }
+
+
   render() {
     return (
       <div id = "pay">
         <h1>Payment Page</h1>
+
+        <label for = "selection">
+          Services
+        </label>
+        <select id = "selection" onChange = {this.newSelection} value = {this.state.amount} >
+
+          <option value = "25.00">
+            Pedicure
+          </option>
+
+          <option value = "5.00">
+            hair
+          </option>
+
+          <option value = "10.00">
+            Service7
+          </option>
+
+          <option value = "20.00">
+            new Service
+          </option>
+
+          <option value = "25.00">
+            Massage
+          </option>
+
+          <option value = "5.00">
+            Manicure
+          </option>
+
+        </select>
+
+
         <div className="payments">
 
         <SquarePaymentForm
@@ -80,7 +124,7 @@ class PaymentPage extends React.Component {
             </fieldset>
 
             <CreditCardSubmitButton>
-                Pay $1.00
+                Pay ${this.state.amount}
             </CreditCardSubmitButton>
 
 
