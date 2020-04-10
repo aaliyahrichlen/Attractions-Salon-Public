@@ -63,6 +63,14 @@ module.exports.init = () => {
 
     });
 
+    //this is for the https rerouting
+    app.use(function(req, res, next) {
+        if ((req.get('X-Forwarded-Proto') !== 'https')) {
+          res.redirect('https://' + req.get('Host') + req.url);
+        } else
+          next();
+    });
+
     return app
 }
 
