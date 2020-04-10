@@ -36,9 +36,10 @@ const CardGroupProps = () => {
             setNameArray([]);
             setPriceArray([]);
             userSnapshot.forEach(function(snapshot) {
-                setDescriptionArray(descriptionArray => descriptionArray.concat(snapshot.child("description").val()));
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
+                setDescriptionArray(descriptionArray => descriptionArray.concat(snapshot.child("description").val()));
+
             });
         });
     
@@ -52,10 +53,10 @@ const CardGroupProps = () => {
         items.push(
         {
             header: nameArray[i],
-            meta: price + priceArray[i],
             color: 'pink',
             image: nails,
-            description: String(descriptionArray[i]),
+            description: descriptionArray[i],
+            extra: price + priceArray[i],
             key: i
 
         }

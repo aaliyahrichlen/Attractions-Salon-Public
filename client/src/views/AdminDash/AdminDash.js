@@ -1,11 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {Button, Popup, Image} from 'semantic-ui-react';
 import fire from "../Login/config/Fire";
 import {storage} from "../Login/config/Fire";
 import {db} from "../Login/config/Fire";
-
+import { FormControl } from '@material-ui/core';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import "./AdminDash.css";
-import Card from 'react-bootstrap/Card';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminDashCard from "../../components/Cards/AdminDashCard";
 const AdminDash = (props) => {
@@ -23,6 +28,7 @@ const AdminDash = (props) => {
     const [about, setAbout] = useState("");
     const [cardNumber, setCardNumber] = useState(0);
     
+
     const handleChange = e => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
@@ -72,7 +78,7 @@ const AdminDash = (props) => {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
-                
+
 
             });
         });
@@ -143,7 +149,7 @@ const AdminDash = (props) => {
             })
         });
     };
-const addService =() =>{
+const addService = e =>{
     setCardNumber(cardNumber+1);
     setNameArray(nameArray => nameArray.concat(""));
     setPriceArray(priceArray => priceArray.concat(""));
@@ -184,26 +190,77 @@ const createForm = () =>{
     let formBoxes = [];
     for (let i = 0; i < cardNumber; i++) 
     {
+        var name;
+        if(nameArray[i].replace(/\s/g, '').length){
+            name = nameArray[i];
+        }
+        else
+            name = "New service";
+
         formBoxes.push(   
                             
-        <div className="formBox" key={i}>
-        <div className="admHead">{nameArray[i]}</div>
-        <form  onSubmit={handleTextUpload}>
-            <label className="buf">
-            Name:<br/>
-            <input className="buf" type="text"name="name"onBlur={handleTextChange(i)}/>
-            </label> <br/>
-            <label className="buf">
-            Price: {priceArray[i]}<br/>
-            <input className="buf" type="text"name="price"onBlur={handlePriceChange(i)}/>
-            </label><br/>
-            <label className="buf">
-            Description: {descArray[i]}<br/>
-            <input className="buf" type="text"name="desc"onBlur={handleDescChange(i)}/>
-            </label><br/>
-            <input className="buf" type="submit" value="Save"></input>                         
-        </form> 
-        <button onClick={deleteService(i)}> Delete Service </button>
+        <div className="formBox">
+        <div className="admHead">{name}</div>
+        <form   onSubmit={handleTextUpload} >
+            
+            <FormControl >
+            <InputLabel className="buf" htmlFor="component-simple">Name </InputLabel>
+            <Input className="buf" id="component-simple" defaultValue={name} onBlur={handleTextChange(i)} label="Name" />
+            </FormControl>
+            <br />
+            <FormControl >
+            <InputLabel className="buf" htmlFor="component-simple">Price </InputLabel>
+            <Input className="buf" id="component-simple" defaultValue={priceArray[i]} onBlur={handlePriceChange(i)} />
+            </FormControl>
+            <br />
+            <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
+            <InputLabel className="buf" htmlFor="component-simple">Description </InputLabel>
+            <Input className="buf" id="component-simple" multiline="true" defaultValue={descArray[i]} onBlur={handleDescChange(i)} />
+            </FormControl>
+            <br />
+            <div className="buf">
+                    <input type="file" onChange={handleChange}/>
+                    </div>
+                    <div className="buf">
+                    <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<CloudUploadIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleUpload} 
+                        >
+                            Upload
+                        </Button> 
+                        </div>
+            <div className="serviceButton">
+            
+            <Button
+        variant="contained"
+        color="default"
+        size="large"
+        startIcon={<SaveIcon />}
+        className="buf"
+        size="small"
+        onClick = {handleTextUpload} 
+      >
+        Save
+      </Button>
+     
+        <Button
+        variant="contained"
+        color="default"
+        className="buf"
+        startIcon={<DeleteIcon />}
+        onClick = {deleteService(i)}
+        size="small"
+      >
+        Delete
+      </Button>
+      
+      </div>
+      </form> 
     </div>)
     }
     
@@ -232,6 +289,17 @@ const createForm = () =>{
          }
 
     };
+    const handleAboutUpload = (e) => {
+        e.preventDefault();
+   
+
+        var db = fire.database();
+        var ref = db.ref("text/about");
+        ref.set(about);
+
+     
+    };
+
 
     const logout = () => {
         fire.auth().signOut();
@@ -244,8 +312,28 @@ const createForm = () =>{
                     <div className="adminHead">Admin Dashboard</div>
                 </div>
                 <div className="headRight">
-                    <button className="adButton" onClick={logout}>Logout</button>
-                    <button className="adButton" onClick={event =>  window.location.href='/delete'}>Delete Images</button>
+                    
+                <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            size="small"
+                            onClick = {logout} 
+                        >
+                            Logout
+                        </Button>
+                        
+                        <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<DeleteIcon />}
+                            size="small"
+                            onClick={event =>  window.location.href='/delete'}
+                        >
+                            Delete Images
+                        </Button>
+                        
                 </div>
             </div>
             <div class="leftPage">
@@ -261,10 +349,25 @@ const createForm = () =>{
                     {/* <img src={urlArray[0]}/>  */}
                     {/* alt="logoImage" */}
                      { show[0] && <progress value={progressBar} max="100"/>}
- 
-                    <input className="adButton" id="logos" type="file" onChange={handleChange}/>
-                    <br/>
-                    <button className="adButton" id='1' onClick={handleUpload}>Upload</button>
+
+                    <div className="buf">
+                    <input id="logos" type="file" onChange={handleChange}/>
+                    </div>
+                    <div className="buf">
+                    <Button
+                            variant="contained"
+                            id='1'
+                            color="default"
+                            size="large"
+                            startIcon={<CloudUploadIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleUpload} 
+                        >
+                            Upload
+                        </Button> 
+                        </div>
+                        
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your homepage slideshow!</div>
@@ -274,9 +377,25 @@ const createForm = () =>{
                      { show[1] && <progress value={progressBar} max="100"/> }
 
                     
-                    <input className="adButton" id="slideshow" type="file" onChange={handleChange}/>
-                    <br/>
-                    <button className="adButton" onClick={handleUpload}>Upload</button>
+
+
+                    <div className="buf">
+                    <input id="slideshow" type="file" onChange={handleChange}/>
+                    </div>
+                    <div className="buf">
+                    <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<CloudUploadIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleUpload} 
+                        >
+                            Upload
+                        </Button> 
+                        </div>
+                    
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your services!</div>
@@ -285,10 +404,23 @@ const createForm = () =>{
                     {/* <img src={urlArray[2]}/> */}
                      { show[2] && <progress value={progressBar} max="100"/>}
                 
+                     <div className="buf">
+                    <input id="services" type="file" onChange={handleChange}/>
+                    </div>
+                    <div className="buf">
+                    <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<CloudUploadIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleUpload} 
+                        >
+                            Upload
+                        </Button> 
+                        </div>
                     
-                    <input className="adButton" id="services" type="file" onChange={handleChange}/>
-                    <br/>
-                    <button className="adButton" onClick={handleUpload}>Upload</button>
                 </div>
                 <div class="box">
                     <div className="admHead">Upload images for your about page!</div>
@@ -297,26 +429,65 @@ const createForm = () =>{
                     {/* <img src={urlArray[3]}/> */}
                      { show[3] && <progress value={progressBar} max="100"/>}
 
-                    <input className="adButton" id="about" type="file" onChange={handleChange}/>
-                    <br/>
-                    <button className="adButton" onClick={handleUpload}>Upload</button>
+                     <div className="buf">
+                    <input id="about" type="file" onChange={handleChange}/>
+                    </div>
+                    <div className="buf">
+                    <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<CloudUploadIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleUpload} 
+                        >
+                            Upload
+                        </Button> 
+                        </div>
                 </div>
+                <div className="box">
+                    <div className="admHead">About Page</div>
+                    <div className="formBox">
+                    <form  onSubmit={handleAboutUpload} >
+                            <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
+                             <InputLabel className="buf" htmlFor="component-simple">About </InputLabel>
+                            <Input className="buf" id="component-simple" multiline="true" defaultValue={about} onBlur={handleAboutChange} />
+                             </FormControl>
+                             <br/>
+                             <div className="buf">
+                             <Button
+                            variant="contained"
+                            color="default"
+                            size="large"
+                            startIcon={<SaveIcon />}
+                            className="buf"
+                            size="small"
+                            onClick = {handleAboutUpload} 
+                        >
+                            Save
+                        </Button> 
+      </div>                      
+                            </form> 
+                            </div>
+                    </div>
             </div>
             <div className="rightPage">
                 <div className="adminHead">Edit service details!</div>
                 <div className="formContainer">
                     {createForm()}
-                    <button onClick={addService}> Add service</button>
-                        <div className="formBox">
-                            <div className="admHead">About</div>
-                            <form  onSubmit={handleTextUpload}>
-                                <label className="buf">
-                                Text:<br/>
-                                <input className="buf" type="text"name="name8"onBlur={handleAboutChange}/>
-                                </label> <br/>
-                                <input className="buf" type="submit" value="Save"></input>                         
-                            </form> 
-                        </div>
+                    <Button
+        variant="contained"
+        color="default"
+        className="buf"
+        startIcon={<ControlPointIcon />}
+        onClick = {addService}
+        size="medium"
+        
+      >
+          Add a Service!
+      </Button>
+                    
                 </div>
             </div>
         </div>
