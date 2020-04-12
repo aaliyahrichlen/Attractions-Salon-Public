@@ -14,6 +14,7 @@ import Payments from "./views/Payments/PaymentPage";
 import Confirmation from "./views/Confirmation/Confirmation"
 import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
 import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
+import ApptRangeApp from "./views/Appointments/AppointmentRange"
 
 import DeleteImage from "./views/DeleteImage/DeleteImage";
 {/* remove this above line */}
@@ -37,6 +38,7 @@ const App = () => {
         <Route exact path="/confirm" component={Confirmation}/>
         <Route exact path="/confirmfailed" component={ConfirmationFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
+        <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
          {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
