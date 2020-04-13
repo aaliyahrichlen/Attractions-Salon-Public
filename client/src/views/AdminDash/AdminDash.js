@@ -211,7 +211,7 @@ const createForm = () =>{
             <br />
             <FormControl >
             <InputLabel className="buf" htmlFor="component-simple">Price </InputLabel>
-            <Input className="buf" id="component-simple" defaultValue={priceArray[i]} onBlur={handlePriceChange(i)} />
+            <Input className="buf" id="component-simple" defaultValue={priceArray[i]} onBlur={handlePriceChange(i)} label="Price" />
             </FormControl>
             <br />
             <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
