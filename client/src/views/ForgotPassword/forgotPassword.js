@@ -30,7 +30,7 @@ handleSubmit(e){
     var emailAddress = this.state.email;
 
     auth.sendPasswordResetEmail(emailAddress).then(function() {
-        alert("Success! Redirecting you back to the login page");
+        alert("Success! Redirecting you back to the login page - press OK!");
         window.location.href="/Login";
 
     }).catch(function(error) {
