@@ -209,12 +209,12 @@ const createForm = () =>{
             <Input className="buf" id="component-simple" defaultValue={name} onBlur={handleTextChange(i)} label="Name" />
             </FormControl>
             <br />
-            <FormControl >
+            <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
             <InputLabel className="buf" htmlFor="component-simple">Price </InputLabel>
             <Input className="buf" id="component-simple" defaultValue={priceArray[i]} onBlur={handlePriceChange(i)} label="Price" />
             </FormControl>
             <br />
-            <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
+            <FormControl >
             <InputLabel className="buf" htmlFor="component-simple">Description </InputLabel>
             <Input className="buf" id="component-simple" multiline="true" defaultValue={descArray[i]} onBlur={handleDescChange(i)} />
             </FormControl>
