@@ -11,6 +11,7 @@ import NavBar from "./components/Header/NavBar";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Payments from "./views/Payments/PaymentPage";
+import forgotPassword from "./views/ForgotPassword/forgotPassword";
 import Confirmation from "./views/Confirmation/Confirmation"
 import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
 import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
@@ -37,6 +38,8 @@ const App = () => {
         <Route exact path="/confirm" component={Confirmation}/>
         <Route exact path="/confirmfailed" component={ConfirmationFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
+        <Route exact path="/forgotPassword" component={forgotPassword}/>
+
          {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
