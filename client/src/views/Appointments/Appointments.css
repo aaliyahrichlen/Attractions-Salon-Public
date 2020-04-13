@@ -5,3 +5,7 @@
 .type {
 	font-family: 'Spartan', sans-serif;
 }
+
+.time-picker{
+	width: 33%;
+}

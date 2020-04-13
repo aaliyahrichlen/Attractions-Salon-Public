@@ -1,65 +1,93 @@
 import React, {useState, useEffect} from 'react';
 import { Button } from 'reactstrap';
 import { Table } from '@material-ui/core';
-import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
+import MomentUtils from '@date-io/moment';
 import {MuiPickersUtilsProvider, TimePicker, KeyboardTimePicker} from '@material-ui/pickers';
+import moment from "moment-timezone";
+import axios from "axios";
+import './Appointments.css';
 
-function TimeRange(startTime, endTime)
-{
-    this.startTime = startTime;
-    this.endTime = endTime;
-}
+const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
 const ApptRangeApp = (props) => {
     const [counter, setCounter] = useState(0);
     const [timeRangeRows, setTimeRangeRows] = useState([]);
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
 
-    const handleDateChange = (date) => {
-      setSelectedDate(date);
+    useEffect(() => {addNewRow()}, [])
+
+    const handleDateChange = (date, id, start_notEnd) => {
+        var array = [...timeRangeRows]; // make a new copy of array instead of mutating the same array directly. 
+        var index = array.findIndex(x => x.id===id); //find the index of item which matches the id passed to the function
+        if(start_notEnd)
+        {
+            array[index].startTime = date;
+        }else{
+            array[index].endTime = date;
+        }
+        setTimeRangeRows(array);
     };
 
     const addNewRow = () => {
-        setTimeRangeRows(timeRangeRows.concat([{id: counter}]));
+        setTimeRangeRows(timeRangeRows.concat([{id: counter, startTime: moment('9:00 am', "HH:mm a"), endTime: moment('12:00 pm', "HH:mm a")}]));
         setCounter(counter + 1);
     }
 
-    const removeRow= (event,id) =>{  
+    const removeRow = (event,id) =>{  
         var array = [...timeRangeRows]; // make a new copy of array instead of mutating the same array directly. 
         var index = array.findIndex(x => x.id===id); //find the index of item which matches the id passed to the function
         array.splice(index, 1);
         setTimeRangeRows(array);
     }
-    
-    console.log(props.match.params.confirmId)
+
+    const submitRanges = () =>{
+    axios
+      .post(API_BASE + "/api/appointmentRange/" + props.match.params.confirmId, timeRangeRows)
+      .then(response =>{
+        console.log(response.data)
+        if(response.data === "OK")
+        {
+            
+        }else if(response.data === "CONFIRMED ALREADY")
+        {
+
+        }else{
+
+        }
+      });
+    }
 
     const rows = timeRangeRows.map((item, index) => {
         return(
-            <tr>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <tr class="range-row">
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <td class="time-picker">
+                    <div>Start Time</div>
                     <TimePicker
                     margin="normal"
-                    id="time-picker"
-                    label="Start Time"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    minutesStep="5"
+                    label={null}
+                    value={item.startTime}
+                    onChange={(date) => handleDateChange(date, item.id, true)}
                     KeyboardButtonProps={{
                         'aria-label': 'change time',
                     }}
                     />
+                    </td>
+                    <td class="time-picker">
+                    <div>End Time</div>
                     <TimePicker
                     margin="normal"
-                    id="time-picker"
-                    label="End Time"
-                    value={selectedDate}
-                    onChange={handleDateChange}
+                    minutesStep="5"
+                    label={null}
+                    value={item.endTime}
+                    onChange={(date) => handleDateChange(date, item.id, false)}
                     KeyboardButtonProps={{
                         'aria-label': 'change time',
                     }}
                     />
+                    </td>
                 </MuiPickersUtilsProvider>
-                <td><Button onClick={(event) => removeRow(event, item.id)}>Delete</Button></td>
+                <td>{item.id !== 0 ? <Button onClick={(event) => removeRow(event, item.id)} style={{backgroundColor: '#B22222'}}>Remove Time Range</Button> : <div/>}</td>
             </tr>
         );
     });
@@ -72,7 +100,11 @@ const ApptRangeApp = (props) => {
         <tfoot>
             <tr>
             <td>
-                <Button onClick={() => {addNewRow()}} size="med" className="float-left">Insert</Button>
+                <Button onClick={() => {addNewRow()}} style={{backgroundColor: 'green'}} className="float-left">Add New Time Range</Button>
+            </td>
+            <td/>
+            <td>
+                <Button onClick={() => {submitRanges()}} style={{backgroundColor: 'orange'}} className="float-left">Submit Time Ranges</Button>
             </td>
             </tr>
         </tfoot>
@@ -81,64 +113,3 @@ const ApptRangeApp = (props) => {
 }
 
 export default ApptRangeApp;
-
-// import 'date-fns';
-// import React from 'react';
-// import Grid from '@material-ui/core/Grid';
-// import DateFnsUtils from '@date-io/date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from '@material-ui/pickers';
-// import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-
-// export default function ApptRangeApp() {
-//   // The first commit of Material-UI
-//   const [selectedDate, setSelectedDate] = React.useState(new Date('2014-08-18T21:11:54'));
-
-//   const handleDateChange = (date) => {
-//     setSelectedDate(date);
-//   };
-
-//   return (
-//     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//     <Grid container justify="space-around">
-//         <KeyboardDatePicker
-//         disableToolbar
-//         variant="inline"
-//         format="MM/dd/yyyy"
-//         margin="normal"
-//         id="date-picker-inline"
-//         label="Date picker inline"
-//         value={selectedDate}
-//         onChange={handleDateChange}
-//         KeyboardButtonProps={{
-//             'aria-label': 'change date',
-//         }}
-//         />
-//         <KeyboardDatePicker
-//         margin="normal"
-//         id="date-picker-dialog"
-//         label="Date picker dialog"
-//         format="MM/dd/yyyy"
-//         value={selectedDate}
-//         onChange={handleDateChange}
-//         KeyboardButtonProps={{
-//             'aria-label': 'change date',
-//         }}
-//         />
-//         <KeyboardTimePicker
-//         margin="normal"
-//         id="time-picker"
-//         label="Time picker"
-//         value={selectedDate}
-//         onChange={handleDateChange}
-//         KeyboardButtonProps={{
-//             'aria-label': 'change time',
-//         }}
-//         />
-//     </Grid>
-//     </MuiPickersUtilsProvider>
-//   );
-// }

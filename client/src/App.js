@@ -12,7 +12,7 @@ import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Payments from "./views/Payments/PaymentPage";
 import Confirmation from "./views/Confirmation/Confirmation"
-import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
+import ActionFailed from "./views/Confirmation/ActionFailed"
 import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
 import ApptRangeApp from "./views/Appointments/AppointmentRange"
 
@@ -36,7 +36,7 @@ const App = () => {
         <Route exact path="/delete" component={DeleteImage}/>
         <Route exact path="/Payments" component={Payments} />
         <Route exact path="/confirm" component={Confirmation}/>
-        <Route exact path="/confirmfailed" component={ConfirmationFailed}/>
+        <Route exact path="/actionfailed" component={ActionFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
         <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
          {/* remove this above line */}

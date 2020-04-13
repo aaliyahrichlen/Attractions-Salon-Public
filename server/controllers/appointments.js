@@ -58,6 +58,7 @@ const appointmentController = {
         msgBody += '\nClient Phone Number: ' + saved.phone;
         //Add confirmation link
         msgBody += '\n\nPlease click here to confirm this appointment: ' +  (process.env.WEB_URL || 'http://localhost:6163') + '/api/confirm/' + saved.confirmation_code
+        msgBody += '\n\nPlease click here to ask the client to reschedule for a different time: ' + (process.env.WEB_URL || 'http://localhost:3000') + '/appt-range/' + saved.confirmation_code
         //Send twilio 
         client.messages
           .create({
@@ -121,14 +122,60 @@ const appointmentController = {
             }else{
               if(process.env.WEB_URL)
               {
-                res.redirect('../../confirmfailed');
+                res.redirect('../../actionfailed');
               }else{
-                res.redirect('http://localhost:3000/ConfirmFailed');
+                res.redirect('http://localhost:3000/ActionFailed');
               }
             }
           });
         }
       });
+  },
+  range(req, res) {
+    var requestBody = req.body;
+    Appointment.findOne({ confirmation_code: req.params.confirmId, confirmed: false }).exec((err, appointment) => {
+      if(appointment)
+        {
+          res.send('OK');
+          let msg = appointment.name + ',\nYour appointment on ' + moment(appointment.slot_date).tz('America/New_York').format("MMMM Do YYYY [at] h:mm a");
+          if(appointment.stylist)
+          {
+            msg += " with the stylist " + appointment.stylist;
+          }else{
+            msg += " with no preferred stylist";
+          }
+          msg += ' is not available at your selected time. Please see the below times for available appointments on the same day, or please make a new appointment on the website if none of these times work for you.';
+          msg += '\n\nAvailable Time Ranges:';
+          requestBody.forEach(element => {
+            msg += '\n' + moment(element.startTime).format("h:mm a") + ' to ' + moment(element.endTime).format("h:mm a")
+          });
+          msg += '\n\nPlease click this link to choose a new time for your appointment on the same day as the original appointment at a time within the above ranges: ';
+          msg += (process.env.WEB_URL || 'http://localhost:3000') + '/something/' + req.params.confirmId;
+          msg += '\nOr, if you would like to reschedule on a different day altogether, please click this link: ';
+          msg += (process.env.WEB_URL || 'http://localhost:3000') + '/appointments';
+          msg += '\n\nWe look forward to your appointment!'
+          let emailOptions = {
+            from: transporter.options.auth.user,
+            to: appointment.email,
+            subject: 'Attractions Salon Appointment Reschedule',
+            text: msg
+          };
+          transporter.sendMail(emailOptions, function(error, info){
+            if (error) {
+              console.error(error);
+            }
+          });
+        }else{
+          Appointment.findOne({ confirmation_code: req.params.confirmId }).exec((err, new_appointment) => {
+            if(new_appointment)
+            {
+              res.send('CONFIRMED ALREADY');
+            }else{
+              res.send('ACTION FAILED');
+            }
+          });
+        }
+    });
   }
 };
 
