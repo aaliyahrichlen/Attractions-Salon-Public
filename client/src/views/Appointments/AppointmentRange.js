@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Redirect } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { Table } from '@material-ui/core';
 import MomentUtils from '@date-io/moment';
@@ -12,6 +13,7 @@ const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163'
 const ApptRangeApp = (props) => {
     const [counter, setCounter] = useState(0);
     const [timeRangeRows, setTimeRangeRows] = useState([]);
+    const [newRedirect, setNewRedirect] = useState(null);
 
     useEffect(() => {addNewRow()}, [])
 
@@ -46,12 +48,12 @@ const ApptRangeApp = (props) => {
         console.log(response.data)
         if(response.data === "OK")
         {
-            
+            setNewRedirect('/success/appt-range')
         }else if(response.data === "CONFIRMED ALREADY")
         {
-
+            setNewRedirect('/confirmedalready')
         }else{
-
+            setNewRedirect('/actionfailed')
         }
       });
     }
@@ -64,7 +66,7 @@ const ApptRangeApp = (props) => {
                     <div>Start Time</div>
                     <TimePicker
                     margin="normal"
-                    minutesStep="5"
+                    minutesStep={5}
                     label={null}
                     value={item.startTime}
                     onChange={(date) => handleDateChange(date, item.id, true)}
@@ -77,7 +79,7 @@ const ApptRangeApp = (props) => {
                     <div>End Time</div>
                     <TimePicker
                     margin="normal"
-                    minutesStep="5"
+                    minutesStep={5}
                     label={null}
                     value={item.endTime}
                     onChange={(date) => handleDateChange(date, item.id, false)}
@@ -92,6 +94,10 @@ const ApptRangeApp = (props) => {
         );
     });
 
+    if(newRedirect)
+    {
+        return <Redirect to={newRedirect} />
+    }
     return (
         <Table borderless>
             <tbody>
