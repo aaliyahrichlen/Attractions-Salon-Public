@@ -8,6 +8,7 @@ import curls2 from './curls2.jpg'
 import stock2 from './stock2.jpg'
 import './CardGroupProps.css';
 import fire from "../../views/Login/config/Fire";
+import {storage} from "../../views/Login/config/Fire";
 import {db} from "../../views/Login/config/Fire";
 
 
@@ -16,14 +17,32 @@ const CardGroupProps = () => {
     const [priceArray, setPriceArray] = useState([]);
     const [descriptionArray, setDescriptionArray] = useState([]);
     const [cardNumber, setCardNumber] = useState(0);
-
+    const [imagesURL, setImagesURL] = useState([]);
+	const [picturesArray, setPicturesArray] = useState([]); 
 
     var price = 'Starting price: ';
 
     useEffect(() => {
         setCardNumber(nameArray.length)
      },[nameArray]);
-     
+
+     useEffect(() =>{
+
+		var storageRef = storage.ref();
+		var listRef = storageRef.child('images/services/');
+		listRef.listAll().then(function(res) {
+		res.items.forEach(function(itemRef) {
+			var singleUrl = itemRef.getDownloadURL().then(function(url){
+				setImagesURL(imagesURL => imagesURL.concat(url));
+			});
+			// All the items under listRef.
+			//set state = res.items
+		});
+		}).catch(function(error) {
+			console.log(error);// Uh-oh, an error occurred!
+		});
+
+	},[]);
  
     useEffect(() => {
 
@@ -54,7 +73,7 @@ const CardGroupProps = () => {
         {
             header: nameArray[i],
             color: 'pink',
-            image: nails,
+            image: imagesURL[i],
             description: descriptionArray[i],
             extra: price + priceArray[i],
             key: i
