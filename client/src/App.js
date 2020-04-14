@@ -45,8 +45,9 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
-      <Footer/>
+      
     </div>
+    <Footer/>
     </div>
   );
 }

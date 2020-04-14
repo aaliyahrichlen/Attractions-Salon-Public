@@ -13,6 +13,7 @@ import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import "./AdminDash.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AdminDashCard from "../../components/Cards/AdminDashCard";
+import Footer from '../../components/Footer/Footer';
 
 const AdminDash = (props) => {
     const [image, setImage] = useState(null);
@@ -307,7 +308,8 @@ const createForm = () =>{
     }
 
     return (
-        <div>
+        <div className="adminContainer">
+            <div>
             <div className="header">
                 <div className="headLeft">
                     <div className="adminHead">Admin Dashboard</div>
@@ -491,6 +493,8 @@ const createForm = () =>{
                     
                 </div>
             </div>
+        </div>
+        
         </div>
     );
 };
