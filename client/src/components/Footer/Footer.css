@@ -1,0 +1,8 @@
+.foot-link {
+    color: white;
+}
+
+.foot-link:hover {
+    color: lightpink;
+    text-decoration: none;
+}

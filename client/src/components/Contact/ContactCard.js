@@ -8,9 +8,10 @@ const ContactCard = (props) => {
         <div className="card">
         <div class="ui card" >
             <div class="content">
-                <div class="header" className="head">Contact Us!</div>
+                <div class="header" className="head">Attractions Salon</div>
             </div>
-            <div class="content"> 
+            <div class="content">
+            <h4 class="ui header" className="infoHead">Highlighting your natual beauty</h4> 
                 <h4 class="ui header" className="infoHead">Phone Number</h4>
                     <div class="ui small feed">
                     <div class="event">
