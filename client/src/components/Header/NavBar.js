@@ -18,14 +18,12 @@ const NavBar = () => {
                 <div className="nav-items">
                     <Link className="nav-link" to='/Home'>Home</Link>
                     <Link className="nav-link" to='/Services'>Services</Link>
-                    <Link className="nav-link" to='/About'>About</Link>
+                    <Link className="nav-link" to='/About'>About Us</Link>
                     <Link className="nav-link" to='/Appointments'>Appointments</Link>
                     <Link className="nav-link" to='/Login'>Login</Link>
                     <Link className="nav-link" to='/Signup'>Signup</Link>
                 </div>
                 <div className="info">
-                    Phone: (352) 376-6008
-                        <br /> Address: 4509 NW 23 Ave, Gainesville, FL 32606
 
                 </div>
             </div>

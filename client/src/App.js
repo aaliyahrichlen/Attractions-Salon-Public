@@ -8,6 +8,7 @@ import Login from "./views/Login/Login";
 import Signup from "./views/Signup/Signup";
 import NotFound from "./views/NotFound";
 import NavBar from "./components/Header/NavBar";
+import Footer from "./components/Footer/Footer";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Payments from "./views/Payments/PaymentPage";
@@ -18,6 +19,7 @@ import ApptRangeApp from "./views/Appointments/AppointmentRange"
 import ApptRangeSuccess from "./views/Confirmation/AppointmentRangeSuccess"
 import ApptTimeSuccess from './views/Confirmation/AppointmentTimeSuccess'
 import NewApptTime from "./views/Appointments/NewAppointmentTime"
+
 
 import DeleteImage from "./views/DeleteImage/DeleteImage";
 {/* remove this above line */}
@@ -51,6 +53,7 @@ const App = () => {
         </Route>
         <Route component={NotFound} />
       </Switch>
+      <Footer/>
     </div>
     </div>
   );

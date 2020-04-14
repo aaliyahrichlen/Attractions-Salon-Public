@@ -83,3 +83,18 @@ body {
     columns: #000000;;
 }
 */
+
+.back {
+    background-color: white;
+}
+
+.homeFlex {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-content: center;
+    align-items: center;
+}
+
