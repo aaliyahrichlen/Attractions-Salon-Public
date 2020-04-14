@@ -10,7 +10,7 @@
 }
 
 .comp {
-    background: #FFFCF3;
+    background:lightpink;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,6 +39,7 @@
     align-items: center;
     font-family: 'Spartan', sans-serif;
     font-size: medium;
+    color:white;
 }
 
 .address{
@@ -47,17 +48,18 @@
 }
 
 .nav-link {
-    background-color: #FFFCF3;
+    background-color: lightpink;
     color: black;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
     font-family: 'Sofia';
     font-size: large;
+    
 }
 
 .nav-link:hover {
-    background-color: #f58aa3;
-    color: black;
+    background-color: lightpink;
+    color: white;
 }
 
