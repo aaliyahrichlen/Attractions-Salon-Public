@@ -13,8 +13,12 @@ import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Payments from "./views/Payments/PaymentPage";
 import Confirmation from "./views/Confirmation/Confirmation"
-import ConfirmationFailed from "./views/Confirmation/ConfirmationFailed"
+import ActionFailed from "./views/Confirmation/ActionFailed"
 import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
+import ApptRangeApp from "./views/Appointments/AppointmentRange"
+import ApptRangeSuccess from "./views/Confirmation/AppointmentRangeSuccess"
+import ApptTimeSuccess from './views/Confirmation/AppointmentTimeSuccess'
+import NewApptTime from "./views/Appointments/NewAppointmentTime"
 
 
 import DeleteImage from "./views/DeleteImage/DeleteImage";
@@ -37,8 +41,12 @@ const App = () => {
         <Route exact path="/delete" component={DeleteImage}/>
         <Route exact path="/Payments" component={Payments} />
         <Route exact path="/confirm" component={Confirmation}/>
-        <Route exact path="/confirmfailed" component={ConfirmationFailed}/>
+        <Route exact path="/actionfailed" component={ActionFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
+        <Route exact path="/success/appt-range" component={ApptRangeSuccess}/>
+        <Route exact path="/success/appt-time" component={ApptTimeSuccess}/>
+        <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
+        <Route exact path="/new-appt-time/:confirmId" component={NewApptTime}/>
          {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
