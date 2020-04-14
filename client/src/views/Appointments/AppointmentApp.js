@@ -85,6 +85,7 @@ class AppointmentApp extends Component {
   handleSubmit() {
     this.setState({ confirmationModalOpen: false });
     let fullDate = moment(moment(this.state.appointmentDate).format("MM/DD/YYYY") + ' ' + this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm'), "MM/DD/YYYY HH:mm a").tz('America/New_York')
+    console.log(fullDate);
     const newAppointment = {
       name: this.state.firstName + " " + this.state.lastName,
       email: this.state.email,

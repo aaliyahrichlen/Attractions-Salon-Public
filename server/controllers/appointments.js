@@ -150,7 +150,7 @@ const appointmentController = {
             msg += '\n' + moment(element.startTime).format("h:mm a") + ' to ' + moment(element.endTime).format("h:mm a")
           });
           msg += '\n\nPlease click this link to choose a new time for your appointment on the same day as the original appointment at a time within the above ranges: ';
-          msg += (process.env.WEB_URL || 'http://localhost:3000') + '/something/' + req.params.confirmId;
+          msg += (process.env.WEB_URL || 'http://localhost:3000') + '/new-appt-time/' + req.params.confirmId;
           msg += '\nOr, if you would like to reschedule on a different day altogether, please click this link: ';
           msg += (process.env.WEB_URL || 'http://localhost:3000') + '/appointments';
           msg += '\n\nWe look forward to your appointment!'
@@ -163,6 +163,65 @@ const appointmentController = {
           transporter.sendMail(emailOptions, function(error, info){
             if (error) {
               console.error(error);
+            }
+          });
+        }else{
+          Appointment.findOne({ confirmation_code: req.params.confirmId }).exec((err, new_appointment) => {
+            if(new_appointment)
+            {
+              res.send('CONFIRMED ALREADY');
+            }else{
+              res.send('ACTION FAILED');
+            }
+          });
+        }
+    });
+  },
+  time(req, res) {
+    var requestBody = req.body;
+    Appointment.findOne({ confirmation_code: req.params.confirmId, confirmed: false }).exec((err, appointment) => {
+      if(appointment)
+        {
+          let newDate = moment(moment(appointment.slot_date).tz('America/New_York').format("MM/DD/YYYY") + ' ' + moment(requestBody.date).format('HH:mm a'), "MM/DD/YYYY HH:mm a").tz('America/New_York').toDate();
+          Appointment.findOneAndUpdate({ confirmation_code: req.params.confirmId, confirmed: false }, {slot_date: newDate}, {new: true}).exec((error, saved) => {
+            if(saved)
+            {
+              res.send('OK');
+              let msgBody = 'Brandi,\n' + saved.name + " is requesting to change their appointment on " + moment(saved.slot_date).tz('America/New_York').format("MMMM Do YYYY [to] h:mm a");
+              if(saved.stylist)
+              {
+                msgBody += " with the stylist " + saved.stylist;
+              }else{
+                msgBody += " with no preferred stylist"
+              }
+              msgBody += '.\n';
+              //Add client info
+              msgBody += '\nClient Email: ' + saved.email;
+              msgBody += '\nClient Phone Number: ' + saved.phone;
+              //Add confirmation link
+              msgBody += '\n\nPlease click here to confirm this appointment: ' +  (process.env.WEB_URL || 'http://localhost:6163') + '/api/confirm/' + saved.confirmation_code
+              msgBody += '\n\nPlease click here to ask the client to reschedule for a different time: ' + (process.env.WEB_URL || 'http://localhost:3000') + '/appt-range/' + saved.confirmation_code
+              //Send email
+              let emailOptions = {
+                from: transporter.options.auth.user,
+                to: process.env.EMAIL_RX_ADDRESS || require('../config/config').email.rx_address,
+                subject: 'Attractions Salon Appointment Confirmation',
+                text: msgBody
+              };
+              transporter.sendMail(emailOptions, function(error, info){
+                if (error) {
+                  console.error(error);
+                }
+              });
+            }else{
+              Appointment.findOne({ confirmation_code: req.params.confirmId }).exec((err, new_appointment) => {
+                if(new_appointment)
+                {
+                  res.send('CONFIRMED ALREADY');
+                }else{
+                  res.send('ACTION FAILED');
+                }
+              });
             }
           });
         }else{

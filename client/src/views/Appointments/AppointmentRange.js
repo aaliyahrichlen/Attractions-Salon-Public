@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Button } from 'reactstrap';
 import { Table } from '@material-ui/core';
 import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider, TimePicker, KeyboardTimePicker} from '@material-ui/pickers';
+import {MuiPickersUtilsProvider, TimePicker} from '@material-ui/pickers';
 import moment from "moment-timezone";
 import axios from "axios";
 import './Appointments.css';
@@ -45,7 +45,6 @@ const ApptRangeApp = (props) => {
     axios
       .post(API_BASE + "/api/appointmentRange/" + props.match.params.confirmId, timeRangeRows)
       .then(response =>{
-        console.log(response.data)
         if(response.data === "OK")
         {
             setNewRedirect('/success/appt-range')
