@@ -34,3 +34,7 @@
 	border: none;
 	width: fit-content;
 }
+
+.pageBuf {
+	margin: 100px;
+}

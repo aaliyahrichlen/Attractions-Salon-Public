@@ -20,6 +20,7 @@ import backGroundImage from './background.jpg'
 import "./Home.css"
 import {image} from 'semantic-ui-react';
 import ContactCard from "../../components/Contact/ContactCard"
+import Footer from "../../components/Footer/Footer";
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -93,6 +94,7 @@ class DesktopContainer extends Component {
           <Image src={backGroundImage}></Image>
           <ContactCard></ContactCard>
           </div>
+          <Footer/>
           {/*<Segment
             inverted
             textAlign='center'
