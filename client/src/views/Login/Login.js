@@ -2,6 +2,7 @@ import React , { Component } from "react";
 import fire from "./config/Fire";
 import * as firebase from 'firebase';
 import "./Login.css";
+import Footer from "../../components/Footer/Footer";
 //import Button from '@material-ui/core/Button';
 class Login extends Component{
 constructor(props)
@@ -51,6 +52,7 @@ handleChange(e){
 render()
 {
     return(
+        <div>
         <div id="logb">
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"/>
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
@@ -68,6 +70,8 @@ render()
                 <button class="myButton" onClick={event =>  window.location.href="/Signup"} variant="contained" color="primary">Sign Up</button>
             </div>
         </div>
+  </div>
+  <Footer/>
   </div>
     )
 }
