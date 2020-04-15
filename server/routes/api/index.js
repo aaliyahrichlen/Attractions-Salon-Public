@@ -5,6 +5,7 @@ const appointmentController = require('../../controllers/appointments')
 router.get('/appointments', appointmentController.all);
 router.post('/appointmentCreate', appointmentController.create);
 router.get('/confirm/:confirmId', appointmentController.confirm);
-
+router.post('/appointmentRange/:confirmId', appointmentController.range);
+router.post('/appointmentTime/:confirmId', appointmentController.time);
 
 module.exports = router;
