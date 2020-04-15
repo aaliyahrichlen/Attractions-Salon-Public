@@ -62,7 +62,12 @@ body {
 
 }
     
-
+#mobilecontact{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
 /*
 .App-logo {
     height: 40vmin;

@@ -4,7 +4,6 @@ import { Container } from 'semantic-ui-react';
 
 const ContactCard = (props) => {
     return (
-        <div>
         <div className="card">
         <div class="ui card" >
             <div class="content">
@@ -37,7 +36,6 @@ const ContactCard = (props) => {
                 </iframe>
                 </div>
             </div>
-        </div>
         </div>
         </div>
     );
