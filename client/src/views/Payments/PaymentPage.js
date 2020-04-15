@@ -13,6 +13,7 @@ import {
 import React, { Component } from 'react';
 import Axios from 'axios';
 
+const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
 class PaymentPage extends React.Component {
 
@@ -34,7 +35,7 @@ class PaymentPage extends React.Component {
     this.setState({ errorMessages: [] })
     alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
 
-    Axios.post("/processPayment", {nonce : nonce})
+    Axios.post(API_BASE + "/api/processPayment", {nonce : nonce, amount : this.state.amount})
     
 
     //insert email trigger request to send invoice of payment

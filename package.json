@@ -41,6 +41,7 @@
     "react-bootstrap": "^1.0.0",
     "semantic-ui-carousel-react": "^1.1.1",
     "should": "^13.2.3",
+    "square-connect": "^3.20200325.0",
     "supertest": "^4.0.2",
     "twilio": "^3.41.1"
   },
