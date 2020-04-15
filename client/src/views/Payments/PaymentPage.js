@@ -11,33 +11,38 @@ import {
 } from 'react-square-payment-form'
 
 import React, { Component } from 'react';
+import Axios from 'axios';
+
 
 class PaymentPage extends React.Component {
-
 
   constructor(props) {
     super(props)
     this.state = {
-      amount : "25.00",
+      amount: "2500",
       errorMessages: [],
     }
+    this.newSelection = this.newSelection.bind(this)
   }
+   
 
   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
     if (errors) {
       this.setState({ errorMessages: errors.map(error => error.message) })
       return
     }
-
     this.setState({ errorMessages: [] })
     alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
+
+    Axios.post("/processPayment", {nonce : nonce})
+    
 
     //insert email trigger request to send invoice of payment
 
 
-  }
+  } 
 
-  createVerificationDetails() {
+  createVerificationDetails = () =>  {
     return {
       amount: this.state.amount,
       currencyCode: "USD",
@@ -46,10 +51,10 @@ class PaymentPage extends React.Component {
         familyName: "Smith",
         givenName: "John",
         email: "jsmith@example.com",
-        //country: "GB",
-        //city: "London",
-        //addressLines: ["1235 Emperor's Gate"],
-        //postalCode: "SW7 4JA",
+        country: "GB",
+        city: "London",
+        addressLines: ["1235 Emperor's Gate"],
+        postalCode: "SW7 4JA",
         phone: "020 7946 0532"
       }
     }
@@ -68,29 +73,29 @@ class PaymentPage extends React.Component {
         <label for = "selection">
           Services
         </label>
-        <select id = "selection" onChange = {this.newSelection} value = {this.state.amount} >
+        <select id = "selection" onChange = {this.newSelection.bind(this)} value  = {this.state.amount} >
 
-          <option value = "25.00">
+          <option value = "2500">
             Pedicure
           </option>
 
-          <option value = "5.00">
+          <option value = "500">
             hair
           </option>
 
-          <option value = "10.00">
+          <option value = "1000">
             Service7
           </option>
 
-          <option value = "20.00">
+          <option value = "2000">
             new Service
           </option>
 
-          <option value = "25.00">
+          <option value = "2500">
             Massage
           </option>
 
-          <option value = "5.00">
+          <option value = "500">
             Manicure
           </option>
 
@@ -124,7 +129,7 @@ class PaymentPage extends React.Component {
             </fieldset>
 
             <CreditCardSubmitButton>
-                Pay ${this.state.amount}
+                Pay ${Number(this.state.amount) / 100}
             </CreditCardSubmitButton>
 
 
@@ -140,5 +145,6 @@ class PaymentPage extends React.Component {
     )
   }
 }
+
 
 export default PaymentPage;
