@@ -13,24 +13,49 @@
     background:lightpink;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: left;
     padding: 1%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+.mobilebar {
+    background:lightpink;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#logo{
+    align-items: right;
+    justify-content: right;
+    order: 2;
 
+}
+
+#dropdown{
+    align-items: left;
+    justify-content: left;
+    order: 1;
+    flex:1;
+}
 .nav-logo {
+    flex: 2;
     display:flex;
     flex-grow: 1;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
+    width: fit-content;
 }
 
 
 .nav-items {
-    flex-grow: 6;
+    flex-grow: 1;
     display:flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
+    justify-self: left;
+
 }
 
 .info {
