@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Image, Segment } from 'semantic-ui-react';
-import { Button } from 'semantic-ui-react';
-import { Header, Responsive, Dropdown } from 'semantic-ui-react';
+import { Image } from 'semantic-ui-react';
+import { Responsive, Dropdown } from 'semantic-ui-react';
 import './NavBar.css';
-import { AutoComplete } from 'material-ui';
-
+/* import { AutoComplete } from 'material-ui';
+ */
 
 const NavBar = () => {
     return (
