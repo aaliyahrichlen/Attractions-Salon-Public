@@ -132,3 +132,18 @@ align-items: start;
     align-content: flex-start;
     align-items: flex-start;
 }
+
+.serviceButton {
+    margin: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    align-items: flex-start;
+}
+
+.adminContainer {
+    height: 2000px;
+}
