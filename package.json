@@ -24,6 +24,7 @@
     "node": "13.6.0"
   },
   "dependencies": {
+    "@brainhubeu/react-carousel": "^1.13.36",
     "@material-ui/core": "^4.9.10",
     "async": "^3.2.0",
     "body-parser": "^1.19.0",
@@ -40,6 +41,8 @@
     "nodemon": "^1.18.10",
     "randomstring": "^1.1.5",
     "react-bootstrap": "^1.0.0",
+    "react-image-carousel": "^2.0.18",
+    "react-slideshow-image": "^1.4.0",
     "reactstrap": "^8.4.1",
     "semantic-ui-carousel-react": "^1.1.1",
     "should": "^13.2.3",

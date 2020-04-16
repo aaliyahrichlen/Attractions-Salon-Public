@@ -1,5 +1,6 @@
 import  React, {useState, useEffect}  from  'react';
 import  Carousel  from  'semantic-ui-carousel-react';
+//import Carousel from '@brainhubeu/react-carousel';
 import { Image, Button} from  'semantic-ui-react';
 import image1 from './Photos/fb1.jpg';
 import image2 from './Photos/stock1.jpeg';
@@ -10,17 +11,18 @@ import image6 from './Photos/stock5.jpeg'
 import image7 from './Photos/stock6.jpeg'
 import fire from "../../views/Login/config/Fire";
 import {storage} from "../../views/Login/config/Fire";
+//import { Slide } from 'react-slideshow-image';
 
 import "./SlideShow.css"
 
 const SlideShow = () => {
 	const [imagesURL, setImagesURL] = useState([]);
 	const [picturesArray, setPicturesArray] = useState([]); 
-	const [picture, setPicture] = useState([{
-		render:()=>{
+	const [picture, setPicture] = useState([]);
+		/*render:()=>{
 			return <Button  ><Image size='large' src={image1} /></Button>
 			}
-	}]) 
+	}]) */
 	useEffect(() =>{
 
 		var storageRef = storage.ref();
@@ -104,17 +106,31 @@ const SlideShow = () => {
 	// 		}
 	// 	}, */
 	// ]
+
 	return (
 		<div id="slide" className="shadow">
-		<Carousel
-			elements  =  { picturesArray }
-			duration  ={4000}
-			animation  ='slide left'
-			showNextPrev  =  {false}
-			showIndicators  ={true}
-		/>
-		</div>
-)
+	<Carousel
+		elements  =  { picturesArray }
+		duration  ={4000}
+		animation  ='browse'
+		showNextPrev  =  {false}
+		showIndicators  ={false}
+	/>
+	</div>
+	)
+	
 };
 
 export default SlideShow;
+
+/*return (
+	<div id="slide">
+	<Carousel
+		elements  =  { picturesArray }
+		duration  ={4000}
+		animation  ='slide left'
+		showNextPrev  =  {false}
+		showIndicators  ={true}
+	/>
+	</div>
+)*/

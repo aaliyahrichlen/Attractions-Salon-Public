@@ -101,14 +101,14 @@ class Review extends React.Component { // you can't use stateless component beca
     return (
       <div className="Review">
         <div className= "reviewHeader">
-                  Reviews
+                  What people are saying about us!
         </div>
         <Carousel
           elements  =  {  elements  }
           duration  ={3000}
-          animation  ='slide left'
+          animation  ='browse'
           showNextPrev  =  {false}
-          showIndicators  ={true}
+          showIndicators  ={false}
         />
       </div>
     )
