@@ -2,8 +2,9 @@ import React , { Component } from "react";
 import fire from "./config/Fire";
 import * as firebase from 'firebase';
 import "./Login.css";
+import Button from '@material-ui/core/Button';
 import Footer from "../../components/Footer/Footer";
-//import Button from '@material-ui/core/Button';
+
 class Login extends Component{
 constructor(props)
 {
@@ -49,6 +50,7 @@ handleChange(e){
     })
 }
 
+
 render()
 {
     return(
@@ -68,6 +70,8 @@ render()
             <div className="button">
                 <button class="myButton" onClick={this.login} variant="contained" color="primary" name="submit">Login</button>
                 <button class="myButton" onClick={event =>  window.location.href="/Signup"} variant="contained" color="primary">Sign Up</button>
+                <Button color="secondary" onClick={event =>  window.location.href="/forgotPassword"}>Forgot Password?</Button>
+
             </div>
         </div>
   </div>

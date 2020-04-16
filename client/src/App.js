@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import Review from './components/ReviewSection/Review';
 import LoginHome from "./views/Login/App";
 import Payments from "./views/Payments/PaymentPage";
+import forgotPassword from "./views/ForgotPassword/forgotPassword";
 import Confirmation from "./views/Confirmation/Confirmation"
 import ActionFailed from "./views/Confirmation/ActionFailed"
 import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
@@ -43,10 +44,12 @@ const App = () => {
         <Route exact path="/confirm" component={Confirmation}/>
         <Route exact path="/actionfailed" component={ActionFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
+        <Route exact path="/forgotPassword" component={forgotPassword}/>
         <Route exact path="/success/appt-range" component={ApptRangeSuccess}/>
         <Route exact path="/success/appt-time" component={ApptTimeSuccess}/>
         <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
         <Route exact path="/new-appt-time/:confirmId" component={NewApptTime}/>
+
          {/* remove this above line */}
         <Route exact path="/">
           <Redirect to="/Home" />
