@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Home from "./views/Home/Home";
 import About from "./views/About/About";
@@ -20,18 +20,30 @@ import ApptRangeApp from "./views/Appointments/AppointmentRange"
 import ApptRangeSuccess from "./views/Confirmation/AppointmentRangeSuccess"
 import ApptTimeSuccess from './views/Confirmation/AppointmentTimeSuccess'
 import NewApptTime from "./views/Appointments/NewAppointmentTime"
+import fire from './views/Login/config/Fire';
 
 
 import DeleteImage from "./views/DeleteImage/DeleteImage";
 {/* remove this above line */}
 const App = () => {
+  const [user, setUser] = useState(false);
+  useEffect(() => {
+    fire.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser(true);
+      } else {
+        setUser(false);
+      }
+    });
+
+},[]);
   return (
     <div>
     <head>
     <link href="https://fonts.googleapis.com/css2?family=Sofia&family=Spartan:wght@400;700&display=swap" rel="stylesheet"></link>
     </head>
     <div class="app">
-      <NavBar />
+      <NavBar loggedIn= {user}/>
       <Switch>
         <Route exact path="/Home" component={Home} />
         <Route exact path="/About" component={About} />
