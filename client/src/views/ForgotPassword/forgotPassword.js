@@ -8,6 +8,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Paper from '@material-ui/core/Paper'
+import Footer from "../../components/Footer/Footer";
 
 //import Button from '@material-ui/core/Button';
 class forgotPassword extends Component{
@@ -46,30 +47,29 @@ handleChange(e){
 
 render()
 {
-    return (     
-        <Paper  elevation={10}>
-        <form onSubmit={this.handleSubmit}>
+    return (   
+        <div>
+        <div className="center">
+        <div className="forgotContainer" align="center">  
+            <div className="script" align = "center">Forgot your password?</div>
+            <div className="instructionText">Please enter your email address below. If the email address exists in our system, you should recieve an eamil with instruction on how to reset your password.</div>
+            <form onSubmit={this.handleSubmit}>
+                
+                <FormControl>
+                    <InputLabel placeholder="Placeholder"
+                        htmlFor="component-simple"> Email Address </InputLabel>
+                    <Input  id="component-simple"  onBlur={this.handleChange} label="Email" />
+                </FormControl>
+                
+                <button type="submit" class="medium ui pink button">
+                    Reset Password
+                </button>
 
-        <FormControl >
-
-            <InputLabel           placeholder="Placeholder"
- htmlFor="component-simple"> Email Address </InputLabel>
-            <Input  id="component-simple"  onBlur={this.handleChange} label="Email" />
-        </FormControl>
-        <Button
-                  type="submit"
-                  variant="raised"
-                  color="primary"
-                  style={{ margin: '16px' }}
-                  
-                >
-                  {'Reset Password'}
-                </Button>
-        </form>
-        {'If the email address is a valid address, you should receive an email to reset the password'}
-
-        </Paper>
-        
+            </form>
+        </div>
+        </div>
+        <Footer/>
+        </div>
     )
 }
 }
