@@ -1,13 +1,11 @@
 .reviewHeader {
-    margin-top: 50px;
+    margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0px;
-    width: 25%;
     text-align: center;
-    font-family: 'Sofia';
+    font-family: 'Spartan', sans-serif;
     font-size: xx-large;
-    font-weight: bold;
 }
 
 .Review {
@@ -15,7 +13,8 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     height: fit-content;
     align-content: center;
-    width: 600px;
+    width: 75vw;
+    
 }
 
 .name {

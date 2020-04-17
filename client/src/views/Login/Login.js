@@ -2,8 +2,9 @@ import React , { Component } from "react";
 import fire from "./config/Fire";
 import * as firebase from 'firebase';
 import "./Login.css";
+import Button from '@material-ui/core/Button';
 import Footer from "../../components/Footer/Footer";
-//import Button from '@material-ui/core/Button';
+
 class Login extends Component{
 constructor(props)
 {
@@ -49,6 +50,7 @@ handleChange(e){
     })
 }
 
+
 render()
 {
     return(
@@ -59,15 +61,30 @@ render()
        
         <div class = "container1">
             <div className="script" align = "center">Sign In</div>
+            <div className="formFont">
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />
             </div>
             <div class="password">
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
+            </div>
             <div className="button">
-                <button class="myButton" onClick={this.login} variant="contained" color="primary" name="submit">Login</button>
-                <button class="myButton" onClick={event =>  window.location.href="/Signup"} variant="contained" color="primary">Sign Up</button>
+                <form onClick={this.login} className="buf">
+                    <button  class="big ui pink button" >
+                        Login
+                    </button>
+                </form>
+                <form action='Signup' className="buf">
+                    <button  class="medium ui pink button" >
+                        Sign Up
+                    </button>
+                </form>
+                <form action='forgotPassword' className="buf">
+                    <button  class="medium ui pink button" >
+                        Forgot Password?
+                    </button>
+                </form>
             </div>
         </div>
   </div>
