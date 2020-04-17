@@ -119,7 +119,7 @@ const CreateForm = (props) =>{
           label="Category"
           value={props.category[i]}
           onChange={props.handleCategoryChange(i)}
-
+          key={`${Math.floor((Math.random() * 1000))}-min`}
         >
           {categories.map((option) => (
             <MenuItem key={option.value} value={option.value}>
