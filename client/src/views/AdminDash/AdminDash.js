@@ -309,7 +309,7 @@ const deleteService = index => e=>{
 
     return (
         <div className="adminContainer">
-            <div>
+        
         <div id="App">
         <SidebarNav pageWrapId={"page-wrap"} outerContainerId={"App"} />
         <div id="page-wrap">
