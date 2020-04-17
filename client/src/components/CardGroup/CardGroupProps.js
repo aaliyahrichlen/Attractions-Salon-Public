@@ -12,13 +12,14 @@ import {storage} from "../../views/Login/config/Fire";
 import {db} from "../../views/Login/config/Fire";
 
 
-const CardGroupProps = () => {
+const CardGroupProps = (props) => {
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
     const [descriptionArray, setDescriptionArray] = useState([]);
     const [cardNumber, setCardNumber] = useState(0);
     const [imagesURL, setImagesURL] = useState([]);
 	const [picturesArray, setPicturesArray] = useState([]); 
+    const [category, setCategory] = useState([]);
 
     var price = 'Starting price: ';
 
@@ -54,10 +55,13 @@ const CardGroupProps = () => {
             setDescriptionArray([]);
             setNameArray([]);
             setPriceArray([]);
+            setCategory([]);
+
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescriptionArray(descriptionArray => descriptionArray.concat(snapshot.child("description").val()));
+                setCategory(category => category.concat(snapshot.child("category").val()));
 
             });
         });
@@ -69,6 +73,8 @@ const CardGroupProps = () => {
     var items = []
     for (let i = 0; i < cardNumber; i++) 
     {
+        if(String(category[i])=== (props.category)){
+
         items.push(
         {
             header: nameArray[i],
@@ -81,6 +87,7 @@ const CardGroupProps = () => {
         }
         );
     }
+}
     return (
         <div className="cards">
             <Card.Group centered
