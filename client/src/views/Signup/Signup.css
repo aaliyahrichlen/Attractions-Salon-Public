@@ -17,8 +17,9 @@ a {color:lightpink;}
     text-align: center;
 }
 .container2{
-    max-width: 500px;
-    height:700px, auto;
+    width: 25%;
+    min-width: 500px;
+    height: 50%;
     background: lightpink;
     margin: 50px auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -36,12 +37,12 @@ a {color:lightpink;}
     outline:none;
     transition: all 0.5s;
 }
-.name .input{
+.names .input{
     width: 48%;
     float: left;
     margin-right: 4%;
 }
-.name .input:last-child{
+.names .input:last-child{
     margin-right: 0;
 }
 .message .area{

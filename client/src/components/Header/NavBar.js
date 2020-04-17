@@ -46,7 +46,8 @@ const NavBar = (props) => {
             <Link className="nav-link" to='/About'>About Us</Link>
             <Link className="nav-link" to='/Appointments'>Appointments</Link>
             <Link className="nav-link" to ='/Login'onClick={logout}>Logout</Link>
-            {"Welcome"} {userName}
+            <Link className="nav-link" to ='/Login'>{"Welcome"} {userName}</Link>
+            
         </div>
         </div>
         </Responsive>
@@ -90,7 +91,6 @@ const NavBar = (props) => {
             <Link className="nav-link" to='/About'>About Us</Link>
             <Link className="nav-link" to='/Appointments'>Appointments</Link>
             <Link className="nav-link" to='/Login'>Login</Link>
-            <Link className="nav-link" to='/Signup'>Signup</Link>
         </div>
         </div>
         </Responsive>
@@ -106,7 +106,6 @@ const NavBar = (props) => {
                         <Link className="nav-link" to='/About'>About Us</Link>
                         <Link className="nav-link" to='/Appointments'>Appointments</Link>
                         <Link className="nav-link" to='/Login'>Login</Link>
-                        <Link className="nav-link" to='/Signup'>Signup</Link>
                     </Dropdown.Menu>
                 </Dropdown>
                 {/* Logo */}

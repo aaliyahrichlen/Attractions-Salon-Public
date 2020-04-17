@@ -57,7 +57,8 @@ render()
             <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-analytics.js"/>
         <div class = "container2">
             <div className="script" align = "center">Sign Up</div>
-            <div class="name">
+            <div className="formFont">
+            <div class="names">
                 <input name="firstName" onChange={this.handleChange} value={this.state.firstName} id="firstName" type="text" placeholder="First Name" class="input"/>
                 <input name="lastName" onChange={this.handleChange} value={this.state.lastName} id="lastName" type="text" placeholder="Last Name" class="input"/>
             </div>
@@ -73,10 +74,19 @@ render()
             <div class="password">
                 <input name="password" id="password" type="password" onChange={this.handleChange} value={this.state.password} placeholder="Password" class="input"/>
             </div>
-            <div className="button">
-                <button class="myButton" onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</button>
-                <button class="myButton" onClick={event =>  window.location.href='/Login'} variant="contained" color="primary" name="submit">Login</button>
             </div>
+            <div className="button">
+            <form action='Signup' className="buf">
+                    <button  class="medium ui pink button" >
+                        Sign Up
+                    </button>
+                </form>
+                <form action='Login' className="buf">
+                    <button  class="medium ui pink button" >
+                        Back to Login
+                    </button>
+                </form>
+                </div>
           </div>
   </div>
   <Footer/>
