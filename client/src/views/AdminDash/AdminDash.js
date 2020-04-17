@@ -34,7 +34,9 @@ const EditServices = (props) => {
     const [descArray, setDescArray] = useState([]);
      const [about, setAbout] = useState("");
     const [cardNumber, setCardNumber] = useState(0);
-    
+    const [category, setCategory] = useState([]);
+
+
 
     const handleChange = e => {
         if (e.target.files[0]) {
@@ -68,6 +70,12 @@ const EditServices = (props) => {
         setDescArray(newArray);
         }
     };
+    const handleCategoryChange =index => (e) => {
+        e.preventDefault();
+        let newArray = [...category];
+        newArray[index] = e.target.value;
+        setCategory(newArray);
+      };
     // const handleAboutChange = e =>{
     //     var str = String(e.target.value);
     //     if(str.replace(/\s/g, '').length){
@@ -81,10 +89,13 @@ const EditServices = (props) => {
             setDescArray([]);
             setNameArray([]);
             setPriceArray([]);
+            setCategory([]);
+
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
+                setCategory(category => category.concat(snapshot.child("category").val()));
 
 
             });
@@ -161,6 +172,8 @@ const addService = e =>{
     setNameArray(nameArray => nameArray.concat(""));
     setPriceArray(priceArray => priceArray.concat(""));
     setDescArray(descArray => descArray.concat(""));
+    setCategory(category => category.concat(""));
+
 };
 const deleteService = index => e=>{
     e.preventDefault();
@@ -172,6 +185,10 @@ const deleteService = index => e=>{
     
     descArray.splice(index, 1);
     setDescArray([...descArray]);
+
+    
+    category.splice(index, 1);
+    setDescArray([...category]);
 
     setCardNumber(cardNumber - 1);
 
@@ -185,7 +202,9 @@ const deleteService = index => e=>{
     
             name: nameArray[i],
             price: priceArray[i],
-            description: descArray[i]
+            description: descArray[i],
+            category: category[i]
+
     });
 
     }
@@ -288,8 +307,8 @@ const deleteService = index => e=>{
         
                 name: nameArray[i],
                 price: priceArray[i],
-                description: descArray[i]
-            
+                description: descArray[i],
+                category: category[i]
         });
 
          }
@@ -354,6 +373,8 @@ const deleteService = index => e=>{
                     priceArray={priceArray}
                     handlePriceChange={handlePriceChange}
                     descArray={descArray}
+                    handleCategoryChange={handleCategoryChange}
+                    category={category}
                     handleDescChange={handleDescChange}
                     handleChange={handleChange}
                     handleUpload={handleUpload}

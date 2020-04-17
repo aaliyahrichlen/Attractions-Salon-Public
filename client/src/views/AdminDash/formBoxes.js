@@ -9,9 +9,38 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import "./AdminDash.css";
 
 const CreateForm = (props) =>{
+  const categories = [
+    {
+      value: 'Full Set',
+      label: 'Full Set',
+    },
+    {
+      value: 'Pedicure',
+      label: 'Pedicure',
+    },
+    {
+      value: 'Manicure',
+      label: 'Manicure',
+    },
+    {
+      value: 'Fill',
+      label: 'Fill',
+    },
+    
+    {
+        value: 'Polish',
+        label: 'Polish',
+      },
+      {
+        value: 'Hair',
+        label: 'Hair',
+      }
+  ];
     let formBoxes = [];
     for (let i = 0; i < props.cardNumber; i++) 
     {
@@ -72,6 +101,7 @@ const CreateForm = (props) =>{
       >
         Save
       </Button>
+      
      
         <Button
         variant="contained"
@@ -83,6 +113,20 @@ const CreateForm = (props) =>{
       >
         Delete
       </Button>
+      <TextField
+          id="Category"
+          select
+          label="Category"
+          value={props.category[i]}
+          onChange={props.handleCategoryChange(i)}
+
+        >
+          {categories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
       
       </div>
       </form> 
