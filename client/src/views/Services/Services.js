@@ -34,6 +34,12 @@ function Services() {
                 Polish
             </Divider>
             <CardGroupProps category={'Polish'} />
+        
+        
+            <Divider horizontal>
+                Hair
+            </Divider>
+            <CardGroupProps category={'Hair'} />
 
             <Footer/>
         </div>
