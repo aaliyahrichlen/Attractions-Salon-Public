@@ -183,10 +183,11 @@ render()
                 <button class="medium ui pink button" onClick={this.signup} variant="contained" color="primary" name="submit">Sign Up</button>
                 <button class="medium ui pink button" onClick={event =>  window.location.href='/Login'} variant="contained" color="primary" name="submit">Login</button>
             </div>
-          </div>
-          <Footer/>
-        </div>
-    )
+            </div>
+            <Footer/>
+            </div>
+            </div>
+    );
 }
 }
 export default Signup;
