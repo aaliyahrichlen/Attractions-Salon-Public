@@ -35,35 +35,33 @@ function About() {
     return (
         <div>
             <div className="wholeFlex">
-            <div className="topFlex">
-            <div className="slideshowContainer">
-            <SlideShow/>
-            </div>
-            <div className="textContainer">
-            <div className="headText">
-                Attractions Salon
-            </div>
-            <div className="textFormat">
-                {text}
-            </div>
-            </div>
+                <div className="topFlex">
+                    <div className="slideshowContainer">
+                        <SlideShow/>
+                    </div>
+                <div className="textContainer">
+                    <div className="headText">
+                        Attractions Salon
+                    </div>
+                <div className="textFormat">   
+                    <div class="container2"> {/*I had to change this because if I just have it as container
+                        the picture goes beyond the container since I am using Bootstrap (Soham)*/}
+                        <img src={imagesURL[0]} class="spread"></img>
+                    <h4 >
+                        {text}
+                    </div>
+                </div>
             
-        </div>
+                </div>
         <div className="reviewComp">
-        <Review/>
+            <Review/>
         </div>
-        </div>
+    </div>
         <Footer/>
-        </div>
-
+</div>
+</div>
+</div>
     );
 }
 
 export default About;
-
-/*<div class="container2"> {/*I had to change this because if I just have it as container
-the picture goes beyond the container since I am using Bootstrap (Soham)*/
-    /*<img src={imagesURL[0]} class="spread"></img>
-    <h4 >
-        {text}
-    </h4>*/
