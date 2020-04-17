@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { Redirect } from "react-router-dom";
-import { Button } from 'reactstrap';
+import { Button } from '@material-ui/core';
 import { Table } from '@material-ui/core';
 import MomentUtils from '@date-io/moment';
 import {MuiPickersUtilsProvider, TimePicker} from '@material-ui/pickers';
 import moment from "moment-timezone";
 import axios from "axios";
 import './Appointments.css';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import SendIcon from '@material-ui/icons/Send';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
@@ -61,8 +64,8 @@ const ApptRangeApp = (props) => {
         return(
             <tr class="range-row">
                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <td class="time-picker">
-                    <div>Start Time</div>
+                    <td class="time-picker" className="resize">
+                    <div className="formFont">Start Time</div>
                     <TimePicker
                     margin="normal"
                     minutesStep={5}
@@ -74,8 +77,8 @@ const ApptRangeApp = (props) => {
                     }}
                     />
                     </td>
-                    <td class="time-picker">
-                    <div>End Time</div>
+                    <td class="time-picker" className="resize">
+                    <div className="formFont">End Time</div>
                     <TimePicker
                     margin="normal"
                     minutesStep={5}
@@ -88,7 +91,7 @@ const ApptRangeApp = (props) => {
                     />
                     </td>
                 </MuiPickersUtilsProvider>
-                <td>{item.id !== 0 ? <Button onClick={(event) => removeRow(event, item.id)} style={{backgroundColor: '#B22222'}}>Remove Time Range</Button> : <div/>}</td>
+                <td className="resize">{item.id !== 0 ? <Button startIcon={<DeleteIcon />} variant="contained" onClick={(event) => removeRow(event, item.id)} >Remove Time Range</Button> : <div/>}</td>
             </tr>
         );
     });
@@ -98,22 +101,26 @@ const ApptRangeApp = (props) => {
         return <Redirect to={newRedirect} />
     }
     return (
-        <Table borderless>
+        <div className="rangeContainer">
+        <div align="center" className="rangeInstructions">Please add new appointment ranges to send to the client.</div>
+        <Table borderless className="buf">
             <tbody>
             {rows}
             </tbody>
         <tfoot>
             <tr>
             <td>
-                <Button onClick={() => {addNewRow()}} style={{backgroundColor: 'green'}} className="float-left">Add New Time Range</Button>
+                
             </td>
-            <td/>
-            <td>
-                <Button onClick={() => {submitRanges()}} style={{backgroundColor: 'orange'}} className="float-left">Submit Time Ranges</Button>
-            </td>
+            <td></td>
+            <td><Button startIcon={<AddCircleOutlineIcon />} variant="contained" onClick={() => {addNewRow()}} className="float-left">Add Another Time Range</Button></td>
             </tr>
         </tfoot>
         </Table>
+        <div className="submitBar">
+        <Button startIcon={<SendIcon />} variant="contained" onClick={() => {submitRanges()}} className="float-left">Submit Time Ranges</Button>
+        </div>
+        </div>
     );
 }
 
