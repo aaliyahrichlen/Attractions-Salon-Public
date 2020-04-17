@@ -22,6 +22,11 @@ import {
 import { RadioButton, RadioButtonGroup } from "material-ui/RadioButton";
 import axios from "axios";
 import './Appointments.css';
+import * as firebase from 'firebase';
+import { Redirect } from "react-router-dom";
+import fire from "../Login/config/Fire";
+import {MuiPickersUtilsProvider, TimePicker} from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
@@ -30,6 +35,7 @@ const stepMuiTheme = getMuiTheme({
     primaryColor: '#f6a5b8',
   },
   textField: {
+    disabledTextColor: 'rgba(0, 0, 0, 1)',
     focusColor: '#f6a5b8',
   },
   radioButton: {
@@ -43,6 +49,12 @@ const stepMuiTheme = getMuiTheme({
     selectTextColor: '#ffffff',
     calendarYearBackgroundColor: '#f6a5b8',
     headerColor: '#f6a5b8',
+  },
+  timePicker:{
+    color: '#f6a5b8',
+    textColor: '#f6a5b8',
+    selectColor: '#f6a5b8',
+    selectTextColor: '#f6a5b8',
   },
   stepper: {
       iconColor: '#f6a5b8'
@@ -60,31 +72,35 @@ class AppointmentApp extends Component {
       stylistName: "",
       schedule: [],
       confirmationModalOpen: false,
-      appointmentMeridiem: 0,
       validEmail: true,
       validPhone: true,
       validTime: false,
       finished: false,
-      appointmentTime: null,
+      appointmentTime: moment('8:00 am', "HH:mm a"),
       smallScreen: window.innerWidth < 768,
       stepIndex: 0
     };
+
+
   }
-  componentDidMount() {
-    // axios.get(API_BASE + `api/retrieveSlots`).then(response => {
-    //   console.log("response via db: ", response.data);
-    //   this.handleDBReponse(response.data);
-    // });
+
+  componentWillMount() {
+    if(firebase.auth().currentUser)
+    {
+      var fireRef = fire.database().ref();
+      fireRef.orderByChild("email").equalTo(firebase.auth().currentUser.email).on("child_added", (snapshot) => {
+        let userData = snapshot.val();
+        this.setState({firstName: userData.firstName, lastName: userData.lastName, email: userData.email, phone: userData.phoneNum});
+      });
+    }
   }
+
   handleSetAppointmentDate(date) {
     this.setState({ appointmentDate: date, confirmationTextVisible: true });
   }
-  handleSetAppointmentMeridiem(meridiem) {
-    this.setState({ appointmentMeridiem: meridiem });
-  }
   handleSubmit() {
     this.setState({ confirmationModalOpen: false });
-    let fullDate = moment(moment(this.state.appointmentDate).format("MM/DD/YYYY") + ' ' + this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm'), "MM/DD/YYYY HH:mm a").tz('America/New_York')
+    let fullDate = moment(moment(this.state.appointmentDate).format("MM/DD/YYYY") + ' ' + moment(this.state.appointmentTime).format("HH:mm a"), "MM/DD/YYYY HH:mm a").tz('America/New_York');
     console.log(fullDate);
     const newAppointment = {
       name: this.state.firstName + " " + this.state.lastName,
@@ -129,19 +145,13 @@ class AppointmentApp extends Component {
       ? this.setState({ validPhone: true })
       : this.setState({ validPhone: false });
   }
-  validateAppointmentTime(time, meridiem) {
-    const regex = /^(0[0-9]|[1][0-2]|[0-9]):([0-5][0-9])$/;
-    let fullTime = time + ' ' + (meridiem == 0 ? 'am' : 'pm');
+  handleTimeChange(time){
     this.setState({appointmentTime: time})
-    if(regex.test(time))
+    var startTime = moment('08:59 am', "HH:mm a");
+    var endTime = moment('05:01 pm', "HH:mm a");
+    if(time.isBetween(startTime , endTime))
     {
-      var currentTime= moment(fullTime, 'HH:mm a');
-      var startTime = moment('08:59 am', "HH:mm a");
-      var endTime = moment('05:00 pm', "HH:mm a");
-      if(currentTime.isBetween(startTime , endTime))
-      {
-        return this.setState({ validTime: true });
-      }
+      return this.setState({ validTime: true });
     }
     return this.setState({ validTime: false });
   }
@@ -153,48 +163,6 @@ class AppointmentApp extends Component {
         .startOf("day")
         .diff(moment().startOf("day")) < 0
     );
-  }
-
-  
-  handleDBReponse(response) {
-    const appointments = response;
-    const today = moment().startOf("day"); //start of today 12 am
-    const initialSchedule = {};
-    initialSchedule[today.format("MM/DD/YYYY")] = true;
-    const schedule = !appointments.length
-      ? initialSchedule
-      : appointments.reduce((currentSchedule, appointment) => {
-          const { slot_date, slot_time } = appointment;
-          const dateString = moment(slot_date, "MM/DD/YYYY").format(
-            "MM/DD/YYYY"
-          );
-          if(!currentSchedule[slot_date])
-          {
-            currentSchedule[dateString] = Array(8).fill(false)
-          }
-          if(Array.isArray(currentSchedule[dateString]))
-          {
-            currentSchedule[dateString][slot_time] = true
-          }
-          return currentSchedule;
-        }, initialSchedule);
-
-    for (let day in schedule) {
-      let slots = schedule[day];
-      if(slots.length)
-      {
-        if(slots.every(slot => slot === true))
-        {
-          schedule[day] = true
-        }
-      }
-    //   slots.length
-    //     ? slots.every(slot => slot === true) ? (schedule[day] = true) : null
-    //     : null;
-    }
-    this.setState({
-      schedule: schedule
-    });
   }
 
   renderAppointmentConfirmation() {
@@ -225,51 +193,13 @@ class AppointmentApp extends Component {
           </span>{" "}
           at{" "}
           <span style={spanStyle}>
-            {this.state.appointmentTime + ' ' + (this.state.appointmentMeridiem == 0 ? 'am' : 'pm')}
+            {moment(this.state.appointmentTime).format(
+              "H:mm a"
+            )}
           </span>
         </p>
       </section>
     );
-  }
-  renderAppointmentTimes() {
-    if (!this.state.isLoading) {
-      const slots = [...Array(8).keys()];
-      return slots.map(slot => {
-        const appointmentDateString = moment(this.state.appointmentDate).format(
-          "MM/DD/YYYY"
-        );
-        const time1 = moment()
-          .hour(9)
-          .minute(0)
-          .add(slot, "hours");
-        const time2 = moment()
-          .hour(9)
-          .minute(0)
-          .add(slot + 1, "hours");
-        const scheduleDisabled = this.state.schedule[appointmentDateString]
-          ? this.state.schedule[
-              moment(this.state.appointmentDate).format("MM/DD/YYYY")
-            ][slot]
-          : false;
-        const meridiemDisabled = this.state.appointmentMeridiem
-          ? time1.format("a") === "am"
-          : time1.format("a") === "pm";
-        return (
-          <RadioButton
-            label={time1.format("h:mm a") + " - " + time2.format("h:mm a")}
-            key={slot}
-            value={slot}
-            style={{
-              marginBottom: 15,
-              display: meridiemDisabled ? "none" : "inherit"
-            }}
-            disabled={scheduleDisabled || meridiemDisabled}
-          />
-        );
-      });
-    } else {
-      return null;
-    }
   }
 
   render() {
@@ -314,6 +244,10 @@ class AppointmentApp extends Component {
         onClick={() => this.handleSubmit()}
       />
     ];
+    if(!firebase.auth().currentUser)
+    {
+      return <Redirect to="/Login"/>
+    }
     return (
       <div>
         <section
@@ -348,37 +282,21 @@ class AppointmentApp extends Component {
                   Choose an available time for your appointment
                 </StepButton>
                 <StepContent>
-                <TextField
-                        value={data.appointmentTime}
-                        style={{ display: "block" }}
-                        name="apt-time"
-                        hintText="HH:MM"
-                        floatingLabelText="Time"
-                        errorText={
-                          !data.appointmentTime || data.validTime ? null : "Enter a valid appointment time"
-                        }
-                        onChange={(evt, newValue) =>
-                          this.validateAppointmentTime(newValue, this.state.appointmentMeridiem)
-                        }
-                      />
-                  <SelectField
-                    floatingLabelText="AM/PM"
-                    value={data.appointmentMeridiem}
-                    onChange={(evt, key, payload) => {
-                      this.handleSetAppointmentMeridiem(payload);
-                      if(this.state.appointmentTime)
-                      {
-                        this.validateAppointmentTime(this.state.appointmentTime,payload);
-                      }
-                    }}
-                    selectionRenderer={value => (value ? "PM" : "AM")}
-                  >
-                    <MenuItem value={0} primaryText="AM" />
-                    <MenuItem value={1} primaryText="PM" />
-                  </SelectField>
+                  <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <TimePicker
+                    margin="normal"
+                    minutesStep={5}
+                    label={!this.state.validTime ? "Must be between 9 to 5" : "Time"}
+                    value={data.appointmentTime}
+                    onChange={(time) => this.handleTimeChange(time)}
+                    InputLabelProps={!this.state.validTime ?
+                      {style: {color: "red"}
+                  } : undefined}
+                    />
+                </MuiPickersUtilsProvider>
                 </StepContent>
               </Step>
-              <Step disabled={ !this.state.validTime }>
+              <Step disabled={!data.appointmentDate || !this.state.validTime }>
               <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
                   Share your contact information with us and we'll send you a reminder
                 </StepButton>
@@ -387,6 +305,7 @@ class AppointmentApp extends Component {
                     <section>
                       <TextField
                         value={data.firstName}
+                        disabled={true}
                         style={{ display: "block" }}
                         name="first_name"
                         hintText="First Name"
@@ -397,6 +316,7 @@ class AppointmentApp extends Component {
                       />
                       <TextField
                         value={data.lastName}
+                        disabled={true}
                         style={{ display: "block" }}
                         name="last_name"
                         hintText="Last Name"
@@ -407,6 +327,7 @@ class AppointmentApp extends Component {
                       />
                       <TextField
                         value={data.email}
+                        disabled={true}
                         style={{ display: "block" }}
                         name="email"
                         hintText="youraddress@mail.com"
@@ -420,7 +341,8 @@ class AppointmentApp extends Component {
                       />
                       <TextField
                         value={data.phone}
-                        style={{ display: "block" }}
+                        disabled={true}
+                        style={{ display: "block"}}
                         name="phone"
                         hintText="+2348995989"
                         floatingLabelText="Phone"
