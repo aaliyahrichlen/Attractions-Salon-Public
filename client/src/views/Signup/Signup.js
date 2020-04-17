@@ -184,8 +184,8 @@ render()
                 <button class="medium ui pink button" onClick={event =>  window.location.href='/Login'} variant="contained" color="primary" name="submit">Login</button>
             </div>
             </div>
-            <Footer/>
             </div>
+            <Footer/>
             </div>
     );
 }
