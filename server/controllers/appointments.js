@@ -118,8 +118,9 @@ const appointmentController = {
           }else{
             msg += " with no preferred stylist"
           }
-          msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
+          msg += " for a " + appointment.serviceName + ", which is priced at $" + (appointment.servicePrice / 100).toFixed(2);
           msg += ' has been confirmed by the salon owner. We look forward to your appointment!';
+          msg += "\n\nPlease click here to pay online: " + (process.env.WEB_URL || 'http://localhost:3000') + '/Payments/' + appointment.confirmation_code
           let emailOptions = {
             from: transporter.options.auth.user,
             to: appointment.email,
@@ -166,7 +167,7 @@ const appointmentController = {
           }else{
             msg += " with no preferred stylist";
           }
-          msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
+          msg += " for a " + appointment.serviceName + ", which is priced at $" + (appointment.servicePrice / 100).toFixed(2);
           msg += ' is not available at your selected time. Please see the below times for available appointments on the same day, or please make a new appointment on the website if none of these times work for you.';
           msg += '\n\nAvailable Time Ranges:';
           requestBody.forEach(element => {
@@ -217,7 +218,7 @@ const appointmentController = {
               }else{
                 msgBody += " with no preferred stylist"
               }
-              msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
+              msgBody += " for a " + appointment.serviceName + ", which is priced at $" + (appointment.servicePrice / 100).toFixed(2);
               msgBody += '.\n';
               //Add client info
               msgBody += '\nClient Email: ' + saved.email;
@@ -229,7 +230,7 @@ const appointmentController = {
               let emailOptions = {
                 from: transporter.options.auth.user,
                 to: process.env.EMAIL_RX_ADDRESS || require('../config/config').email.rx_address,
-                subject: 'Attractions Salon Appointment Confirmation',
+                subject: 'Attractions Salon Appointment Reschedule',
                 text: msgBody
               };
               transporter.sendMail(emailOptions, function(error, info){
