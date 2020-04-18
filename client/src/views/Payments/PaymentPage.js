@@ -1,3 +1,4 @@
+import { Redirect } from "react-router-dom";
 import 'react-square-payment-form/lib/default.css'
 import './PaymentPage.css';
 
@@ -17,11 +18,14 @@ const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163'
 
 class PaymentPage extends React.Component {
 
+  //const [newRedirect, setNewRedirect] = useState(null);//change this
+
   constructor(props) {
     super(props)
     this.state = {
       amount: "2500",
       errorMessages: [],
+      newRedirect: null,
     }
     this.newSelection = this.newSelection.bind(this)
   }
@@ -36,7 +40,18 @@ class PaymentPage extends React.Component {
     alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
 
     Axios.post(API_BASE + "/api/processPayment", {nonce : nonce, amount : this.state.amount})
-    
+    .then(response =>{
+      if(response.data === "OK")
+      {
+        this.setState({newRedirect: '/paymentSuccess'});
+        console.log(this.state.newRedirect);
+      }
+      else{
+        this.setState({newRedirect: '/actionfailed'});
+      }
+    });
+
+    //add files in confirmations folder just like what noah did
 
     //insert email trigger request to send invoice of payment
 
@@ -67,6 +82,12 @@ class PaymentPage extends React.Component {
 
 
   render() {
+
+    if(this.state.newRedirect)
+    {
+        return <Redirect to={this.state.newRedirect} />
+    }
+
     return (
       <div id = "pay">
         <h1>Payment Page</h1>
