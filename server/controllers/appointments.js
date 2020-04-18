@@ -14,7 +14,14 @@ const appointmentController = {
   price(req, res) {
     var requestBody = req.body;
     // Returns the price of a singular appointment
-    Appointment.findOne({confirmation_code: requestBody.confirmation_code}).exec((err, appointment) => res.json(appointment.servicePrice));
+    Appointment.findOne({confirmation_code: requestBody.confirmation_code}).exec((err, appointment) => {
+      if(appointment)
+      {
+        res.json({paid: appointment.paid, price: appointment.servicePrice, name: appointment.serviceName})
+      }else{
+        res.send("FAILURE")
+      }
+    });
   },
   pastAppointments(req, res) {
     // Returns past appointments for a user
@@ -34,7 +41,8 @@ const appointmentController = {
       confirmed: false,
       confirmation_code: '',
       serviceName: requestBody.service.name,
-      servicePrice: (parsedPrice.value * 100)
+      servicePrice: (parsedPrice.value * 100),
+      paid: false
     });
     //Create a confirmation code
     var codeExists = true;

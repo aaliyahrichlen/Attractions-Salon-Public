@@ -21,6 +21,7 @@ import ApptRangeSuccess from "./views/Confirmation/AppointmentRangeSuccess"
 import ApptTimeSuccess from './views/Confirmation/AppointmentTimeSuccess'
 import PaymentSuccess from './views/Confirmation/PaymentSuccess'
 import NewApptTime from "./views/Appointments/NewAppointmentTime"
+import AlreadyPaid from "./views/Confirmation/AlreadyPaid"
 import fire from './views/Login/config/Fire';
 
 
@@ -53,13 +54,14 @@ const App = () => {
         <Route exact path="/Login" component={LoginHome} />
         <Route exact path="/Signup" component={Signup} />
         <Route exact path="/delete" component={DeleteImage}/>
-        <Route exact path="/Payments" component={Payments} />
+        <Route exact path="/Payments/:confirmId" component={Payments} />
         <Route exact path="/confirm" component={Confirmation}/>
         <Route exact path="/actionfailed" component={ActionFailed}/>
         <Route exact path="/confirmedalready" component={ConfirmedAlready}/>
         <Route exact path="/forgotPassword" component={forgotPassword}/>
         <Route exact path="/success/appt-range" component={ApptRangeSuccess}/>
         <Route exact path="/success/appt-time" component={ApptTimeSuccess}/>
+        <Route exact path="/alreadyPaid" component={AlreadyPaid}/>
         <Route exact path="/paymentSuccess" component={PaymentSuccess}/>
         <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
         <Route exact path="/new-appt-time/:confirmId" component={NewApptTime}/>
