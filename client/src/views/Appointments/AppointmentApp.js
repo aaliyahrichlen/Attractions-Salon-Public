@@ -91,18 +91,11 @@ class AppointmentApp extends Component {
 
   }
 
-  /*componentDidUpdate() {
-    console.log("component did update");
-    this.loadServices();
-  }
-*/
   loadServices() {
-    console.log("attempting to load services");
     //loading in the services offered dynamically:
     let db = fire.database();
     let ref = db.ref("text/services");
     ref.on("value", (servicesData => {
-      console.log("HERE!!!")
       const servicesObject = servicesData.val();
       const servicesList = Object.keys(servicesObject).map(key => ({
         ...servicesObject[key],
@@ -167,8 +160,6 @@ class AppointmentApp extends Component {
       });
   }
   validateEmail(email) {
-    console.log("prod" + process.env.REACT_APP_PRODUCTION)
-    console.log('api_base' + API_BASE)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     this.setState({ email: email })
     return regex.test(email)
@@ -299,7 +290,6 @@ class AppointmentApp extends Component {
     if (!firebase.auth().currentUser) {
       return <Redirect to="/Login" />
     }
-
     return (
       <div>
         <section
@@ -339,10 +329,10 @@ class AppointmentApp extends Component {
                     </SelectField>
                   </StepContent>
                 </Step>
-                <Step>
+                <Step disabled={JSON.stringify(this.state.selectedService) === '{}'}>
                   <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
                     Choose an available day for your appointment
-                </StepButton>
+                  </StepButton>
                   <StepContent>
                     {DatePickerExampleSimple()}
                   </StepContent>
@@ -350,7 +340,7 @@ class AppointmentApp extends Component {
                 <Step disabled={!data.appointmentDate}>
                   <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
                     Choose an available time for your appointment
-                </StepButton>
+                  </StepButton>
                   <StepContent>
                     <MuiPickersUtilsProvider utils={MomentUtils}>
                       <TimePicker
@@ -444,6 +434,7 @@ class AppointmentApp extends Component {
                           labelPosition="before"
                           primary={true}
                           fullWidth={true}
+                          disabled={!contactFormFilled || data.processed}
                           onClick={() =>
                             this.setState({
                               confirmationModalOpen: !this.state
