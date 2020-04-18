@@ -41,7 +41,7 @@ function Profile() {
                 logout = {logout}/>
                 
                 <PastAppointments
-                 />
+                 email ={userEmail}/>
             </div>
         </div>
         <Footer/>
