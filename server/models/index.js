@@ -15,7 +15,8 @@ const appointmentSchema = new Schema({
   confirmation_code: String,
   confirmed: Boolean,
   serviceName: String,
-  servicePrice: Number
+  servicePrice: Number,
+  paid: Boolean
 });
 
 const Appointment = model('Appointment', appointmentSchema);

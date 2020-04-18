@@ -12,7 +12,9 @@ const appointmentController = {
     Appointment.find({}).exec((err, appointments) => res.json(appointments));
   },
   price(req, res) {
-
+    var requestBody = req.body;
+    // Returns the price of a singular appointment
+    Appointment.findOne({confirmation_code: requestBody.confirmation_code}).exec((err, appointment) => res.json(appointment.servicePrice));
   },
   pastAppointments(req, res) {
     // Returns past appointments for a user
@@ -60,8 +62,9 @@ const appointmentController = {
         {
           msgBody += " with the stylist " + requestBody.stylist;
         }else{
-          msgBody += " with no preferred stylist"
+          msgBody += " with no preferred stylist";
         }
+        msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
         msgBody += '.\n';
         //Add client info
         msgBody += '\nClient Email: ' + saved.email;
@@ -107,6 +110,7 @@ const appointmentController = {
           }else{
             msg += " with no preferred stylist"
           }
+          msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
           msg += ' has been confirmed by the salon owner. We look forward to your appointment!';
           let emailOptions = {
             from: transporter.options.auth.user,
@@ -154,6 +158,7 @@ const appointmentController = {
           }else{
             msg += " with no preferred stylist";
           }
+          msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
           msg += ' is not available at your selected time. Please see the below times for available appointments on the same day, or please make a new appointment on the website if none of these times work for you.';
           msg += '\n\nAvailable Time Ranges:';
           requestBody.forEach(element => {
@@ -204,6 +209,7 @@ const appointmentController = {
               }else{
                 msgBody += " with no preferred stylist"
               }
+              msgBody += " for a " + saved.serviceName + ", which is priced at $" + (saved.servicePrice / 100).toFixed(2);
               msgBody += '.\n';
               //Add client info
               msgBody += '\nClient Email: ' + saved.email;
