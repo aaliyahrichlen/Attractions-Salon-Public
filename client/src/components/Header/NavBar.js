@@ -61,8 +61,9 @@ const NavBar = (props) => {
                         <Link className="nav-link" to='/Home'>Home</Link>
                         <Link className="nav-link" to='/Services'>Services</Link>
                         <Link className="nav-link" to='/About'>About Us</Link>
-                        <Link className="nav-link" to='/Appointments'>Appointments</Link>           
-                         <Link className="nav-link" to='/Logout'>Logout</Link>
+                        <Link className="nav-link" to='/Appointments'>Appointments</Link> 
+                        <Link className="nav-link" to ='/Login'>Logout</Link>
+                        <Link className="nav-link" to='/Logout'>Logout</Link>
 
                     </Dropdown.Menu>
                 </Dropdown>
