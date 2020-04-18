@@ -10,6 +10,9 @@ const appointmentController = {
     // Returns all appointments
     Appointment.find({}).exec((err, appointments) => res.json(appointments));
   },
+  price(req, res) {
+
+  },
   pastAppointments(req, res) {
     // Returns past appointments for a user
      Appointment.find({email: req.body.email}).exec((err, appointments) => res.json(appointments));
