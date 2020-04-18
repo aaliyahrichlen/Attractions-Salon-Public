@@ -13,7 +13,9 @@ const appointmentSchema = new Schema({
   slot_date: Date,
   created_at: Date,
   confirmation_code: String,
-  confirmed: Boolean
+  confirmed: Boolean,
+  serviceName: String,
+  servicePrice: Number
 });
 
 const Appointment = model('Appointment', appointmentSchema);

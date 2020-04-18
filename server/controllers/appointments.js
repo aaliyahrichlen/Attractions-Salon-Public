@@ -29,9 +29,12 @@ const appointmentController = {
       slot_date: requestBody.slot_date,
       created_at: Date.now(),
       confirmed: false,
-      confirmation_code: ''
+      confirmation_code: '',
+      serviceName: requestBody.selectedService.name,
+      servicePrice: requestBody.selectedService.price
     });
-
+    console.log("Name: " + requestBody.selectedService.name)
+    console.log("Price: " + requestBody.selectedService.price)
     //Create a confirmation code
     var codeExists = true;
     while(codeExists)
