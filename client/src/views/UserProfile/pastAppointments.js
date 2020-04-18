@@ -50,7 +50,7 @@ for(let i = obj.length -1; i >= 0; i--){
 }
 let temp =JSON.stringify(obj[i].slot_date);
 let date = moment(temp,'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
-let stylist ='';
+let stylist ="";
 
 let style = JSON.stringify(obj[i].stylist);
 if(!style.match(/[a-z]/i))
@@ -64,7 +64,7 @@ else
 
 appointments.push(date); //date of appointment
 
-let status ='';
+let status ="";
 if(obj[i].confirmed)
   {  appointments.push("Appointment confirmed"); //appointment confirmation
     status = "Appointment confirmed"}
@@ -72,8 +72,7 @@ else
 {appointments.push("Appointment not confirmed");
 status = "Appointment not confirmed"
 }
-rows.push(createData("Appointment" +i, stylist, date, status));
-
+rows.push(createData("Appointment " + i, stylist, date, status));
 }
 }
 }
