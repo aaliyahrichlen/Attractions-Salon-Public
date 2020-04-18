@@ -4,6 +4,7 @@ const moment = require('moment-timezone')
 const randomstring = require('randomstring')
 const async = require('async')
 const {transporter} =  require('./../models/email')
+const parseCurrency = require('parsecurrency');
 
 const appointmentController = {
   all(req, res) {
@@ -19,7 +20,7 @@ const appointmentController = {
   },
   async create(req, res) {
     var requestBody = req.body;
-    
+    parsedPrice = parseCurrency(requestBody.service.price)
     // Creates a new record from a submitted form
     var newappointment = new Appointment({
       name: requestBody.name,
@@ -30,11 +31,9 @@ const appointmentController = {
       created_at: Date.now(),
       confirmed: false,
       confirmation_code: '',
-      serviceName: requestBody.selectedService.name,
-      servicePrice: requestBody.selectedService.price
+      serviceName: requestBody.service.name,
+      servicePrice: (parsedPrice.value * 100)
     });
-    console.log("Name: " + requestBody.selectedService.name)
-    console.log("Price: " + requestBody.selectedService.price)
     //Create a confirmation code
     var codeExists = true;
     while(codeExists)
@@ -50,6 +49,7 @@ const appointmentController = {
     // and saves the record to
     // the data base
     newappointment.save((err, saved) => {
+      console.log("Error: " + err)
       // Returns the saved appointment
       // after a successful save
       Appointment.find({ _id: saved._id })
