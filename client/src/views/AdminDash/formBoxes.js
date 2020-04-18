@@ -57,25 +57,40 @@ const CreateForm = (props) =>{
         <div className="admHead">{name}</div>
         <form   onSubmit={props.handleTextUpload} >
             
-            <FormControl >
+            <FormControl fullWidth="true">
             <InputLabel className="buf" htmlFor="component-simple">Name </InputLabel>
             <Input className="buf" id="component-simple" defaultValue={name} onBlur={props.handleTextChange(i)} label="Name" />
             </FormControl>
             <br />
-            <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
+            <FormControl fullWidth="true" key={`${Math.floor((Math.random() * 1000))}-min`}>
             <InputLabel className="buf" htmlFor="component-simple">Price </InputLabel>
             <Input className="buf" id="component-simple" defaultValue={props.priceArray[i]} onBlur={props.handlePriceChange(i)} label="Price" />
             </FormControl>
             <br />
-            <FormControl >
+            <FormControl fullWidth="true" >
             <InputLabel className="buf" htmlFor="component-simple">Description </InputLabel>
             <Input className="buf" id="component-simple" multiline="true" defaultValue={props.descArray[i]} onBlur={props.handleDescChange(i)} />
             </FormControl>
             <br />
-            <div className="buf">
-                    <input type="file" onChange={props.handleChange}/>
-                    </div>
-                    <div className="buf">
+            <TextField
+          id="Category"
+          select
+          label="Category"
+          value={props.category[i]}
+          onChange={props.handleCategoryChange(i)}
+          key={`${Math.floor((Math.random() * 1000))}-min`}
+        >
+          {categories.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <br/>
+            <div>
+              <div className="buf">
+                    <input  type="file" onChange={props.handleChange}/>
+                    
                     <Button
                             variant="contained"
                             color="default"
@@ -87,6 +102,7 @@ const CreateForm = (props) =>{
                         >
                             Upload
                         </Button> 
+                        </div>
                         </div>
             <div className="serviceButton">
             
@@ -113,20 +129,7 @@ const CreateForm = (props) =>{
       >
         Delete
       </Button>
-      <TextField
-          id="Category"
-          select
-          label="Category"
-          value={props.category[i]}
-          onChange={props.handleCategoryChange(i)}
-          key={`${Math.floor((Math.random() * 1000))}-min`}
-        >
-          {categories.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+
       
       </div>
       </form> 

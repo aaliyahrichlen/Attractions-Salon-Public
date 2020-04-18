@@ -71,7 +71,7 @@ render()
             </div>
             <div className="button">
                 <form onClick={this.login} className="buf">
-                    <button  class="big ui pink button" >
+                    <button  class="medium ui pink button" >
                         Login
                     </button>
                 </form>
