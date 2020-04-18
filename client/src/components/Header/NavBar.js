@@ -63,7 +63,7 @@ const NavBar = (props) => {
                         <Link className="nav-link" to='/About'>About Us</Link>
                         <Link className="nav-link" to='/Appointments'>Appointments</Link> 
                         <Link className="nav-link" to ='/Login'>Profile</Link>
-                        <Link className="nav-link" to='/Logout'>Logout</Link>
+                        <Link className="nav-link" to ='/Login'onClick={logout}>Logout</Link>
 
                     </Dropdown.Menu>
                 </Dropdown>
