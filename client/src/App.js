@@ -19,6 +19,7 @@ import ConfirmedAlready from "./views/Confirmation/ConfirmedAlready"
 import ApptRangeApp from "./views/Appointments/AppointmentRange"
 import ApptRangeSuccess from "./views/Confirmation/AppointmentRangeSuccess"
 import ApptTimeSuccess from './views/Confirmation/AppointmentTimeSuccess'
+import PaymentSuccess from './views/Confirmation/PaymentSuccess'
 import NewApptTime from "./views/Appointments/NewAppointmentTime"
 import fire from './views/Login/config/Fire';
 
@@ -59,6 +60,7 @@ const App = () => {
         <Route exact path="/forgotPassword" component={forgotPassword}/>
         <Route exact path="/success/appt-range" component={ApptRangeSuccess}/>
         <Route exact path="/success/appt-time" component={ApptTimeSuccess}/>
+        <Route exact path="/paymentSuccess" component={PaymentSuccess}/>
         <Route exact path="/appt-range/:confirmId" component={ApptRangeApp}/>
         <Route exact path="/new-appt-time/:confirmId" component={NewApptTime}/>
 
