@@ -8,10 +8,10 @@ import Card from 'react-bootstrap/Card';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 function AdminDashCard (props) {
     return (
-        <Card style={{ width: '14rem' }}>
+        <Card>
             <Card.Img variant="top" src={props.URL} />
             <Card.Body>
-                <Card.Title>Upload an image for your {props.nameOfService}!</Card.Title>
+                <Card.Title class="admHead">Upload an image for your {props.nameOfService}!</Card.Title>
                 <Card.Text>
                 </Card.Text>
                 { props.showValue && <progress value={props.progressBar} max="100"/>} 

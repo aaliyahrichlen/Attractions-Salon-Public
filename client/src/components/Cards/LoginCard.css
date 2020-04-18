@@ -3,3 +3,12 @@
     justify-content: center;
     flex-direction: row;    
 }
+
+.deleteCardCont {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: stretch;
+    align-items: flex-start;
+}

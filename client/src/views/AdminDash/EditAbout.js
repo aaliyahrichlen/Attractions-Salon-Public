@@ -17,6 +17,7 @@ import SidebarNav from "../../components/DashSidebar/SidebarNav.js";
 import createForm from "./formBoxes.js";
 import CreateForm from './formBoxes.js';
 import Card from 'react-bootstrap/Card';
+import "./AdminDash.css"
 const EditAbout = (props) => {
     const [about, setAbout] = useState("");
   
@@ -43,7 +44,7 @@ const EditAbout = (props) => {
     },[]);
 
     return (
-        <div class="leftPage">           
+        <div >           
                 {/* <div className="box"> */}
                     {/* <div className="admHead">About Page
                     </div> */}
@@ -68,12 +69,12 @@ const EditAbout = (props) => {
                         </Button> 
                             </div>  */}
 
-                            <Card style={{ width: '18rem' }}>
+                            <Card className="aboutResize">
                                 <Card.Body>
-                                <Card.Title>About</Card.Title>
-                                <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
-                                    <InputLabel className="buf" htmlFor="component-simple">About </InputLabel>
-                                    <Input className="buf" id="component-simple" multiline="true" defaultValue={about} onBlur={handleAboutChange} />
+                                <Card.Title className="admHead">About</Card.Title>
+                                <FormControl fullWidth="true" key={`${Math.floor((Math.random() * 1000))}-min`}>
+                                    <InputLabel htmlFor="component-simple">About </InputLabel>
+                                    <Input  id="component-simple" multiline="true" defaultValue={about} onBlur={handleAboutChange} />
                                 </FormControl>
                                     <div className="buf">
                                         <Button

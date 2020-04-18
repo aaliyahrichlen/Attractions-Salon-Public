@@ -8,6 +8,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import DeleteCard from "../../components/Cards/DeleteCard";
 import AdminDashCard from "../../components/Cards/AdminDashCard";
 import SidebarNav from "../../components/DashSidebar/SidebarNav.js";
+import EditAbout from "../AdminDash/EditAbout.js";
+import "./DeleteImage.css"
+import Divider from '@material-ui/core/Divider';
 
 const DeleteImage = () => { 
 
@@ -177,7 +180,10 @@ const DeleteImage = () => {
             <div className="rowDelete">
                 <div className="largecolumnDelete">
                     <div className="pink-columnDelete">
-                    <h2 class="centeraligned">Delete photos from Slideshow folder!</h2>
+                    <div className="headFont">Edit the About Us Page</div>
+                    <div className="cardContainer">
+                    <EditAbout/>
+                    
                     <AdminDashCard
                     URL={urlArray[1]}
                     nameOfService="Slideshow"
@@ -186,9 +192,11 @@ const DeleteImage = () => {
                     id="slideshow"
                     handleChange={handleAddChange}
                     handleUpload={handleUpload}/>
-
+                    
+                    </div>
                     <DeleteCard images = {images}
                     handleChange = {handleChange}/>
+
                     {/* <EditSlideshow
                     URL={urlArray[1]}
                     showValue={show[1]}
@@ -198,7 +206,10 @@ const DeleteImage = () => {
                     SlideshowImages={images}
                     handleChange={handleChange}/>                     */}
                     <br/>
-                    <h2 class="centeraligned">Delete photos from Logos folder!</h2>
+                    <Divider/>
+                    <Divider/>
+                    <div className="headFont">Delete Photos from the Logos Folder</div>
+                    <div align="center">
                     <AdminDashCard
                     URL={urlArray[0]}
                     nameOfService="Logos"
@@ -207,6 +218,7 @@ const DeleteImage = () => {
                     id="logos"
                     handleChange={handleAddChange}
                     handleUpload={handleUpload}/>
+                    </div>
                     <DeleteCard images = {LogoImages}
                     handleChange = {handleChange}/>
                     {/* <EditLogos
@@ -218,31 +230,7 @@ const DeleteImage = () => {
                     LogoImages={LogoImages}
                     handleChange={handleChange}/>                     */}
                     <br/>
-                    <h2 class="centeraligned">Delete photos from Services folder!</h2>
-                    <AdminDashCard
-                    URL={urlArray[2]}
-                    nameOfService="Services"
-                    showValue={show[2]}
-                    progressBar={progressBar}
-                    id="services"
-                    handleChange={handleAddChange}
-                    handleUpload={handleUpload}/>
-
-                    <DeleteCard images = {servicesImages}
-                    handleChange = {handleChange}/>
-                    <br/>
-                    <h2 class="centeraligned">Delete photos from About folder!</h2>
-                    <AdminDashCard
-                    URL={urlArray[3]}
-                    nameOfService="About"
-                    showValue={show[3]}
-                    progressBar={progressBar}
-                    id="about"
-                    handleChange={handleAddChange}
-                    handleUpload={handleUpload}/>
-
-                    <DeleteCard images = {aboutImages}
-                    handleChange = {handleChange}/>
+                    
                     </div>
                 </div>
             </div>

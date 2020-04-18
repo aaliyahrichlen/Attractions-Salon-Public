@@ -18,20 +18,10 @@
 
 
   .pinkBackground{
-      background-color: pink;
+      background-color: lightpink;
   }
-  .wrapper{
-      width: 95%;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      grid-column-gap: 20px;
-      grid-row-gap: 20px;
-  }
-  .item{
-      color:white;
-      padding: 10px;
-  }
+
+
   .centeraligned{
       text-align: center;
   }
@@ -40,6 +30,26 @@
       background: red;
       color: white;
     grid-template-columns: 2fr, 2fr
+  }
+
+  .headFont {
+    font-family: 'Sofia';
+    font-size: xx-large;
+    margin: 20px;
+    text-align: center;
+  }
+
+  .slideResize {
+    width: 250px;
+  }
+
+  .cardContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: stretch;
+    align-items: flex-start;
   }
 
 /* .rowDeleteCard{

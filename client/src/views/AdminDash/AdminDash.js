@@ -19,6 +19,7 @@ import createForm from "./formBoxes.js";
 import CreateForm from './formBoxes.js';
 import EditAbout from "./EditAbout.js";
 import DeletePage from "../DeleteImage/DeleteImage";
+import Divider from '@material-ui/core/Divider';
 
 const EditServices = (props) => {
     const [image, setImage] = useState(null);
@@ -330,7 +331,6 @@ const deleteService = index => e=>{
         <div className="adminContainer">
         
         <div id="App">
-        <SidebarNav pageWrapId={"page-wrap"} outerContainerId={"App"} />
         <div id="page-wrap">
             <div className="header">
                 <div className="headLeft">
@@ -348,22 +348,11 @@ const deleteService = index => e=>{
                             Logout
                         </Button>
                         
-                        <Button
-                            variant="contained"
-                            color="default"
-                            size="large"
-                            startIcon={<DeleteIcon />}
-                            size="small"
-                            onClick={event =>  window.location.href='/delete'}
-                        >
-                            Delete Images
-                        </Button>
-                        
                 </div>
             </div>
            
             <div className="fullpage">
-                <div className="adminHead">Edit service details!</div>
+                <div className="adminHead">Edit the Services Page</div>
                 <div className="formContainer">
                     <CreateForm
                     cardNumber={cardNumber}
@@ -381,6 +370,8 @@ const deleteService = index => e=>{
                     deleteService={deleteService}
                     />
                     {/* {createForm()} */}
+                    </div>
+                    <div className="buf">
                     <Button
                         variant="contained"
                         color="default"
@@ -392,9 +383,10 @@ const deleteService = index => e=>{
                     >
                     Add a Service!
                 </Button>
-                <EditAbout/>
                 </div>
-                
+                <br/>
+                <Divider/>
+                <Divider/>
                 <DeletePage/>
                 
             </div>
