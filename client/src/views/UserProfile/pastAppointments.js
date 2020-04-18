@@ -32,8 +32,11 @@ const PastAppointments = (props) => {
         });
     }
 	},[props.email]);
- 
+const createData= (name, stylist, time, confirmed) =>{ 
+        return { name, stylist, time, confirmed};
+}
 var appointments = [];
+var rows = [];
 
 const processData = () =>{
 
@@ -47,28 +50,60 @@ for(let i = obj.length -1; i >= 0; i--){
 }
 let temp =JSON.stringify(obj[i].slot_date);
 let date = moment(temp,'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
+let stylist ='';
 
 let style = JSON.stringify(obj[i].stylist);
 if(!style.match(/[a-z]/i))
-appointments.push("No preference");
+{appointments.push("No preference");
+stylist = "No preference"}
 else
 {   
     appointments.push(JSON.stringify(obj[i].stylist)); //stylist name
+    stylist = JSON.stringify(obj[i].stylist);
 }
 
 appointments.push(date); //date of appointment
-if(obj[i].confirmed)
-    appointments.push("Appointment confirmed"); //appointment confirmation
-else
-appointments.push("Appointment not confirmed");
-}
-}
 
+let status ='';
+if(obj[i].confirmed)
+  {  appointments.push("Appointment confirmed"); //appointment confirmation
+    status = "Appointment confirmed"}
+else
+{appointments.push("Appointment not confirmed");
+status = "Appointment not confirmed"
+}
+rows.push(createData("Appointment" +i, stylist, date, status));
+
+}
+}
 }
     return (
         <div>
             {processData()}
-            {appointments}
+            <TableContainer >
+      <Table aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Appointments</TableCell>
+            <TableCell align="right">Stylist</TableCell>
+            <TableCell align="right">Time</TableCell>
+            <TableCell align="right">Confirmed</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow key={row.name}>
+              <TableCell component="th" scope="row">
+                {row.name}
+              </TableCell>
+              <TableCell align="right">{row.stylist}</TableCell>
+              <TableCell align="right">{row.time}</TableCell>
+              <TableCell align="right">{row.confirmed}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
         </div>
     );
 }
