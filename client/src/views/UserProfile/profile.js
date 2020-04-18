@@ -6,6 +6,7 @@ import fire from "../Login/config/Fire";
 import Review from '../../components/ReviewSection/Review';
 import Footer from "../../components/Footer/Footer";
 import "./profile.css";
+import PastAppointments from "./pastAppointments"
 function Profile() {
     const [userName,setUserName] = useState("");
     const [userEmail,setUserEmail] = useState("");
@@ -38,6 +39,9 @@ function Profile() {
                 <LoginCard email = {userEmail} 
                 name ={userName}
                 logout = {logout}/>
+                
+                <PastAppointments
+                 />
             </div>
         </div>
         <Footer/>
