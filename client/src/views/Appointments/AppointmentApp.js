@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import AppBar from "material-ui/AppBar";
 import RaisedButton from "material-ui/RaisedButton";
 import FlatButton from "material-ui/FlatButton";
@@ -12,6 +12,7 @@ import SnackBar from "material-ui/Snackbar";
 import Card from "material-ui/Card";
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import {
   Step,
   Stepper,
@@ -25,10 +26,12 @@ import './Appointments.css';
 import * as firebase from 'firebase';
 import { Redirect } from "react-router-dom";
 import fire from "../Login/config/Fire";
-import {MuiPickersUtilsProvider, TimePicker} from '@material-ui/pickers';
+import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 
 const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
+
+
 
 const stepMuiTheme = getMuiTheme({
   raisedButton: {
@@ -50,18 +53,20 @@ const stepMuiTheme = getMuiTheme({
     calendarYearBackgroundColor: '#f6a5b8',
     headerColor: '#f6a5b8',
   },
-  timePicker:{
+  timePicker: {
     color: '#f6a5b8',
     textColor: '#f6a5b8',
     selectColor: '#f6a5b8',
     selectTextColor: '#f6a5b8',
   },
   stepper: {
-      iconColor: '#f6a5b8'
+    iconColor: '#f6a5b8'
   }
 })
 
 class AppointmentApp extends Component {
+
+
   constructor(props, context) {
     super(props, context);
 
@@ -71,6 +76,7 @@ class AppointmentApp extends Component {
       email: "",
       stylistName: "",
       schedule: [],
+      selectedService: {},
       confirmationModalOpen: false,
       validEmail: true,
       validPhone: true,
@@ -78,19 +84,49 @@ class AppointmentApp extends Component {
       finished: false,
       appointmentTime: moment('8:00 am', "HH:mm a"),
       smallScreen: window.innerWidth < 768,
-      stepIndex: 0
+      stepIndex: 0,
+      services: []
     };
 
 
   }
 
+  /*componentDidUpdate() {
+    console.log("component did update");
+    this.loadServices();
+  }
+*/
+  loadServices() {
+    console.log("attempting to load services");
+    //loading in the services offered dynamically:
+    let db = fire.database();
+    let ref = db.ref("text/services");
+    ref.on("value", (servicesData => {
+      console.log("HERE!!!")
+      const servicesObject = servicesData.val();
+      const servicesList = Object.keys(servicesObject).map(key => ({
+        ...servicesObject[key],
+        uid: key,
+      }));
+
+      this.setState({ services: servicesList });
+    }))
+  }
+  handleSetService(service) {
+    this.setState({ selectedService: service });
+  }
+
+
+  componentDidMount() {
+    this.loadServices();
+  }
+
   componentWillMount() {
-    if(firebase.auth().currentUser)
-    {
+    if (firebase.auth().currentUser) {
       var fireRef = fire.database().ref();
       fireRef.orderByChild("email").equalTo(firebase.auth().currentUser.email).on("child_added", (snapshot) => {
         let userData = snapshot.val();
-        this.setState({firstName: userData.firstName, lastName: userData.lastName, email: userData.email, phone: userData.phoneNum});
+        this.setState({ firstName: userData.firstName, lastName: userData.lastName, email: userData.email, phone: userData.phoneNum });
       });
     }
   }
@@ -107,6 +143,7 @@ class AppointmentApp extends Component {
       email: this.state.email,
       phone: this.state.phone,
       stylist: this.state.stylistName,
+      service: this.state.selectedService,
       slot_date: fullDate
       // slot_date: moment(this.state.appointmentDate).format("MM/DD/YYYY"),
       // slot_time: this.state.appointmentSlot
@@ -133,24 +170,23 @@ class AppointmentApp extends Component {
     console.log("prod" + process.env.REACT_APP_PRODUCTION)
     console.log('api_base' + API_BASE)
     const regex = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    this.setState({email: email})
+    this.setState({ email: email })
     return regex.test(email)
       ? this.setState({ validEmail: true })
       : this.setState({ validEmail: false });
   }
   validatePhone(phoneNumber) {
     const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
-    this.setState({phone: phoneNumber})
+    this.setState({ phone: phoneNumber })
     return regex.test(phoneNumber)
       ? this.setState({ validPhone: true })
       : this.setState({ validPhone: false });
   }
-  handleTimeChange(time){
-    this.setState({appointmentTime: time})
+  handleTimeChange(time) {
+    this.setState({ appointmentTime: time })
     var startTime = moment('08:59 am', "HH:mm a");
     var endTime = moment('05:01 pm', "HH:mm a");
-    if(time.isBetween(startTime , endTime))
-    {
+    if (time.isBetween(startTime, endTime)) {
       return this.setState({ validTime: true });
     }
     return this.setState({ validTime: false });
@@ -167,6 +203,7 @@ class AppointmentApp extends Component {
 
   renderAppointmentConfirmation() {
     const spanStyle = { color: "#f6a5b8" };
+    let selectedServiceStr = this.state.selectedService.name + " " + this.state.selectedService.price;
     return (
       <section>
         <p>
@@ -185,6 +222,9 @@ class AppointmentApp extends Component {
           Stylist: <span style={spanStyle}>{!this.state.stylistName ? "No Preference" : this.state.stylistName}</span>
         </p>
         <p>
+          Service: <span style={spanStyle}>{!this.state.selectedService ? "None Specified" : selectedServiceStr}</span>
+        </p>
+        <p>
           Appointment:{" "}
           <span style={spanStyle}>
             {moment(this.state.appointmentDate).format(
@@ -201,6 +241,10 @@ class AppointmentApp extends Component {
       </section>
     );
   }
+
+
+
+
 
   render() {
     const {
@@ -244,10 +288,18 @@ class AppointmentApp extends Component {
         onClick={() => this.handleSubmit()}
       />
     ];
-    if(!firebase.auth().currentUser)
-    {
-      return <Redirect to="/Login"/>
+
+    //create list of services
+
+    const servicesList = this.state.services.map((service) => {
+      let text = service.name + ":  " + service.price;
+      return <MenuItem value={service} primaryText={text} ></MenuItem>
+    })
+
+    if (!firebase.auth().currentUser) {
+      return <Redirect to="/Login" />
     }
+
     return (
       <div>
         <section
@@ -264,129 +316,152 @@ class AppointmentApp extends Component {
             }}
           >
             <MuiThemeProvider muiTheme={stepMuiTheme}>
-            <Stepper
-              activeStep={stepIndex}
-              orientation="vertical"
-              linear={false}
-            >
-              <Step>
-                <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-                  Choose an available day for your appointment
+              <Stepper
+                activeStep={stepIndex}
+                orientation="vertical"
+                linear={false}
+              >
+                <Step>
+                  <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
+                    Choose what service you will be recieving
+                  </StepButton>
+                  <StepContent>
+                    <SelectField
+                      floatingLabelText="Service"
+                      value={this.state.selectedService}
+                      onChange={(evt, key, payload) => {
+                        this.handleSetService(payload);
+
+                      }}
+                    >
+                      {servicesList}
+
+                    </SelectField>
+                  </StepContent>
+                </Step>
+                <Step>
+                  <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
+                    Choose an available day for your appointment
                 </StepButton>
-                <StepContent>
-                  {DatePickerExampleSimple()}
-                </StepContent>
-              </Step>
-              <Step disabled={!data.appointmentDate}>
-                 <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-                  Choose an available time for your appointment
+                  <StepContent>
+                    {DatePickerExampleSimple()}
+                  </StepContent>
+                </Step>
+                <Step disabled={!data.appointmentDate}>
+                  <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
+                    Choose an available time for your appointment
                 </StepButton>
-                <StepContent>
-                  <MuiPickersUtilsProvider utils={MomentUtils}>
-                    <TimePicker
-                    margin="normal"
-                    minutesStep={5}
-                    label={!this.state.validTime ? "Must be between 9 to 5" : "Time"}
-                    value={data.appointmentTime}
-                    onChange={(time) => this.handleTimeChange(time)}
-                    InputLabelProps={!this.state.validTime ?
-                      {style: {color: "red"}
-                  } : undefined}
-                    />
-                </MuiPickersUtilsProvider>
-                </StepContent>
-              </Step>
-              <Step disabled={!data.appointmentDate || !this.state.validTime }>
-              <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-                  Share your contact information with us and we'll send you a reminder
+                  <StepContent>
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                      <TimePicker
+                        margin="normal"
+                        minutesStep={5}
+                        label={!this.state.validTime ? "Must be between 9 to 5" : "Time"}
+                        value={data.appointmentTime}
+                        onChange={(time) => this.handleTimeChange(time)}
+                        InputLabelProps={!this.state.validTime ?
+                          {
+                            style: { color: "red" }
+                          } : undefined}
+                      />
+                    </MuiPickersUtilsProvider>
+                  </StepContent>
+                </Step>
+                <Step disabled={!data.appointmentDate || !this.state.validTime}>
+                  <StepButton onClick={() => this.setState({ stepIndex: 3 })}>
+                    Share your contact information with us and we'll send you a reminder
                 </StepButton>
-                <StepContent>
-                  <p>
-                    <section>
-                      <TextField
-                        value={data.firstName}
-                        disabled={true}
-                        style={{ display: "block" }}
-                        name="first_name"
-                        hintText="First Name"
-                        floatingLabelText="First Name"
-                        onChange={(evt, newValue) =>
-                          this.setState({ firstName: newValue })
-                        }
-                      />
-                      <TextField
-                        value={data.lastName}
-                        disabled={true}
-                        style={{ display: "block" }}
-                        name="last_name"
-                        hintText="Last Name"
-                        floatingLabelText="Last Name"
-                        onChange={(evt, newValue) =>
-                          this.setState({ lastName: newValue })
-                        }
-                      />
-                      <TextField
-                        value={data.email}
-                        disabled={true}
-                        style={{ display: "block" }}
-                        name="email"
-                        hintText="youraddress@mail.com"
-                        floatingLabelText="Email"
-                        errorText={
-                          !data.email || data.validEmail ? null : "Enter a valid email address"
-                        }
-                        onChange={(evt, newValue) =>
-                          this.validateEmail(newValue)
-                        }
-                      />
-                      <TextField
-                        value={data.phone}
-                        disabled={true}
-                        style={{ display: "block"}}
-                        name="phone"
-                        hintText="+2348995989"
-                        floatingLabelText="Phone"
-                        errorText={
-                          !data.phone || data.validPhone ? null : "Enter a valid phone number"
-                        }
-                        onChange={(evt, newValue) =>
-                          this.validatePhone(newValue)
-                        }
-                      />
-                      <TextField
-                        value={data.stylistName}
-                        style={{ display: "block" }}
-                        name="stylist"
-                        hintText="No Preference"
-                        floatingLabelText="Stylist"
-                        onChange={(evt, newValue) =>
-                          this.setState({ stylistName: newValue })
-                        }
-                      />
-                      <RaisedButton
-                        style={{ display: "block", backgroundColor: "#f6a5b8" }}
-                        label={
-                          contactFormFilled
-                            ? "Schedule"
-                            : "Fill out your information to schedule"
-                        }
-                        labelPosition="before"
-                        primary={true}
-                        fullWidth={true}
-                        onClick={() =>
-                          this.setState({
-                            confirmationModalOpen: !this.state
-                              .confirmationModalOpen
-                          })
-                        }
-                        disabled={!contactFormFilled || data.processed}
-                        style={{ marginTop: 20, maxWidth: 100 }}
-                      />
-                    </section>
-                  </p>
-                </StepContent>
-              </Step>
-            </Stepper>
+                  <StepContent>
+                    <p>
+                      <section>
+                        <TextField
+                          value={data.firstName}
+                          disabled={true}
+                          style={{ display: "block" }}
+                          name="first_name"
+                          hintText="First Name"
+                          floatingLabelText="First Name"
+                          onChange={(evt, newValue) =>
+                            this.setState({ firstName: newValue })
+                          }
+                        />
+                        <TextField
+                          value={data.lastName}
+                          disabled={true}
+                          style={{ display: "block" }}
+                          name="last_name"
+                          hintText="Last Name"
+                          floatingLabelText="Last Name"
+                          onChange={(evt, newValue) =>
+                            this.setState({ lastName: newValue })
+                          }
+                        />
+                        <TextField
+                          value={data.email}
+                          disabled={true}
+                          style={{ display: "block" }}
+                          name="email"
+                          hintText="youraddress@mail.com"
+                          floatingLabelText="Email"
+                          errorText={
+                            !data.email || data.validEmail ? null : "Enter a valid email address"
+                          }
+                          onChange={(evt, newValue) =>
+                            this.validateEmail(newValue)
+                          }
+                        />
+                        <TextField
+                          value={data.phone}
+                          disabled={true}
+                          style={{ display: "block" }}
+                          name="phone"
+                          hintText="+2348995989"
+                          floatingLabelText="Phone"
+                          errorText={
+                            !data.phone || data.validPhone ? null : "Enter a valid phone number"
+                          }
+                          onChange={(evt, newValue) =>
+                            this.validatePhone(newValue)
+                          }
+                        />
+                        <TextField
+                          value={data.stylistName}
+                          style={{ display: "block" }}
+                          name="stylist"
+                          hintText="No Preference"
+                          floatingLabelText="Stylist"
+                          onChange={(evt, newValue) =>
+                            this.setState({ stylistName: newValue })
+                          }
+                        />
+                        <RaisedButton
+                          style={{ display: "block", backgroundColor: "#f6a5b8" }}
+                          label={
+                            contactFormFilled
+                              ? "Schedule"
+                              : "Fill out your information to schedule"
+                          }
+                          labelPosition="before"
+                          primary={true}
+                          fullWidth={true}
+                          onClick={() =>
+                            this.setState({
+                              confirmationModalOpen: !this.state
+                                .confirmationModalOpen
+                            })
+                          }
+
+                          selectionRenderer={value => (value ? "PM" : "AM")}
+                        >
+                          <MenuItem value={0} primaryText="AM" />
+                          <MenuItem value={1} primaryText="PM" />
+                        </RaisedButton>
+                      </section>
+                    </p>
+                  </StepContent>
+                </Step>
+
+              </Stepper>
             </MuiThemeProvider>
           </Card>
           <Dialog
@@ -408,7 +483,7 @@ class AppointmentApp extends Component {
             }
           />
         </section>
-      </div>
+      </div >
     );
   }
 }
