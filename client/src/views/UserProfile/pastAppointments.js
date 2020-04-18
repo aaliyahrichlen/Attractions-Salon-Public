@@ -49,7 +49,6 @@ let temp =JSON.stringify(obj[i].slot_date);
 let date = moment(temp,'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
 
 let style = JSON.stringify(obj[i].stylist);
-console.log(style);
 if(!style.match(/[a-z]/i))
 appointments.push("No preference");
 else
@@ -58,7 +57,10 @@ else
 }
 
 appointments.push(date); //date of appointment
-
+if(obj[i].confirmed)
+    appointments.push("Appointment confirmed"); //appointment confirmation
+else
+appointments.push("Appointment not confirmed");
 }
 }
 
