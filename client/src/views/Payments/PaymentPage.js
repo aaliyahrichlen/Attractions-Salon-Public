@@ -28,7 +28,7 @@ class PaymentPage extends React.Component {
    
 
   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
-    if (errors) {
+    if (!errors.every((err)=> err === null)) {
       this.setState({ errorMessages: errors.map(error => error.message) })
       return
     }
