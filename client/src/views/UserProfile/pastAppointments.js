@@ -44,10 +44,7 @@ var length = strData.length;
 if(strData.replace(/\s/g, '').length){
 var obj = JSON.parse(strData);
 for(let i = obj.length -1; i >= 0; i--){ 
-    if(appointments.length > 9)
-{
-    break;
-}
+
 let temp =JSON.stringify(obj[i].slot_date);
 let date = moment(temp,'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
 let stylist ="";
