@@ -4,7 +4,9 @@ import LoginCard from "../../components/Cards/LoginCard";
 import SlideShow from "../../components/SlideShow/SlideShow";
 import fire from "../Login/config/Fire";
 import Review from '../../components/ReviewSection/Review';
+import Footer from "../../components/Footer/Footer";
 import "./profile.css";
+import PastAppointments from "./pastAppointments"
 function Profile() {
     const [userName,setUserName] = useState("");
     const [userEmail,setUserEmail] = useState("");
@@ -31,12 +33,18 @@ function Profile() {
           }); 
     }, [])
     return (
+        <div>
         <div className="pageBack">
             <div>
                 <LoginCard email = {userEmail} 
                 name ={userName}
                 logout = {logout}/>
+                
+                <PastAppointments
+                 email ={userEmail}/>
             </div>
+        </div>
+        <Footer/>
         </div>
     );
 

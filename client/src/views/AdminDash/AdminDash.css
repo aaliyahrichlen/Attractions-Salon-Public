@@ -26,7 +26,7 @@
 /*background: blue;
 border: white;
 border-style:solid;*/
-.leftPage{
+/* .leftPage{
     margin: 10px;
     margin-left: 20px;
     width: 15%;
@@ -38,7 +38,7 @@ border-style:solid;*/
     justify-content: flex-start;
     align-content: flex-start;
     align-items: center;
-}
+} */
 
 /*border: white;
 border-style:solid;
@@ -46,11 +46,21 @@ border-style:solid;
 background: green;*/
 .rightPage{
     margin: 10px;
-    margin-right: 20px;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
     width: 80%;
     float: right;
     background-color: lightpink;
 
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.fullpage{
+    margin: 10px;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    width: 95%;
+    background-color: lightpink;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .formContainer {
@@ -102,9 +112,7 @@ align-items: start;
     height: auto;
     margin: 10px;
     background-color: white;
-    border: peachpuff;
-    border-style:solid;
-    
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .buf {
@@ -144,3 +152,19 @@ align-items: start;
     align-items: flex-start;
 }
 
+.adminContainer {
+    height: 2000px;
+}
+
+.aboutResize {
+    width: 40vw;
+    height: auto;
+}
+
+.aboutResize2 {
+    width: 35vw;
+}
+
+.chooseFile {
+    margin: auto;
+}

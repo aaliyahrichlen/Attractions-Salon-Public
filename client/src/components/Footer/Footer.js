@@ -22,6 +22,7 @@ import "./Footer.css"
 
 const Footer = () => {
     return (
+      <div className="footer">
     <Segment color="black" inverted vertical style={{ padding: '5em 0em' }}>
     <Container>
       <Grid divided inverted stackable>
@@ -49,6 +50,7 @@ const Footer = () => {
       </Grid>
     </Container>
   </Segment>
+  </div>
     );
 }
 

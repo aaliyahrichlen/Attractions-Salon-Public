@@ -9,3 +9,56 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .textContainer {
+          width: 50%;
+          background-color: lightpink;
+          height: 300px;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          
+  }
+
+  .textFormat {
+        font-family: 'Spartan', sans-serif;
+        font-size: larger;
+        margin: 10px;
+        
+  }
+
+  .headText {
+        font-family: 'Spartan', sans-serif;
+        font-size: xx-large;
+        margin: 20px;
+  }
+
+  .topFlex {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: space-around;
+        align-items: center;
+        margin: 20px;
+        margin-bottom: 0px;
+  }
+
+  .slideshowContainer {
+          height: 300px;
+          margin: 20px;
+
+  }
+
+  .wholeFlex {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: space-around;
+        align-items: center;
+        
+  }
+
+  .reviewComp {
+          margin-top: 0px;
+          margin: 20px;
+  }

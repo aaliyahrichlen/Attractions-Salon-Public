@@ -20,6 +20,7 @@ import backGroundImage from './background.jpg'
 import "./Home.css"
 import {image} from 'semantic-ui-react';
 import ContactCard from "../../components/Contact/ContactCard"
+import Footer from "../../components/Footer/Footer";
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -35,8 +36,9 @@ const getWidth = () => {
  * such things.
  */
 const HomepageHeading = ({ mobile }) => (
-  <Container text>
-    <Header
+  <Container Item>
+      <ContactCard></ContactCard>
+    {/* <Header
       as='h1'
       content='Attractions Salon'
       inverted
@@ -60,7 +62,7 @@ const HomepageHeading = ({ mobile }) => (
     <Button primary size='huge'>
       Get Started
       <Icon name='right arrow' />
-    </Button>
+    </Button> */}
   </Container>
 )
 
@@ -91,8 +93,9 @@ class DesktopContainer extends Component {
         >
           <div className="homeFlex">
           <Image src={backGroundImage}></Image>
-          <ContactCard></ContactCard>
+          <ContactCard className='contactCard'></ContactCard>
           </div>
+          <Footer/>
           {/*<Segment
             inverted
             textAlign='center'
@@ -153,18 +156,18 @@ class MobileContainer extends Component {
           <Menu.Item as='a'>Sign Up</Menu.Item>
         </Sidebar>
 
-        <Sidebar.Pusher dimmed={sidebarOpened}>
-          <Segment            
-          inverted
+        <Sidebar.Pusher dimmed={sidebarOpened} id = 'mobilecontact'>
+        <ContactCard id = 'mobilecontact' />{/* <Segment            
+            inverted
             textAlign='center'
             style={{ minHeight: 700, padding: '1em 0em'}}
             vertical
-            color='pink'
-            tertiary
+            color='white'
+            tertiary 
           >
             
-            <HomepageHeading mobile />
-          </Segment>
+            <HomepageHeading mobile id='mobile'/>
+          </Segment> */}
 
           {children}
         </Sidebar.Pusher>

@@ -10,6 +10,10 @@ const appointmentController = {
     // Returns all appointments
     Appointment.find({}).exec((err, appointments) => res.json(appointments));
   },
+  pastAppointments(req, res) {
+    // Returns past appointments for a user
+     Appointment.find({email: req.body.email}).exec((err, appointments) => res.json(appointments));
+  },
   async create(req, res) {
     var requestBody = req.body;
     
