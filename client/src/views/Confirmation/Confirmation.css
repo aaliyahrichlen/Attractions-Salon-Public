@@ -11,7 +11,7 @@
         margin: 0 auto;
 }
 .container123{
-        min-width: 600px;
+        /*min-width: 600px;*/
         max-width: 900px;
         height:700px, auto;
         background: lightpink;

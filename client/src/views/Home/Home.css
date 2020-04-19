@@ -66,28 +66,10 @@ body {
     display: flex;
     margin-left: auto;
     margin-right: auto;
-    width: fit-content;
-}
-/*
-.App-logo {
-    height: 40vmin;
-}
+/*     width: fit-content;
+ */}
 
-.App-header {
-    background-color: #F8E5E5;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-}
 
-.App-link {
-    columns: #000000;;
-}
-*/
 
 .back {
     background-color: white;

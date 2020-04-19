@@ -12,7 +12,6 @@
 
 .head {
 	font-family: 'Spartan', sans-serif;
-	
 	font-size: xx-large;
 }
 
@@ -45,7 +44,24 @@
 	align-items: flex-start;
 	font-family: 'Spartan', sans-serif;
 }
-
+@media only screen and (max-width: 800px) {
+    .ui.card{
+        width: 100vh;
+		height: 100vh;
+		padding: 3px;
+	}
+	.head{
+		padding: 0%;
+		position: relative;
+		position: 50px,50px;
+	}
+    .card{
+        width: 100vh;
+        height: 100vh;
+	}
+	.content{
+	}    
+}
 .buf {
 	margin: 0px;
 }
