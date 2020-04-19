@@ -34,7 +34,6 @@ const PastAppointments = (props) => {
     var rows = [];
 
     const processData = () => {
-        console.log(strData);
         var length = strData.length;
         if (strData.replace(/\s/g, '').length) {
             var obj = JSON.parse(strData);
