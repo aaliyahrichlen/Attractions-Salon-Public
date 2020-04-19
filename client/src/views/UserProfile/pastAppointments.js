@@ -27,8 +27,8 @@ const PastAppointments = (props) => {
             });
         }
     }, [props.email]);
-    const createData = (name, service, price, stylist, time, confirmed) => {
-        return {name, service, price, stylist, time, confirmed};
+    const createData = (name, service, price, stylist, paid, time, confirmed) => {
+        return {name, service, price, stylist, paid, time, confirmed};
     }
     var appointments = [];
     var rows = [];
@@ -45,6 +45,7 @@ const PastAppointments = (props) => {
                 let stylist = "";
                 let service ="";
                 let price ="";
+                let paid ="";
                 let style = JSON.stringify(obj[i].stylist);
                 if (! style.match(/[a-z]/i)) {
                     appointments.push("No preference");
@@ -76,6 +77,17 @@ const PastAppointments = (props) => {
                   price = "No price available";
 
                 }
+                if(obj[i].hasOwnProperty('paid'))
+                {
+                  if(obj[i].paid === true)
+                    paid = "Yes";
+                  else
+                    paid = "No";
+                }
+                else{
+                  paid = "No payment information available";
+
+                }
                 let status = "";
                 if (obj[i].confirmed) {
                     appointments.push("Appointment confirmed"); // appointment confirmation
@@ -83,7 +95,7 @@ const PastAppointments = (props) => {
                 } else {
                     appointments.push("Appointment not confirmed");
                     status = "Appointment not confirmed"
-                } rows.push(createData("Appointment " + i, service, price, stylist, date, status));
+                } rows.push(createData("Appointment " + i, service, price, stylist, paid, date, status));
             }
         }
     }
@@ -99,6 +111,7 @@ const PastAppointments = (props) => {
                             <TableCell align="right">Service</TableCell>
                             <TableCell align="right">Price</TableCell>
                             <TableCell align="right">Stylist</TableCell>
+                            <TableCell align="right">Paid</TableCell>
                             <TableCell align="right">Time</TableCell>
                             <TableCell align="right">Confirmed</TableCell>
 
@@ -125,6 +138,10 @@ const PastAppointments = (props) => {
                                 <TableCell align="right">
                                     {
                                     row.stylist
+                                }</TableCell>
+                                <TableCell align="right">
+                                    {
+                                    row.paid
                                 }</TableCell>
                                 <TableCell align="right">
                                     {
