@@ -97,25 +97,24 @@ class AppointmentApp extends Component {
     let ref = db.ref("text/services");
     ref.on("value", (servicesData => {
       const servicesObject = servicesData.val();
-      const servicesList = Object.keys(servicesObject).map(key => ({
-        ...servicesObject[key],
-        uid: key,
-      }));
-
-      this.setState({ services: servicesList });
-    }))
+      if(servicesObject)
+      {
+        const servicesList = Object.keys(servicesObject).map(key => ({
+          ...servicesObject[key],
+          uid: key,
+        }));
+  
+        this.setState({ services: servicesList });
+      }
+    }));
   }
   handleSetService(service) {
     this.setState({ selectedService: service });
   }
 
-
-  componentDidMount() {
-    this.loadServices();
-  }
-
   componentWillMount() {
     if (firebase.auth().currentUser) {
+      this.loadServices()
       var fireRef = fire.database().ref();
       fireRef.orderByChild("email").equalTo(firebase.auth().currentUser.email).on("child_added", (snapshot) => {
         let userData = snapshot.val();
@@ -225,7 +224,7 @@ class AppointmentApp extends Component {
           at{" "}
           <span style={spanStyle}>
             {moment(this.state.appointmentTime).format(
-              "H:mm a"
+              "h:mm a"
             )}
           </span>
         </p>
