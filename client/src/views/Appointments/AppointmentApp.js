@@ -287,9 +287,6 @@ class AppointmentApp extends Component {
       return <MenuItem value={service} primaryText={text} ></MenuItem>
     })
 
-    if (!firebase.auth().currentUser) {
-      return <Redirect to="/Login" />
-    }
     return (
       <div>
         <section
