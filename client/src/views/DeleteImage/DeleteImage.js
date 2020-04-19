@@ -153,6 +153,7 @@ const DeleteImage = () => {
 
 
     const handleChange = (delImage)=>{
+        console.log(delImage);
         var desertRef = storageRef.child(`images${delImage.target.id}`)
         desertRef.delete().then(function() {
           }).catch(function(error) {
