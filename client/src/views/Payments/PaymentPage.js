@@ -1,3 +1,4 @@
+import { Redirect } from "react-router-dom";
 import 'react-square-payment-form/lib/default.css'
 import './PaymentPage.css';
 
@@ -17,26 +18,58 @@ const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163'
 
 class PaymentPage extends React.Component {
 
+  //const [newRedirect, setNewRedirect] = useState(null);//change this
+
   constructor(props) {
     super(props)
     this.state = {
-      amount: "2500",
+      amount: 0,
       errorMessages: [],
+      newRedirect: null,
+      serviceName: ""
     }
-    this.newSelection = this.newSelection.bind(this)
+    this.confirmId = props.match.params.confirmId
   }
    
+  componentDidMount() {
+    //Get the price of the appointment from the backend
+    Axios.post(API_BASE + "/api/appointmentPrice", {confirmation_code : this.confirmId})
+    .then(response =>{
+      if(response.data === "FAILURE")
+      {
+        //Redirect to action failed
+        this.setState({newRedirect: '/actionfailed'});
+      }else{
+        this.setState({amount: response.data.price, serviceName: response.data.name})
+        //Redirect to already paid for page
+        if(response.data.paid)
+        {
+          this.setState({newRedirect: '/alreadyPaid'});
+        }
+      }
+    });
+  }
 
   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
-    if (errors) {
+    if (!errors.every((err)=> err === null)) {
       this.setState({ errorMessages: errors.map(error => error.message) })
       return
     }
     this.setState({ errorMessages: [] })
-    alert("nonce created: " + nonce + ", buyerVerificationToken: " + buyerVerificationToken)
 
-    Axios.post(API_BASE + "/api/processPayment", {nonce : nonce, amount : this.state.amount})
-    
+    Axios.post(API_BASE + "/api/processPayment", {nonce : nonce, amount : this.state.amount, confirmation_code: this.confirmId})
+    .then(response =>{
+      if(response.data === "OK")
+      {
+        this.setState({newRedirect: '/paymentSuccess'});
+        console.log(this.state.newRedirect);
+      }
+      else{
+        this.setState({newRedirect: '/actionfailed'});
+      }
+    });
+
+    //add files in confirmations folder just like what noah did
 
     //insert email trigger request to send invoice of payment
 
@@ -45,7 +78,7 @@ class PaymentPage extends React.Component {
 
   createVerificationDetails = () =>  {
     return {
-      amount: this.state.amount,
+      amount: String(this.state.amount),
       currencyCode: "USD",
       intent: "CHARGE",
       billingContact: {
@@ -61,48 +94,16 @@ class PaymentPage extends React.Component {
     }
   }
 
-  newSelection = (e) => {
-      this.setState({amount:e.target.value})
-  }
-
-
   render() {
+
+    if(this.state.newRedirect)
+    {
+        return <Redirect to={this.state.newRedirect} />
+    }
+
     return (
       <div id = "pay">
         <h1>Payment Page</h1>
-
-        <label for = "selection">
-          Services
-        </label>
-        <select id = "selection" onChange = {this.newSelection.bind(this)} value  = {this.state.amount} >
-
-          <option value = "2500">
-            Pedicure
-          </option>
-
-          <option value = "500">
-            hair
-          </option>
-
-          <option value = "1000">
-            Service7
-          </option>
-
-          <option value = "2000">
-            new Service
-          </option>
-
-          <option value = "2500">
-            Massage
-          </option>
-
-          <option value = "500">
-            Manicure
-          </option>
-
-        </select>
-
-
         <div className="payments">
 
         <SquarePaymentForm
@@ -130,9 +131,8 @@ class PaymentPage extends React.Component {
             </fieldset>
 
             <CreditCardSubmitButton>
-                Pay ${Number(this.state.amount) / 100}
+                Pay ${(this.state.amount / 100).toFixed(2)} for {this.state.serviceName}
             </CreditCardSubmitButton>
-
 
         </SquarePaymentForm>
         </div>

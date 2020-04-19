@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from './config/Fire';
-import Home from './Home';
 import Login from './Login';
 import Signup from '../Signup/Signup';
 import AdminDash from "../AdminDash/AdminDash";
@@ -25,7 +24,6 @@ class App extends Component {
   authListener() {
     fire.auth().onAuthStateChanged((user) => {
       
-      console.log(user);
       if (user) {
         this.state.count++;
         this.setState({ user });

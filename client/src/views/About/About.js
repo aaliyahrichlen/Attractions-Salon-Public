@@ -60,10 +60,3 @@ function About() {
 }
 
 export default About;
-
-/*<div class="container2"> {/*I had to change this because if I just have it as container
-the picture goes beyond the container since I am using Bootstrap (Soham)*/
-    /*<img src={imagesURL[0]} class="spread"></img>
-    <h4 >
-        {text}
-    </h4>*/
