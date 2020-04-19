@@ -47,10 +47,7 @@ const NavBar = (props) => {
             <Link className="nav-link" to='/Appointments'>Appointments</Link>
             <Link className="nav-link" to ='/Login'onClick={logout}>Logout</Link>
             <Link className="nav-link" to ='/Login'>{"Welcome"} {userName}</Link>
-<<<<<<< HEAD
-=======
             
->>>>>>> master
         </div>
         </div>
         </Responsive>
@@ -64,15 +61,9 @@ const NavBar = (props) => {
                         <Link className="nav-link" to='/Home'>Home</Link>
                         <Link className="nav-link" to='/Services'>Services</Link>
                         <Link className="nav-link" to='/About'>About Us</Link>
-<<<<<<< HEAD
-                        <Link className="nav-link" to='/Appointments'>Appointments</Link>
-                        <Link className="nav-link" to ='/Login'>Account</Link>           
-                        <Link className="nav-link" to='/Logout'>Logout</Link>
-=======
                         <Link className="nav-link" to='/Appointments'>Appointments</Link> 
                         <Link className="nav-link" to ='/Login'>Profile</Link>
                         <Link className="nav-link" to ='/Login'onClick={logout}>Logout</Link>
->>>>>>> master
 
                     </Dropdown.Menu>
                 </Dropdown>
