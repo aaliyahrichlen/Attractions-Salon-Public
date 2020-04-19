@@ -16,9 +16,10 @@ function Profile() {
     }
 
     useEffect (() => {
+        var userObj = fire.auth().currentUser;
         fire.auth().onAuthStateChanged(function(user) {
             if (user) {
-                 var db = fire.database();
+                var db = fire.database();
                 var ref = db.ref();
                 ref.on("value", function(userSnapshot) {
                     userSnapshot.forEach(function(snapshot) {
@@ -32,6 +33,7 @@ function Profile() {
             }
           }); 
     }, [])
+
     return (
         <div>
         <div className="pageBack">

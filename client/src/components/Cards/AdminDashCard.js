@@ -15,7 +15,7 @@ function AdminDashCard (props) {
                 <Card.Text>
                 </Card.Text>
                 { props.showValue && <progress value={props.progressBar} max="100"/>} 
-                <input id={props.id} type="file" onChange={props.handleAddChange}/>
+                <input id={props.id} type="file" onChange={props.handleChange}/>
                 <Button variant="contained" id='1' color="default" size="large" startIcon={<CloudUploadIcon />} className="buf" size="small" onClick = {props.handleUpload} >Upload</Button>
             </Card.Body>
         </Card>

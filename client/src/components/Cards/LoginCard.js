@@ -5,10 +5,12 @@ import Card from 'react-bootstrap/Card';
 import woman from "./woman-1.png";
 import man from "./man-1.png";
 import "./LoginCard.css";
+import { Modal } from 'react-bootstrap';
 import { Dimmer, Segment, Header, Icon, Image, Button } from 'semantic-ui-react'
 function LoginCard (props) {
     const[active, setActive] = useState(false)
-  
+    const[modalShow, setModalShow] = useState(false);
+    
     const handleShow = () => {
         setActive(true);
     }
@@ -16,18 +18,23 @@ function LoginCard (props) {
     const handleHide = () => {
         setActive(false);
     }
-    
-    
+
     return ( 
     <div className="loginCardCenter">
         <div class="ui card ">
             <div class="image">
             <Dimmer.Dimmable as={Image} dimmed={active} onMouseEnter={handleShow} onMouseLeave={handleHide}>
-                <img src={man}/>
+                <img src={woman}/>
                 <Dimmer active={active}>
                     <Header as='h2' icon inverted>
-                    <Icon name='heart' />
-                    Dimmed Message!
+                        <br/>
+                    <Button onClick={() => setModalShow(true)} >update password</Button>
+                    <MyVerticallyCenteredModal
+                        show = {modalShow}
+                        onHide={() => setModalShow(false)}
+                    />
+                    {/* <Button>Upload userPhoto</Button> */}
+                    {/* <Icon name='id badge outline' /> */}
                     </Header>
                 </Dimmer>
                 </Dimmer.Dimmable>
@@ -51,6 +58,47 @@ function LoginCard (props) {
         </div>
     </div>     
     );
+
+    function MyVerticallyCenteredModal(props) {
+        const[newPassword, setNewPassword] = useState('');
+        const updatePassword = () => {
+            var userObj = fire.auth().currentUser;
+            userObj.updatePassword(newPassword).then(function() {
+                props.onHide();
+                alert("Your password has been successfully changed!");
+            }).catch(function(error) {
+                alert(error);// An error happened.
+            });
+            
+        }
+        return (
+        <Modal
+            {...props}
+            size="med"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+        >
+            <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+                Update Password
+            </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <h4>Enter your new password</h4>
+            <div class="password">
+                <input name="password" id="password" type="password" value={newPassword}
+                onChange={event => setNewPassword(event.target.value)} placeholder="Password" class="input"/>
+            </div>
+            </Modal.Body>
+            <Modal.Footer>
+            <Button onClick={updatePassword}>Save</Button>
+            <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+        </Modal>
+        );
+  }
 };
+
+
 
 export default LoginCard;
