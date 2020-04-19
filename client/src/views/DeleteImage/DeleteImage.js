@@ -46,6 +46,7 @@ const DeleteImage = () => {
     
 
     const handleAddChange = e => {
+ 
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
             setFolder(e.target.id);
@@ -84,6 +85,7 @@ const DeleteImage = () => {
 
 
     const handleUpload = (e) => {
+       
         var fireRef = fire.database().ref("images");
         const uploadTask = storage.ref(`images/${folder}/${
             image.name

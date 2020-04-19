@@ -50,6 +50,10 @@ class PaymentPage extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    window.location.replace(window.location.pathname)
+  }
+
   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
     if (!errors.every((err)=> err === null)) {
       this.setState({ errorMessages: errors.map(error => error.message) })
@@ -103,7 +107,7 @@ class PaymentPage extends React.Component {
 
     return (
       <div id = "pay">
-        <h1>Payment Page</h1>
+        <h1 id = "header">Payment</h1>
         <div className="payments">
 
         <SquarePaymentForm

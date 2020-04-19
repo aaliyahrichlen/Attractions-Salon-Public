@@ -20,26 +20,38 @@ import CreateForm from './formBoxes.js';
 import EditAbout from "./EditAbout.js";
 import DeletePage from "../DeleteImage/DeleteImage";
 import Divider from '@material-ui/core/Divider';
-
+import update from 'immutability-helper';
 const EditServices = (props) => {
     const [image, setImage] = useState(null);
     const [url, setUrl] = useState(null);
     const [progressBar, setProgressBar] = useState(0);
-    const [show, setShow] = useState([false, false, false, false] );
+    // const [show, setShow] = useState([false, false, false, false]);
+    const [show, setShow] = useState([]);
     const [folder, setFolder] = useState(null);
     const [imagesURL, setImagesURL] = useState([]);
     const [imageNames, setImageNames] = useState([]);
-    const [urlArray, setUrlArray] = useState([null, null, null, null]);
+    const [UArray, setUArray] = useState([]);
+     const [urlArray, setUrlArray] = useState([null, null, null, null]);
     const [nameArray, setNameArray] = useState([]);
     const [priceArray, setPriceArray] = useState([]);
     const [descArray, setDescArray] = useState([]);
      const [about, setAbout] = useState("");
     const [cardNumber, setCardNumber] = useState(0);
     const [category, setCategory] = useState([]);
+    const [duplicateImage, setDuplicateImage] = useState(false);
+    const [passedImage, setPassedImage] = useState([]);
+    const [imageName, setImageName] = useState([]); 
+    const[changeImage, setChangeImage] = useState(false);
+    const[change, setChange] = useState([]);
+    const[a, setA] = useState(false);
+//     const handleChange = e => { //SOham
+//         if (e.target.files[0]) {
+//             setImage(e.target.files[0]);
+//             setFolder(e.target.id);
+//         }
+//     };
 
-
-
-    const handleChange = e => {
+    const handleServicesChange = index => (e) => {
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
             setFolder(e.target.id);
@@ -53,8 +65,9 @@ const EditServices = (props) => {
         newArray[index] = e.target.value;
         setNameArray(newArray);
        }
-
     };
+
+
     const handlePriceChange = index=> e => {
         var str = String(e.target.value);
         if(str.replace(/\s/g, '').length){
@@ -77,12 +90,14 @@ const EditServices = (props) => {
         newArray[index] = e.target.value;
         setCategory(newArray);
       };
-    // const handleAboutChange = e =>{
-    //     var str = String(e.target.value);
-    //     if(str.replace(/\s/g, '').length){
-    //     setAbout(e.target.value);
-    //     }
-    // };
+
+// const handleAboutChange = e =>{
+//     var str = String(e.target.value);
+//     if(str.replace(/\s/g, '').length){
+//     setAbout(e.target.value);
+//     }
+// };
+
     useEffect(() => {
         var db = fire.database();
         var ref = db.ref("text/services");
@@ -97,8 +112,6 @@ const EditServices = (props) => {
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
                 setCategory(category => category.concat(snapshot.child("category").val()));
-
-
             });
         });
     },[]);
@@ -110,42 +123,143 @@ const EditServices = (props) => {
                 setAbout(snapshot.val());
         });
     },[]);
-    useEffect(() => {
-       setCardNumber(nameArray.length)
-    },[nameArray]);
-      
 
     useEffect(() => {
+        setCardNumber(nameArray.length);
        
-        var storageRef = storage.ref(`images/${folder}/`);
-        // var listRef = storageRef.child(`images/${folder}/`);
+     },[nameArray]);
+
+
+     useEffect(() =>{
+		var storageRef = storage.ref();
+        var listRef = storageRef.child('images/services/');
+        //alert(a);
+		listRef.listAll().then(function(res) {
+		res.items.forEach(function(itemRef) {
+        //    console.log(itemRef.name); 
+			var singleUrl = itemRef.getDownloadURL().then(function(url){
+                setImagesURL(imagesURL => imagesURL.concat(url));
+                setImageName(image => image.concat(itemRef.name));
+            });
+		});
+        }).catch(function(error) {
+			console.log(error);// Uh-oh, an error occurred!
+        });
+        
+    },[a]);
+
+//     useEffect(() => { //soham
+//         var storageRef = storage.ref(`images/${folder}/`);
+//         // var listRef = storageRef.child(`images/${folder}/`);
+//         storageRef.listAll().then(function (res) {
+//             res.items.forEach(function (itemRef) {
+//                 console.log(itemRef.name);
+//                 setImageNames(imageNames => imageNames.concat(itemRef));
+//                 var singleUrl = itemRef.getDownloadURL().then(function (url) {
+//                     setImagesURL(imagesURL => imagesURL.concat(url));
+//                 });
+//             });
+//         }).catch(function (error) {
+//             console.log(error); // Uh-oh, an error occurred!
+//         });
+//     }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
+
+
+    useEffect(()=>{
+        //    console.log("Cardnumber: " + cardNumber);
+        //     console.log(imageName.length);
+            //alert(cardNumber + " " + imageName.length);
+             console.log(imagesURL);
+             for (let i = 0; i < imageName.length; i++) 
+             {
+                 imageName.map((image, a) => {
+                    if(image.indexOf(`Bucket${i}_`) === 0) {
+                        console.log("i: " + i + " a: " + a);
+                        setPassedImage(passedImage => passedImage.concat(imagesURL[a]));
+                    }
+                })
+            }
+        }, [imageName.length === cardNumber]) //Need to find the length of carNumber
+
+    // const handleUpload = (e) => { //soham
+    //     var fireRef = fire.database().ref("images");
+    //     const uploadTask = storage.ref(`images/${folder}/${
+    //         image.name
+    //     }`).put(image);
+    //     uploadTask.on("state_changed", snapshot => {
+    //         const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+    //         setProgressBar(progress);
+    //     }, error => {
+    //         console.log(error);
+    //     }, () => {
+    //         storage.ref(`images/${folder}/`).child(image.name).getDownloadURL().then(url => {
+    //             setUrl(url);
+    //             if(folder === "logos"){
+    //                 setUrlArray([url, null, null, null]);
+    //                 setShow([true, false, false, false]);
+    //             }else if(folder === "slideshow"){
+    //                 setUrlArray([null, url, null, null]);
+    //                 setShow([false, true, false, false]);
+    //             }else if (folder === "services"){
+    //                 setUrlArray([null, null, url, null]);
+    //                 setShow([false, false, true, false]);
+    //             }else if (folder === "about"){
+    //                 setUrlArray([null, null, null, url]);
+    //                 setShow([false, false, false, true]);
+    //             }
+    //             // writing to database prob: Duplicate entries!
+    //             // var fireRef = fire.database().ref("images");
+    //             // fireRef.push().set({
+    //             //     name: image.name,
+    //             //     URL: url
+    //             // })
+    //         })
+    //     });
+    // };
+
+
+    const handleServicesUpload = index => (e) => { //soham
+        e.preventDefault();
+        // alert(index);
+        var storageRef = storage.ref(`images/services/`);
+        // var desertRef = storageRef.child(`images${delImage.target.id}`)
+        // desertRef.delete().then(function() {
+        //   }).catch(function(error) {
+        //     console.log(error);
+        //   });
         storageRef.listAll().then(function (res) {
             res.items.forEach(function (itemRef) {
-                console.log(itemRef.name);
-                setImageNames(imageNames => imageNames.concat(itemRef));
-                var singleUrl = itemRef.getDownloadURL().then(function (url) {
-                    setImagesURL(imagesURL => imagesURL.concat(url));
-                });
+                if(itemRef.name.indexOf(`Bucket${index}`) === -1){  
+                }else {
+                    itemRef.delete().then(function() {
+                    }).catch(function(error) {
+                      console.log(error);
+                    });
+                }
             });
         }).catch(function (error) {
             console.log(error); // Uh-oh, an error occurred!
         });
-    }, [folder]); // I think this changes twice because first it gets set and then updated when I press the button
-
-
-    const handleUpload = (e) => {
         var fireRef = fire.database().ref("images");
-        const uploadTask = storage.ref(`images/${folder}/${
-            image.name
-        }`).put(image);
+        const uploadTask = storage.ref(`images/services/Bucket${index}_${image.name}`).put(image);
         uploadTask.on("state_changed", snapshot => {
+            setChangeImage(true);
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             setProgressBar(progress);
         }, error => {
             console.log(error);
         }, () => {
-            storage.ref(`images/${folder}/`).child(image.name).getDownloadURL().then(url => {
+            storage.ref(`images/services/`).child(`Bucket${index}_${image.name}`).getDownloadURL().then(url => {
                 setUrl(url);
+                let newArray = [];
+                for(let x = 0; x < UArray.length; x++){
+                    if(x === index){
+                        newArray[x] = url;
+                    }else {
+                        newArray[x] = UArray[x];
+                    }
+                }
+                setUArray(newArray);
                 if(folder === "logos"){
                     setUrlArray([url, null, null, null]);
                     setShow([true, false, false, false]);
@@ -159,28 +273,62 @@ const EditServices = (props) => {
                     setUrlArray([null, null, null, url]);
                     setShow([false, false, false, true]);
                 }
+
+                f();
                 // writing to database prob: Duplicate entries!
                 // var fireRef = fire.database().ref("images");
                 // fireRef.push().set({
                 //     name: image.name,
-                //     URL: url
+                //     URL: url,
+                //     number: index
                 // })
             })
         });
     };
+
+    const f = e => {
+        console.log(change);
+    }
+
+    useEffect(() => {
+            for(let x = 0; x < passedImage.length; x++){
+                UArray[x] = passedImage[x];
+            }
+      }, [cardNumber === passedImage.length]); 
+
+
+    // useEffect(() => {
+    //     for(let x = 0; x < passedImage.length; x++){
+    //         UArray[x] = passedImage[x];
+    //     }
+    // }, [cardNumber === imageName.length]); 
+
+      useEffect(()=>{
+        console.log(UArray);
+        let newArray = [];
+            for(let x = 0; x < UArray.length; x++){
+                newArray[x] = UArray[x];
+            }
+      }, [UArray.length === passedImage.length])
+
+
 const addService = e =>{
     setCardNumber(cardNumber+1);
+    setUArray([...UArray, null]);
+    setA(!a);
     setNameArray(nameArray => nameArray.concat(""));
     setPriceArray(priceArray => priceArray.concat(""));
     setDescArray(descArray => descArray.concat(""));
     setCategory(category => category.concat(""));
 
 };
+
 const deleteService = index => e=>{
+    
     e.preventDefault();
     nameArray.splice(index, 1);
     setNameArray([...nameArray]);
-    
+    setA(!a);
     priceArray.splice(index, 1);
     setPriceArray([...priceArray]);
     
@@ -192,7 +340,7 @@ const deleteService = index => e=>{
     setDescArray([...category]);
 
     setCardNumber(cardNumber - 1);
-
+    
     var db = fire.database();
     var ref = db.ref("text");
     var usersRef = ref.child("services");
@@ -207,120 +355,76 @@ const deleteService = index => e=>{
             category: category[i]
 
     });
-
+    var storageRef = storage.ref();
+    var listRef = storageRef.child('images/services/');
+    listRef.listAll().then(function(res) {
+		res.items.forEach(function(itemRef) {
+             //if(itemRef.name.indexOf(`Bucket${index}_`) === 0) {
+                itemRef.delete().then(function()  {
+                 }).catch(function(error) {
+                    console.log(error);
+                 });
+            //}
+		});
+        }).catch(function(error) {
+			console.log(error);// Uh-oh, an error occurred!
+        });
     }
 
 };
 
-// const createForm = () =>{
-//     let formBoxes = [];
-//     for (let i = 0; i < cardNumber; i++) 
-//     {
-//         var name;
-//         if(nameArray[i].replace(/\s/g, '').length){
-//             name = nameArray[i];
-//         }
-//         else
-//             name = "New service";
-
-//         formBoxes.push(   
-                            
-//         <div className="formBox">
-//         <div className="admHead">{name}</div>
-//         <form   onSubmit={handleTextUpload} >
-            
-//             <FormControl >
-//             <InputLabel className="buf" htmlFor="component-simple">Name </InputLabel>
-//             <Input className="buf" id="component-simple" defaultValue={name} onBlur={handleTextChange(i)} label="Name" />
-//             </FormControl>
-//             <br />
-//             <FormControl key={`${Math.floor((Math.random() * 1000))}-min`}>
-//             <InputLabel className="buf" htmlFor="component-simple">Price </InputLabel>
-//             <Input className="buf" id="component-simple" defaultValue={priceArray[i]} onBlur={handlePriceChange(i)} label="Price" />
-//             </FormControl>
-//             <br />
-//             <FormControl >
-//             <InputLabel className="buf" htmlFor="component-simple">Description </InputLabel>
-//             <Input className="buf" id="component-simple" multiline="true" defaultValue={descArray[i]} onBlur={handleDescChange(i)} />
-//             </FormControl>
-//             <br />
-//             <div className="buf">
-//                     <input type="file" onChange={handleChange}/>
-//                     </div>
-//                     <div className="buf">
-//                     <Button
-//                             variant="contained"
-//                             color="default"
-//                             size="large"
-//                             startIcon={<CloudUploadIcon />}
-//                             className="buf"
-//                             size="small"
-//                             onClick = {handleUpload} 
-//                         >
-//                             Upload
-//                         </Button> 
-//                         </div>
-//             <div className="serviceButton">
-            
-//             <Button
-//         variant="contained"
-//         color="default"
-//         size="large"
-//         startIcon={<SaveIcon />}
-//         className="buf"
-//         size="small"
-//         onClick = {handleTextUpload} 
-//       >
-//         Save
-//       </Button>
-     
-//         <Button
-//         variant="contained"
-//         color="default"
-//         className="buf"
-//         startIcon={<DeleteIcon />}
-//         onClick = {deleteService(i)}
-//         size="small"
-//       >
-//         Delete
-//       </Button>
-      
-//       </div>
-//       </form> 
-//     </div>)
-//     }
-    
-//     return formBoxes;
-// };
-    const handleTextUpload = (e) => {
-        e.preventDefault();
+//     const handleTextUpload = (e) => {
+//         e.preventDefault();
    
 
-        var db = fire.database();
-        var ref = db.ref("text");
+//         var db = fire.database();
+//         var ref = db.ref("text");
 
-        var usersRef = ref.child("services");
-        usersRef.remove();
+//         var usersRef = ref.child("services");
+//         usersRef.remove();
        
-        for (let i = 0; i < cardNumber; i++) 
-        { 
-            usersRef.push().set({
+//         for (let i = 0; i < cardNumber; i++) 
+//         { 
+//             usersRef.push().set({
         
-                name: nameArray[i],
-                price: priceArray[i],
-                description: descArray[i],
-                category: category[i]
-        });
+//                 name: nameArray[i],
+//                 price: priceArray[i],
+//                 description: descArray[i],
+//                 category: category[i]
+//         });
 
-         }
+//          }
 
-    };
-    // const handleAboutUpload = (e) => { 
-    //     e.preventDefault();
-    //     var db = fire.database();
-    //     var ref = db.ref("text/about");
-    //     ref.set(about);
-    // };
+//     };
+const handleTextUpload = (e) => {
+    e.preventDefault();
+
+
+    var db = fire.database();
+    var ref = db.ref("text");
+
+    var usersRef = ref.child("services");
+    usersRef.remove();
+   
+    for (let i = 0; i < cardNumber; i++) 
+    { 
+        usersRef.push().set({
+    
+            name: nameArray[i],
+            price: priceArray[i],
+            description: descArray[i],
+            category: category[i]
+    });
+
+     }
+
+};
+//     // const handleAboutUpload = (e) => { 
+//     //     e.preventDefault();
+//     //     var db = fire.database();
+//     //     var ref = db.ref("text/about");
+//     //     ref.set(about);
+//     // };
 
 
     const logout = () => {
@@ -350,7 +454,7 @@ const deleteService = index => e=>{
                         
                 </div>
             </div>
-           
+
             <div className="fullpage">
                 <div className="adminHead">Edit the Services Page</div>
                 <div className="formContainer">
@@ -364,9 +468,15 @@ const deleteService = index => e=>{
                     descArray={descArray}
                     handleCategoryChange={handleCategoryChange}
                     category={category}
+                    UArray={UArray}
+                    // URL={urlArray[2]}
+                    // showArray={show}
+                    // change={change}
+                    changeImage={changeImage}
+                    imagesArray={passedImage}
                     handleDescChange={handleDescChange}
-                    handleChange={handleChange}
-                    handleUpload={handleUpload}
+                    handleChange={handleServicesChange}
+                    handleUpload={handleServicesUpload}
                     deleteService={deleteService}
                     />
                     {/* {createForm()} */}
@@ -397,4 +507,4 @@ const deleteService = index => e=>{
      </div>
     );
 };
-export default EditServices;
+export default EditServices;     

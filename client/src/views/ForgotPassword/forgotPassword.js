@@ -52,7 +52,7 @@ render()
         <div className="center">
         <div className="forgotContainer" align="center">  
             <div className="script" align = "center">Forgot your password?</div>
-            <div className="instructionText">Please enter your email address below. If the email address exists in our system, you should recieve an eamil with instruction on how to reset your password.</div>
+            <div className="instructionText">Please enter your email address below. If the email address exists in our system, you should recieve an email with instruction on how to reset your password.</div>
             <form onSubmit={this.handleSubmit}>
                 
                 <FormControl>
