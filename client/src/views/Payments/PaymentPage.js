@@ -50,6 +50,10 @@ class PaymentPage extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    window.location.replace(window.location.pathname)
+  }
+
   cardNonceResponseReceived = (errors, nonce, cardData, buyerVerificationToken) => {
     if (!errors.every((err)=> err === null)) {
       this.setState({ errorMessages: errors.map(error => error.message) })
