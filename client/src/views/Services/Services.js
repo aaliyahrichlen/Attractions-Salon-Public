@@ -116,10 +116,49 @@ function Services() {
         
         
             <Divider horizontal>
-                Hair
+                Haircuts
             </Divider>
-            <CardGroupProps category={'Hair'} 
+            <CardGroupProps category={'Haircuts'} 
             imagesArray = {passedImage} />
+
+            <Divider horizontal>
+                 Hair Styling
+            </Divider>
+            <CardGroupProps category={'Hair Styling'} 
+            imagesArray = {passedImage} />
+
+         <Divider horizontal>
+                Hair Treatment
+            </Divider>
+            <CardGroupProps category={'Hair Treatment'} 
+            imagesArray = {passedImage} />
+
+           <Divider horizontal>
+                Hair Extensions
+            </Divider>
+            <CardGroupProps category={'Hair Extensions'} 
+            imagesArray = {passedImage} />
+
+           <Divider horizontal>
+                Hair Shampoo
+            </Divider>
+            <CardGroupProps category={'Hair Shampoo'} 
+            imagesArray = {passedImage} />
+
+            
+           <Divider horizontal>
+                Hair Coloring
+            </Divider>
+            <CardGroupProps category={'Hair Coloring'} 
+            imagesArray = {passedImage} />
+
+            
+           <Divider horizontal>
+                Wax
+            </Divider>
+            <CardGroupProps category={'Wax'} 
+            imagesArray = {passedImage} />
+
 
             <Footer/>
         </div>
