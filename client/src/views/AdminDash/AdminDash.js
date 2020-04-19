@@ -220,6 +220,7 @@ const EditServices = (props) => {
 
     const handleServicesUpload = index => (e) => { //soham
         e.preventDefault();
+        // alert(index);
         var storageRef = storage.ref(`images/services/`);
         // var desertRef = storageRef.child(`images${delImage.target.id}`)
         // desertRef.delete().then(function() {
@@ -240,7 +241,7 @@ const EditServices = (props) => {
             console.log(error); // Uh-oh, an error occurred!
         });
         var fireRef = fire.database().ref("images");
-        const uploadTask = storage.ref(`images/${folder}/Bucket${index}_${image.name}`).put(image);
+        const uploadTask = storage.ref(`images/services/Bucket${index}_${image.name}`).put(image);
         uploadTask.on("state_changed", snapshot => {
             setChangeImage(true);
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -248,7 +249,7 @@ const EditServices = (props) => {
         }, error => {
             console.log(error);
         }, () => {
-            storage.ref(`images/${folder}/`).child(`Bucket${index}_${image.name}`).getDownloadURL().then(url => {
+            storage.ref(`images/services/`).child(`Bucket${index}_${image.name}`).getDownloadURL().then(url => {
                 setUrl(url);
                 let newArray = [];
                 for(let x = 0; x < UArray.length; x++){
