@@ -3,8 +3,11 @@ import React, {Component} from 'react';
 import './Review.css';
 import  Carousel  from  'semantic-ui-carousel-react';
 
-const proxyurl = "https://cors-anywhere.herokuapp.com/";
-const url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJLbSMfFK76IgRiFeXZHbznxo&key=AIzaSyDhLHQTNwZu40NisFTOX1XpgRWEQQnG3R0";
+const reviewKey = "AIzaSyDhLHQTNwZu40NisFTOX1XpgRWEQQnG3R0";
+const placeID = "ChIJLbSMfFK76IgRiFeXZHbznxo";
+
+let proxyurl = "https://cors-anywhere.herokuapp.com/";
+let url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + placeID + "&key=" + reviewKey;
 
 
 class Review extends React.Component { // you can't use stateless component because you need a state
