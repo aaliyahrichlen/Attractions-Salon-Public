@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import fire from "../../views/Login/config/Fire";
 import {storage} from "../../views/Login/config/Fire";
 import "../../views/DeleteImage/DeleteImage.css";
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import DeleteIcon from '@material-ui/icons/Delete';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 function DeleteCard (props) {
     const DeleteCard = props.images.map((image) => {
+        //  alert(image.name);
      return (  
 
      <div className="item">
@@ -19,7 +21,8 @@ function DeleteCard (props) {
         
      </Card.Body>
      <Card.Footer>
-         <Button  id={image.name} onClick={props.handleChange} variant="contained" startIcon={<DeleteIcon />}>Delete</Button>
+         {/* <Button  id={image.name} onClick={props.handleChange} variant="contained" startIcon={<DeleteIcon />}>Delete</Button> */}
+         <Button class="mt-auto" id={image.name} onClick={props.handleChange} variant="primary" >Delete</Button>
      </Card.Footer>
      </Card>
      <br/>
