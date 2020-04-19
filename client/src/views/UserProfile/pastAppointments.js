@@ -16,90 +16,129 @@ const PastAppointments = (props) => {
 
     const API_BASE = process.env.REACT_APP_PRODUCTION ? '' : 'http://localhost:6163';
 
-     useEffect(() =>{
-         if(props.email !== ''){
-        const lookup = {
-            email: props.email
-          };
+    useEffect(() => {
+        if (props.email !== '') {
+            const lookup = {
+                email: props.email
+            };
 
-        axios.post(API_BASE + "/api/pastAppointments", lookup)
-        .then(response =>
-            setStrData(JSON.stringify(response.data))
-
-        )
-        .catch(err => {
-          console.log(err);
-        });
+            axios.post(API_BASE + "/api/pastAppointments", lookup).then(response => setStrData(JSON.stringify(response.data))).catch(err => {
+                console.log(err);
+            });
+        }
+    }, [props.email]);
+    const createData = (name, service, price, stylist, time, confirmed) => {
+        return {name, service, price, stylist, time, confirmed};
     }
-	},[props.email]);
-const createData= (name, stylist, time, confirmed) =>{ 
-        return { name, stylist, time, confirmed};
-}
-var appointments = [];
-var rows = [];
+    var appointments = [];
+    var rows = [];
 
-const processData = () =>{
+    const processData = () => {
+        console.log(strData);
+        var length = strData.length;
+        if (strData.replace(/\s/g, '').length) {
+            var obj = JSON.parse(strData);
+            for (let i = obj.length - 1; i >= 0; i--) {
 
-var length = strData.length;
-if(strData.replace(/\s/g, '').length){
-var obj = JSON.parse(strData);
-for(let i = obj.length -1; i >= 0; i--){ 
+                let temp = JSON.stringify(obj[i].slot_date);
+                let date = moment(temp, 'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
+                let stylist = "";
+                let service ="";
+                let price ="";
+                let style = JSON.stringify(obj[i].stylist);
+                if (! style.match(/[a-z]/i)) {
+                    appointments.push("No preference");
+                    stylist = "No preference"
+                } else {
+                    appointments.push(JSON.stringify(obj[i].stylist)); // stylist name
+                    stylist = JSON.stringify(obj[i].stylist);
+                    stylist.replace(/\"/g, "")
 
-let temp =JSON.stringify(obj[i].slot_date);
-let date = moment(temp,'YYYY-MM-DDTHH:mm:ssZ').format("MMMM D, YYYY  hh:mm:ss a");
-let stylist ="";
+                } appointments.push(date); // date of appointment
+                if(obj[i].hasOwnProperty('serviceName'))
+                {
 
-let style = JSON.stringify(obj[i].stylist);
-if(!style.match(/[a-z]/i))
-{appointments.push("No preference");
-stylist = "No preference"}
-else
-{   
-    appointments.push(JSON.stringify(obj[i].stylist)); //stylist name
-    stylist = JSON.stringify(obj[i].stylist);
-}
+                  service = JSON.stringify(obj[i].serviceName);
+                  service.replace(/\"/g, "");
 
-appointments.push(date); //date of appointment
+                }
+                else
+                {
+                  service = "No service chosen";
+                }
+                if(obj[i].hasOwnProperty('servicePrice'))
+                {
+                  price= parseInt(JSON.stringify(obj[i].servicePrice));
+                  price = price /100;
+                  price = '$' + price;
+                }
+                else{
+                  price = "No price available";
 
-let status ="";
-if(obj[i].confirmed)
-  {  appointments.push("Appointment confirmed"); //appointment confirmation
-    status = "Appointment confirmed"}
-else
-{appointments.push("Appointment not confirmed");
-status = "Appointment not confirmed"
-}
-rows.push(createData("Appointment " + i, stylist, date, status));
-}
-}
-}
+                }
+                let status = "";
+                if (obj[i].confirmed) {
+                    appointments.push("Appointment confirmed"); // appointment confirmation
+                    status = "Appointment confirmed"
+                } else {
+                    appointments.push("Appointment not confirmed");
+                    status = "Appointment not confirmed"
+                } rows.push(createData("Appointment " + i, service, price, stylist, date, status));
+            }
+        }
+    }
     return (
-        <div>
-            {processData()}
-            <TableContainer >
-      <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Appointments</TableCell>
-            <TableCell align="right">Stylist</TableCell>
-            <TableCell align="right">Time</TableCell>
-            <TableCell align="right">Confirmed</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.stylist}</TableCell>
-              <TableCell align="right">{row.time}</TableCell>
-              <TableCell align="right">{row.confirmed}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        <div> {
+            processData()
+        }
+            <TableContainer>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Appointments</TableCell>
+                            <TableCell align="right">Service</TableCell>
+                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Stylist</TableCell>
+                            <TableCell align="right">Time</TableCell>
+                            <TableCell align="right">Confirmed</TableCell>
+
+                        </TableRow>
+                    </TableHead>
+                    <TableBody> {
+                        rows.map((row) => (
+                            <TableRow key={
+                                row.name
+                            }>
+                                <TableCell component="th" scope="row">
+                                    {
+                                    row.name
+                                } </TableCell>
+                                
+                                <TableCell align="right">
+                                    {
+                                    row.service
+                                }</TableCell>
+                                <TableCell align="right">
+                                    {
+                                    row.price
+                                }</TableCell>
+                                <TableCell align="right">
+                                    {
+                                    row.stylist
+                                }</TableCell>
+                                <TableCell align="right">
+                                    {
+                                    row.time
+                                }</TableCell>
+                                <TableCell align="right">
+                                    {
+                                    row.confirmed
+                                }</TableCell>
+                            </TableRow>
+                        ))
+                    } </TableBody>
+                </Table>
+            </TableContainer>
         </div>
     );
 }
