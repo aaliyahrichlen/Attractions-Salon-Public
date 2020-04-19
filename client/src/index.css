@@ -1,10 +1,6 @@
-/* .col {
-    background: rgb(255,252,243);
-    background: linear-gradient(180deg, rgba(255,252,243,1) 0%, rgba(181,181,181,1) 100%);
-} */
-    /* background: linear-gradient(180deg, rgba(255,252,243,1) 0%, rgba(175,233,246,1) 20%, rgba(132,222,247,1) 100%); */
+
 .app{
-    background: rgb(255,252,243);
+    background:rgba(181,181,181,1);
     background: linear-gradient(180deg, rgba(255,252,243,1) 0%, rgba(181,181,181,1) 100%);
     min-height: 800px;
 
