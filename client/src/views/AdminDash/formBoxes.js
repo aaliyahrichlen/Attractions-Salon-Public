@@ -46,33 +46,58 @@ const CreateForm = (props) =>{
 //         console.log(error); // Uh-oh, an error occurred!
 //     });
 // }, [folder]); 
-  const categories = [
-    {
-      value: 'Full Set',
-      label: 'Full Set',
+const categories = [
+  {
+    value: 'Full Set',
+    label: 'Full Set',
+  },
+  {
+    value: 'Pedicure',
+    label: 'Pedicure',
+  },
+  {
+    value: 'Manicure',
+    label: 'Manicure',
+  },
+  {
+    value: 'Fill',
+    label: 'Fill',
+  },
+  
+  {
+      value: 'Polish',
+      label: 'Polish',
     },
     {
-      value: 'Pedicure',
-      label: 'Pedicure',
+      value: 'Haircuts',
+      label: 'Haircuts',
     },
     {
-      value: 'Manicure',
-      label: 'Manicure',
+      value: 'Hair Styling',
+      label: 'Hair Styling',
     },
     {
-      value: 'Fill',
-      label: 'Fill',
+      value: 'Hair Treatment',
+      label: 'Hair Treatment',
     },
-    
     {
-        value: 'Polish',
-        label: 'Polish',
-      },
-      {
-        value: 'Hair',
-        label: 'Hair',
-      }
-  ];
+      value: 'Hair Extensions',
+      label: 'Hair Extensions',
+    },
+    {
+      value: 'Hair Shampoo',
+      label: 'Hair Shampoo',
+    },
+    {
+      value: 'Hair Coloring',
+      label: 'Hair Coloring',
+    },
+    {
+      value: 'Wax',
+      label: 'Wax',
+    }
+
+];
     let formBoxes = [];
     for (let i = 0; i < props.cardNumber; i++) 
     {
