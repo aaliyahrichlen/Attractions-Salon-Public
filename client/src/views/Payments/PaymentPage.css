@@ -6,21 +6,56 @@
     float: left;
     left: 30%;
     background-color: lightpink;
-    margin: 5%;
-    
+    margin: 5%;    
 }
 #pay{
     float: center;
-    margin: 5%;
+    margin: auto;
+    margin-top: 5%;
     background-color: lightpink;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    width: 90%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
 }
 
+#header{
+    margin-top: 5%;
+    border: none;
+    font-family: 'Sofia';
+    font-weight: bold;
+    font-size: xx-large;
+}
+
 #sq-payment-form {
     color: black;
    }
+
+#sq-payment-form-sq-card-number{
+    background-color: white;
+
+
+}
+#sq-payment-form-sq-expiration-date{
+    background-color: white;
+
+
+}
+#sq-payment-form-sq-postal-code{
+    background-color: white;
+
+
+}
+#sq-payment-form-sq-cvv{
+    background-color: white;
+
+
+}
+
+/* .sq-label{
+    font-weight: bold;
+} */
+
+

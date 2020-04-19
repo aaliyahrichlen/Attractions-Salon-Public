@@ -103,7 +103,7 @@ class PaymentPage extends React.Component {
 
     return (
       <div id = "pay">
-        <h1>Payment Page</h1>
+        <h1 id = "header">Payment</h1>
         <div className="payments">
 
         <SquarePaymentForm
