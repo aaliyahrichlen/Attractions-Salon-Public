@@ -99,8 +99,10 @@ const categories = [
 
 ];
     let formBoxes = [];
+    console.log("Create Form");
     for (let i = 0; i < props.cardNumber; i++) 
     {
+
         var name;
         if(props.nameArray[i].replace(/\s/g, '').length){
             name = props.nameArray[i];
@@ -115,9 +117,10 @@ const categories = [
         <form onSubmit={props.handleTextUpload} >
              <DCard
              id={i}
-             URL={props.changeImage ?
-              props.UArray[i] : props.imagesArray[i]
-              }
+            //  URL={props.changeImage ?
+            //   props.UArray[i] : props.newURLArray[i]
+            //   }
+            URL={props.newURLArray[i]}
             />
             <FormControl >
             <InputLabel className="buf" htmlFor="component-simple">Name </InputLabel>

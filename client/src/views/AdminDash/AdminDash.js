@@ -43,6 +43,7 @@ const EditServices = (props) => {
     const [imageName, setImageName] = useState([]); 
     const[changeImage, setChangeImage] = useState(false);
     const[change, setChange] = useState([]);
+    const[newURLArray, setNewURLArray] = useState([]);
     const[a, setA] = useState(false);
 //     const handleChange = e => { //SOham
 //         if (e.target.files[0]) {
@@ -106,16 +107,22 @@ const EditServices = (props) => {
             setNameArray([]);
             setPriceArray([]);
             setCategory([]);
-
+            setNewURLArray([]);
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
                 setCategory(category => category.concat(snapshot.child("category").val()));
+                setNewURLArray(newURLArray => newURLArray.concat(snapshot.child("imageURL").val()));
             });
         });
     },[]);
 
+    useEffect(() => {
+        console.log(newURLArray);
+        console.log(priceArray);
+        console.log(descArray);
+    }, [newURLArray])
     useEffect(() => {
         var db = fire.database();
         var ref = db.ref("text/about");
@@ -259,6 +266,10 @@ const EditServices = (props) => {
                         newArray[x] = UArray[x];
                     }
                 }
+                newURLArray.splice(index, 1, url);
+                console.log("Index: " + index);
+                console.log(newURLArray);
+                // newURLArray[index] = url;
                 setUArray(newArray);
                 if(folder === "logos"){
                     setUrlArray([url, null, null, null]);
@@ -320,18 +331,36 @@ const addService = e =>{
     setPriceArray(priceArray => priceArray.concat(""));
     setDescArray(descArray => descArray.concat(""));
     setCategory(category => category.concat(""));
-
+    setNewURLArray(newURLArray => newURLArray.concat(""));
 };
 
-const deleteService = index => e=>{
-    
+const deleteService = index => e => {
+
+    var storageRef = storage.ref();
+    var listRef = storageRef.child('images/services/');
+    listRef.listAll().then(function(res) {
+        res.items.forEach(function(itemRef) {
+                if(itemRef.name.indexOf(`Bucket${index}_`) === 0) {
+                itemRef.delete().then(function()  {
+                    }).catch(function(error) {
+                    console.log(error);
+                    });
+            }
+        });
+        }).catch(function(error) {
+            console.log(error);// Uh-oh, an error occurred!
+        });
     e.preventDefault();
     nameArray.splice(index, 1);
     setNameArray([...nameArray]);
     setA(!a);
+
     priceArray.splice(index, 1);
     setPriceArray([...priceArray]);
     
+    newURLArray.splice(index, 1);
+    setNewURLArray([...newURLArray]);
+
     descArray.splice(index, 1);
     setDescArray([...descArray]);
 
@@ -347,31 +376,29 @@ const deleteService = index => e=>{
     usersRef.remove();
     for (let i = 0; i < cardNumber-1; i++) 
     { 
-        usersRef.push().set({
-    
+        let serviceObj = {
             name: nameArray[i],
             price: priceArray[i],
             description: descArray[i],
-            category: category[i]
+            category: category[i],
+            imageURL: newURLArray[i]
+        }
+        console.log(serviceObj);
+        usersRef.push().set(
+            serviceObj);
+    //     usersRef.push().set({
+    
+    //         name: nameArray[i],
+    //         price: priceArray[i],
+    //         description: descArray[i],
+    //         category: category[i]
 
-    });
-    var storageRef = storage.ref();
-    var listRef = storageRef.child('images/services/');
-    listRef.listAll().then(function(res) {
-		res.items.forEach(function(itemRef) {
-             //if(itemRef.name.indexOf(`Bucket${index}_`) === 0) {
-                itemRef.delete().then(function()  {
-                 }).catch(function(error) {
-                    console.log(error);
-                 });
-            //}
-		});
-        }).catch(function(error) {
-			console.log(error);// Uh-oh, an error occurred!
-        });
+    // });
     }
 
 };
+
+
 
 //     const handleTextUpload = (e) => {
 //         e.preventDefault();
@@ -398,8 +425,8 @@ const deleteService = index => e=>{
 //     };
 const handleTextUpload = (e) => {
     e.preventDefault();
-
-
+console.log("TXTUPLOAD");
+    
     var db = fire.database();
     var ref = db.ref("text");
 
@@ -408,13 +435,22 @@ const handleTextUpload = (e) => {
    
     for (let i = 0; i < cardNumber; i++) 
     { 
-        usersRef.push().set({
-    
+        let serviceObj = {
             name: nameArray[i],
             price: priceArray[i],
             description: descArray[i],
-            category: category[i]
-    });
+            category: category[i],
+            imageURL: newURLArray[i]
+        }
+        console.log(serviceObj);
+        usersRef.push().set(
+            serviceObj);
+          
+            // name: nameArray[i],
+            // price: priceArray[i],
+            // description: descArray[i],
+            // category: category[i]
+            // imageURL: );
 
      }
 
@@ -469,6 +505,7 @@ const handleTextUpload = (e) => {
                     handleCategoryChange={handleCategoryChange}
                     category={category}
                     UArray={UArray}
+                    newURLArray={newURLArray}
                     // URL={urlArray[2]}
                     // showArray={show}
                     // change={change}
