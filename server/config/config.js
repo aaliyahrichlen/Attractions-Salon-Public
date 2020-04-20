@@ -7,9 +7,9 @@ module.exports = {
     },
     sms: {
         rx_phone_num: '+12397761551',
-        tx_phone_num: '+12057546632',
-        sid: 'AC57fdbf0bb5d0edda10e85a708b8a3d02',
-        auth_token: 'cbf2a372825816b18e6fec8968457a65',
+        tx_phone_num: '+12728080317',
+        sid: 'AC82604389ac155ac6dbf555c4235a8834',
+        auth_token: '8f43072b9a96722d6049ae155f8bb263',
     },
     email: {
         service: 'gmail',
