@@ -9,13 +9,13 @@ import Image from 'react-bootstrap/Image';
 // src={props.change && props.URL}
 function DCard (props) {
     return (
-        <div className="item">
+        <div align="center">
         <Card className="card" style={{ width: '18rem', align: "center", height: "200px" }}>
         <Card.Img id={props.id} className="card-img-top" style={{height: "200px" }} variant="top" src={props.URL} />
         {/* <Image src={props.URL} fluid /> */}
         {/* style={{height: "150px" }} */}
         </Card>
-        </div> 
+        </div>
     );
 };
 
