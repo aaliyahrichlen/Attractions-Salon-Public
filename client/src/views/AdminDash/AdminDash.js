@@ -238,19 +238,6 @@ const EditServices = (props) => {
         //   }).catch(function(error) {
         //     console.log(error);
         //   });
-        // storageRef.listAll().then(function (res) {
-        //     res.items.forEach(function (itemRef) {
-        //         if(itemRef.name.indexOf(`${imageNameEntry[index]}`) === -1){  
-        //         }else {
-        //             itemRef.delete().then(function() {
-        //             }).catch(function(error) {
-        //               console.log(error);
-        //             });
-        //         }
-        //     });
-        // }).catch(function (error) {
-        //     console.log(error); // Uh-oh, an error occurred!
-        // });
         //Bucket${index}_
         var fireRef = fire.database().ref("images");
         const uploadTask = storage.ref(`images/services/${image.name}`).put(image);
