@@ -17,6 +17,7 @@ function Services() {
     const [category, setCategory] = useState([]);
     const [passedImage, setPassedImage] = useState([]);
     const[numServices, setNumServices] = useState(0);
+    const [newURLArray, setNewURLArray] = useState([]);
     var price = 'Starting price: ';
 
     useEffect(() => {
@@ -66,13 +67,13 @@ function Services() {
             setNameArray([]);
             setPriceArray([]);
             setCategory([]);
-
+            setNewURLArray([]);
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescriptionArray(descriptionArray => descriptionArray.concat(snapshot.child("description").val()));
                 setCategory(category => category.concat(snapshot.child("category").val()));
-
+                setNewURLArray(newURLArray => newURLArray.concat(snapshot.child("imageURL").val()));
             });
         });
     
@@ -86,33 +87,42 @@ function Services() {
                 Full Set
             </Divider>
             <CardGroupProps category={'Full Set'}
-            imagesArray = {passedImage} />
+            // imagesArray = {passedImage}
+            imagesArray = {newURLArray} />
             
             <Divider horizontal>
                 Pedicure
             </Divider>
             <CardGroupProps category={'Pedicure'} 
-            imagesArray = {passedImage} />
+            // imagesArray = {passedImage} 
+            imagesArray = {newURLArray}
+            />
             
             <Divider horizontal>
                 Manicure
             </Divider>
             <CardGroupProps category={'Manicure'} 
-            imagesArray = {passedImage} />
+            // imagesArray = {passedImage} 
+            imagesArray = {newURLArray} 
+            />
 
             
             <Divider horizontal>
                 Fill
             </Divider>
             <CardGroupProps category={'Fill'} 
-            imagesArray = {passedImage} />
+            // imagesArray = {passedImage} 
+            imagesArray = {newURLArray} 
+            />
 
             
             <Divider horizontal>
                 Polish
             </Divider>
             <CardGroupProps category={'Polish'} 
-            imagesArray = {passedImage} />
+            // imagesArray = {passedImage} 
+            imagesArray = {newURLArray} 
+            />
         
         
             <Divider horizontal>
@@ -120,44 +130,48 @@ function Services() {
             </Divider>
             <CardGroupProps category={'Haircuts'} 
             imagesArray = {passedImage} />
+            <CardGroupProps category={'Hair'} 
+            // imagesArray = {passedImage} 
+            imagesArray = {newURLArray} 
+            />
 
             <Divider horizontal>
                  Hair Styling
             </Divider>
             <CardGroupProps category={'Hair Styling'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
          <Divider horizontal>
                 Hair Treatment
             </Divider>
             <CardGroupProps category={'Hair Treatment'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
            <Divider horizontal>
                 Hair Extensions
             </Divider>
             <CardGroupProps category={'Hair Extensions'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
            <Divider horizontal>
                 Hair Shampoo
             </Divider>
             <CardGroupProps category={'Hair Shampoo'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
             
            <Divider horizontal>
                 Hair Coloring
             </Divider>
             <CardGroupProps category={'Hair Coloring'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
             
            <Divider horizontal>
                 Wax
             </Divider>
             <CardGroupProps category={'Wax'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
 
 
             <Footer/>
