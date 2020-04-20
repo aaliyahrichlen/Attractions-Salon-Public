@@ -44,6 +44,7 @@ const EditServices = (props) => {
     const[changeImage, setChangeImage] = useState(false);
     const[change, setChange] = useState([]);
     const[newURLArray, setNewURLArray] = useState([]);
+    const[imageNameEntry, setImageNameEntry] = useState([]);
     const[a, setA] = useState(false);
 //     const handleChange = e => { //SOham
 //         if (e.target.files[0]) {
@@ -108,12 +109,14 @@ const EditServices = (props) => {
             setPriceArray([]);
             setCategory([]);
             setNewURLArray([]);
+            setImageNameEntry([]);
             userSnapshot.forEach(function(snapshot) {
                 setNameArray(nameArray => nameArray.concat(snapshot.child("name").val()));
                 setPriceArray(priceArray => priceArray.concat(snapshot.child("price").val()));
                 setDescArray(descArray => descArray.concat(snapshot.child("description").val()));
                 setCategory(category => category.concat(snapshot.child("category").val()));
                 setNewURLArray(newURLArray => newURLArray.concat(snapshot.child("imageURL").val()));
+                setImageNameEntry(imageNameEntry => imageNameEntry.concat(snapshot.child("imageName").val()));
             });
         });
     },[]);
@@ -122,6 +125,7 @@ const EditServices = (props) => {
         console.log(newURLArray);
         console.log(priceArray);
         console.log(descArray);
+        console.log(imageNameEntry);
     }, [newURLArray])
     useEffect(() => {
         var db = fire.database();
@@ -234,21 +238,22 @@ const EditServices = (props) => {
         //   }).catch(function(error) {
         //     console.log(error);
         //   });
-        storageRef.listAll().then(function (res) {
-            res.items.forEach(function (itemRef) {
-                if(itemRef.name.indexOf(`Bucket${index}`) === -1){  
-                }else {
-                    itemRef.delete().then(function() {
-                    }).catch(function(error) {
-                      console.log(error);
-                    });
-                }
-            });
-        }).catch(function (error) {
-            console.log(error); // Uh-oh, an error occurred!
-        });
+        // storageRef.listAll().then(function (res) {
+        //     res.items.forEach(function (itemRef) {
+        //         if(itemRef.name.indexOf(`${imageNameEntry[index]}`) === -1){  
+        //         }else {
+        //             itemRef.delete().then(function() {
+        //             }).catch(function(error) {
+        //               console.log(error);
+        //             });
+        //         }
+        //     });
+        // }).catch(function (error) {
+        //     console.log(error); // Uh-oh, an error occurred!
+        // });
+        //Bucket${index}_
         var fireRef = fire.database().ref("images");
-        const uploadTask = storage.ref(`images/services/Bucket${index}_${image.name}`).put(image);
+        const uploadTask = storage.ref(`images/services/${image.name}`).put(image);
         uploadTask.on("state_changed", snapshot => {
             setChangeImage(true);
             const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
@@ -256,7 +261,7 @@ const EditServices = (props) => {
         }, error => {
             console.log(error);
         }, () => {
-            storage.ref(`images/services/`).child(`Bucket${index}_${image.name}`).getDownloadURL().then(url => {
+            storage.ref(`images/services/`).child(`${image.name}`).getDownloadURL().then(url => {
                 setUrl(url);
                 let newArray = [];
                 for(let x = 0; x < UArray.length; x++){
@@ -267,6 +272,7 @@ const EditServices = (props) => {
                     }
                 }
                 newURLArray.splice(index, 1, url);
+                imageNameEntry.splice(index, 1, image.name);
                 console.log("Index: " + index);
                 console.log(newURLArray);
                 // newURLArray[index] = url;
@@ -332,15 +338,16 @@ const addService = e =>{
     setDescArray(descArray => descArray.concat(""));
     setCategory(category => category.concat(""));
     setNewURLArray(newURLArray => newURLArray.concat(""));
+    setImageNameEntry(imageNameEntry => imageNameEntry.concat(""));
 };
 
-const deleteService = index => e => {
+const deleteService = (index) => e => {
 
     var storageRef = storage.ref();
     var listRef = storageRef.child('images/services/');
     listRef.listAll().then(function(res) {
         res.items.forEach(function(itemRef) {
-                if(itemRef.name.indexOf(`Bucket${index}_`) === 0) {
+                if(itemRef.name.indexOf(`${imageNameEntry[index]}`) === 0) {
                 itemRef.delete().then(function()  {
                     }).catch(function(error) {
                     console.log(error);
@@ -360,6 +367,9 @@ const deleteService = index => e => {
     
     newURLArray.splice(index, 1);
     setNewURLArray([...newURLArray]);
+
+    imageNameEntry.splice(index, 1);
+    setNewURLArray([...imageNameEntry]);
 
     descArray.splice(index, 1);
     setDescArray([...descArray]);
@@ -381,7 +391,8 @@ const deleteService = index => e => {
             price: priceArray[i],
             description: descArray[i],
             category: category[i],
-            imageURL: newURLArray[i]
+            imageURL: newURLArray[i],
+            imageName: imageNameEntry[i]
         }
         console.log(serviceObj);
         usersRef.push().set(
@@ -440,7 +451,8 @@ console.log("TXTUPLOAD");
             price: priceArray[i],
             description: descArray[i],
             category: category[i],
-            imageURL: newURLArray[i]
+            imageURL: newURLArray[i],
+            imageName: imageNameEntry[i]
         }
         console.log(serviceObj);
         usersRef.push().set(
@@ -506,6 +518,7 @@ console.log("TXTUPLOAD");
                     category={category}
                     UArray={UArray}
                     newURLArray={newURLArray}
+                    imageNameEntry={imageNameEntry}
                     // URL={urlArray[2]}
                     // showArray={show}
                     // change={change}
