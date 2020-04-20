@@ -330,11 +330,12 @@ const addService = e =>{
 
 const deleteService = (index) => e => {
 
+    let deleteItem = imageNameEntry[index];
     var storageRef = storage.ref();
     var listRef = storageRef.child('images/services/');
     listRef.listAll().then(function(res) {
         res.items.forEach(function(itemRef) {
-                if(itemRef.name.indexOf(`${imageNameEntry[index]}`) === 0) {
+                if(itemRef.name.indexOf(deleteItem) === 0) {
                 itemRef.delete().then(function()  {
                     }).catch(function(error) {
                     console.log(error);
