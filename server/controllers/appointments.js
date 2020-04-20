@@ -171,7 +171,7 @@ const appointmentController = {
           msg += ' is not available at your selected time. Please see the below times for available appointments on the same day, or please make a new appointment on the website if none of these times work for you.';
           msg += '\n\nAvailable Time Ranges:';
           requestBody.forEach(element => {
-            msg += '\n' + moment(element.startTime).format("h:mm a").tz('America/New_York') + ' to ' + moment(element.endTime).format("h:mm a").tz('America/New_York')
+            msg += '\n' + moment(element.startTime).tz('America/New_York').format("h:mm a") + ' to ' + moment(element.endTime).tz('America/New_York').format("h:mm a")
           });
           msg += '\n\nPlease click this link to choose a new time for your appointment on the same day as the original appointment at a time within the above ranges: ';
           msg += (process.env.WEB_URL || 'http://localhost:3000') + '/new-appt-time/' + req.params.confirmId;
