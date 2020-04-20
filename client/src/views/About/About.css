@@ -13,7 +13,12 @@
   .textContainer {
           width: 50%;
           background-color: lightpink;
-          height: 300px;
+          display: flex;
+          flex-direction: column;
+          flex-wrap: wrap;
+          justify-content: center;
+          align-content: flex-start;
+          align-items: flex-start;
           box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           
   }
@@ -22,7 +27,7 @@
         font-family: 'Spartan', sans-serif;
         font-size: larger;
         margin: 10px;
-        
+        min-height: 50vh;
   }
 
   .headText {
@@ -36,15 +41,16 @@
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-around;
-        align-content: space-around;
-        align-items: center;
-        margin: 20px;
-        margin-bottom: 0px;
+        align-content: flex-start;
+        align-items: flex-start;
+        margin: 30px;
+        margin-bottom: 10px;
+  
   }
 
   .slideshowContainer {
-          height: 300px;
-          margin: 20px;
+
+
 
   }
 
