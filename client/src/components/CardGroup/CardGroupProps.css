@@ -15,7 +15,7 @@
 .description {
 	font-family: 'Spartan', sans-serif;
 }
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 840px) {
 
 .ui.pink.card{
     height: fit-content;
