@@ -23,7 +23,7 @@ function Profile() {
                 var ref = db.ref();
                 ref.on("value", function(userSnapshot) {
                     userSnapshot.forEach(function(snapshot) {
-                        if(user.email === snapshot.child("email").val()){
+                        if(snapshot.child("email").val() != null && user.email.toLowerCase()  === snapshot.child("email").val().toLowerCase()){
                             setUserName(snapshot.child("firstName").val() + " " + snapshot.child("lastName").val());
                         }
                     });
