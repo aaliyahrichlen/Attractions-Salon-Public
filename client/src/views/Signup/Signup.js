@@ -21,6 +21,15 @@ constructor(props)
 signup(e){
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
+        // var db = fire.database();
+        // var ref = db.ref();
+        //     ref.on("value", function(userSnapshot) {
+        //     userSnapshot.forEach(function(snapshot) {
+        //         if(user.email.toLowerCase()  === snapshot.child("email").val().toLowerCase()){
+        //             setUserName(snapshot.child("firstName").val() + " " + snapshot.child("lastName").val());
+        //         }
+        //     });
+        // });
         var fireRef = fire.database().ref();
         fireRef.push().set({
             firstName: this.state.firstName,
