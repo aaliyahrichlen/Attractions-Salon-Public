@@ -17,6 +17,17 @@
     max-width: 250px;
     max-height: 250px;
 }
+@media only screen and (max-width: 800px) {
+    #loginCardCenter{
+        margin-top: 0%;
+    }
+    .ui.card{
+        width: 60%;
+        height: 60%;
+        margin-top: 20%
+
+    }
+}
 
 img.card-img-top {
     max-height: 250px;
