@@ -85,7 +85,33 @@ const DeleteImage = () => {
 
 
     const handleUpload = (e) => {
-       
+       if(folder === "logos") {
+        var fireRef = fire.database().ref("images");
+        const uploadTask = storage.ref(`images/${folder}/logo`).put(image);
+        uploadTask.on("state_changed", snapshot => {
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setProgressBar(progress);
+        }, error => {
+            console.log(error);
+        }, () => {
+            storage.ref(`images/${folder}/`).child("logo").getDownloadURL().then(url => {
+                setUrl(url);
+                if(folder === "logos"){
+                    setUrlArray([url, null, null, null]);
+                    setShow([true, false, false, false]);
+                }else if(folder === "slideshow"){
+                    setUrlArray([null, url, null, null]);
+                    setShow([false, true, false, false]);
+                }else if (folder === "services"){
+                    setUrlArray([null, null, url, null]);
+                    setShow([false, false, true, false]);
+                }else if (folder === "about"){
+                    setUrlArray([null, null, null, url]);
+                    setShow([false, false, false, true]);
+                }
+            })
+        });
+       }else {
         var fireRef = fire.database().ref("images");
         const uploadTask = storage.ref(`images/${folder}/${
             image.name
@@ -119,6 +145,8 @@ const DeleteImage = () => {
                 // })
             })
         });
+       }
+        
     };
 
     const handleAboutUpload = (e) => { 
