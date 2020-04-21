@@ -5,7 +5,7 @@ import { Container } from 'semantic-ui-react';
 const ContactCard = (props) => {
     return (
         <div className="card">
-        <div class="ui card" >
+        <div class="ui card" id='contactcardcard'>
             <div class="content">
                 <div class="header" className="head">Attractions Salon</div>
             </div>
