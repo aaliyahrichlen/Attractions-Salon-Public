@@ -4,12 +4,13 @@ import { Image } from 'semantic-ui-react';
 import { Responsive, Dropdown } from 'semantic-ui-react';
 import './NavBar.css';
 import fire from "../../views/Login/config/Fire";
-
+import {storage} from "../../views/Login/config/Fire";
 /* import { AutoComplete } from 'material-ui';
  */
 
 const NavBar = (props) => {
     const [userName,setUserName] = useState("");
+    const [logo,setLogo] = useState("");
     useEffect (() => {
         fire.auth().onAuthStateChanged(function(user) {
             if (user) {
@@ -26,6 +27,15 @@ const NavBar = (props) => {
             }
           }); 
     }, [])
+
+    useEffect (() => {
+        var storageRef = storage.ref("images/logos/logo");
+        storageRef.getDownloadURL().then(function (url) {
+            setLogo(url);
+        });
+        
+    }, [])
+
     const logout = () => {
         fire.auth().signOut();
     }
@@ -37,7 +47,8 @@ const NavBar = (props) => {
         <div className="comp">
         {/* Logo */}
         <Link className="nav-logo" to="/">
-            <Image src='/images/logo.png' size='small' />
+            {/* <Image src='/images/logo.png' size='small' /> */}
+            <Image src={logo} size='small' />
         </Link>
         {/* Page Links */}
         <div className="nav-items">
@@ -69,7 +80,7 @@ const NavBar = (props) => {
                 </Dropdown>
                 {/* Logo */}
                 <Link id='logo' className="nav-logo" to="/">
-                    <Image src='/images/logo.png' size='small' />
+                    <Image src={logo} size='small' />
                 </Link>
             </div>
         </Responsive>
@@ -83,7 +94,7 @@ const NavBar = (props) => {
         <div className="comp">
         {/* Logo */}
         <Link className="nav-logo" to="/">
-            <Image src='/images/logo.png' size='small' />
+            <Image src={logo} size='small' />
         </Link>
         {/* Page Links */}
         <div className="nav-items">
@@ -111,7 +122,7 @@ const NavBar = (props) => {
                 </Dropdown>
                 {/* Logo */}
                 <Link id='logo' className="nav-logo" to="/">
-                    <Image src='/images/logo.png' size='small' />
+                    <Image src={logo} size='small' />
                 </Link>
             </div>
         </Responsive>
