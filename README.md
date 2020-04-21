@@ -92,3 +92,10 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 `package.json` - Defines npm behaviors like the scripts defined in the next section of the README
 `.gitignore` - Tells git which files to ignore
 `README` - This file!
+`client` - Holds the server application
+- `config` - This holds all of the API keys for the database/email services as well as setup for the Express server
+- `controllers` - This holds definitions for various queryable Express routes as well as behavior for payments
+- `models` - This holds definitions and setup for appointment objects
+- `routes` - Holds more routing information
+	- `api` - This holds how each route should communicate with a HTTP request
+- `server.js` - Specifues on which port server should be hosted
