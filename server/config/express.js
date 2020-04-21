@@ -25,6 +25,18 @@ module.exports.init = () => {
     // body parsing middlewareE
     app.use(bodyParser.json());
 
+    if (process.env.NODE_ENV === 'production') {
+        //this is for the https rerouting
+        app.use('*', function(req, res, next) {
+            console.log('HELLLLLLLO')
+            console.log(req.get('X-Forwarded-Proto'));
+            if ((req.get('X-Forwarded-Proto') !== 'https')) {
+            res.redirect('https://' + req.get('Host') + req.url);
+            } else
+            next();
+        });
+    }
+
     //This enabled CORS, Cross-origin resource sharing (CORS) is a mechanism that allows restricted resources (e.g. fonts) 
     //on a web page to be requested from another domain outside the domain from which the first resource was served
 
@@ -61,14 +73,6 @@ module.exports.init = () => {
 
         res.sendFile(filepath);
 
-    });
-
-    //this is for the https rerouting
-    app.use(function(req, res, next) {
-        if ((req.get('X-Forwarded-Proto') !== 'https')) {
-          res.redirect('https://' + req.get('Host') + req.url);
-        } else
-          next();
     });
 
     return app
