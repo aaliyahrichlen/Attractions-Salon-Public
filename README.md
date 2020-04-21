@@ -49,6 +49,13 @@ To replace an API key, either go to its location in the code, or go to the herok
     - Location: client > src > components > ReviewSection > Review.js
     - Google Review API Key: line 6
     - The place ID is located on line 7 of this file. It is a public place ID given by Google to access information about an address. If the business should ever move addresses, this ID should be replaced.
+- Firebase
+    - website: https://console.firebase.google.com/
+    - Navigate to Firebase console
+    - username: attractionssalonweb@gmail.com
+    - password: thunderboltTeam1
+    - Location: client > src > views > Login > config > Fire.js
+    - Firebase API key: line 16
 
 
 ## Getting Started
