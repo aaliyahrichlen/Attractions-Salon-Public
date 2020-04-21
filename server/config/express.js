@@ -28,8 +28,6 @@ module.exports.init = () => {
     if (process.env.NODE_ENV === 'production') {
         //this is for the https rerouting
         app.use('*', function(req, res, next) {
-            console.log('HELLLLLLLO')
-            console.log(req.get('X-Forwarded-Proto'));
             if ((req.get('X-Forwarded-Proto') !== 'https')) {
             res.redirect('https://' + req.get('Host') + req.url);
             } else
