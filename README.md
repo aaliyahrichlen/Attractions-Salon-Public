@@ -19,7 +19,7 @@ A web app for the Attractions Salon in Gainesville, FL. It aims for users to be 
 
 
 ## APIs and Replacements Procedure
-To replace an API key, either go to its location in the code, or go to the heroku environment variables and change it there (see instructions under 9.4)
+To replace an API key, either go to its location in the code, or go to the Heroku environment variables and change it there (see instructions under the SRS section 9.4)
 
 - Payments (Square)
     - website: [https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers](https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers)
