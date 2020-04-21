@@ -93,7 +93,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 `.gitignore` - Tells git which files to ignore
 `README` - This file!
 
-`Server` - Holds the server application
+`server` - Holds the server application
 - `config` - This holds all of the API keys for the database/email services as well as setup for the Express server
 - `controllers` - This holds definitions for various queryable Express routes as well as behavior for payments
 - `models` - This holds definitions and setup for appointment objects
