@@ -57,7 +57,7 @@ signup(e){
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             phoneNum: this.state.phoneNum,
-            email: this.state.email,
+            email: this.state.email.toLowerCase(),
             password: this.state.password
         }).then((u)=>{
             window.location.href='/Login';
