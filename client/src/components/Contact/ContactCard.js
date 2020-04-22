@@ -43,7 +43,3 @@ const ContactCard = (props) => {
 
 export default ContactCard;
 
-/*<div class="content" className="infoBody">
-<i class="phone square large icon"></i>
-    (352)376-6008
-</div>*/

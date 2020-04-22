@@ -1,5 +1,9 @@
 ## Project Overview
-A web app for the Attractions Salon in Gainesville, FL. It aims for users to be able to find the salon, see the services offered, make payments, and make appointments in an easy to use fashion.
+A web app for the Attractions Salon in Gainesville, FL. It aims for users to be able to find the salon, see the services offered, make payments, and make appointments in an easy to use fashion. The master branch automatically deploys to https://attractionssalont.herokuapp.com/ , to push to https://attractionssalon.herokuapp.com/ one must log on to heroku and push production from the test site.
+
+## Techincal Overview of:
+    - client : client/README.md
+    - server : server/README.md
 
 ## Features
 - Salon Client (User)
@@ -106,4 +110,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 - `models` - This holds definitions and setup for appointment objects
 - `routes` - Holds more routing information
 	- `api` - This holds how each route should communicate with a HTTP request
-- `server.js` - Specifues on which port server should be hosted
+- `server.js` - Specifies on which port server should be hosted
