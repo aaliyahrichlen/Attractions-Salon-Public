@@ -1,74 +1,101 @@
-## _**PLEASE READ THIS TO COMPLETION BEFORE ASKING ANY QUESTIONS!**_
+## Project Overview
+A web app for the Attractions Salon in Gainesville, FL. It aims for users to be able to find the salon, see the services offered, make payments, and make appointments in an easy to use fashion.
 
-### _**IMPORTANT NOTES**_ - 
-This project does not have a mongoDB connection setup. Setup the connection based on the environments below.
-- local development: create a config file (make sure to name it config.js) in the config folder, which exports your db.uri connection. An example is provided, config/config.example.js. This file will be ignored by git so your db credentials will be kept safe when the app is deployed.
-- production: Since the config file is not pushed when you deploy your app, you must specifiy your db uri in heorku. Set the uri in heroku as specified in [this](https://devcenter.heroku.com/articles/config-vars) resource. Make sure you name the environement variable "DB_URI".
+## Features
+- Salon Client (User)
+    - View Information about the Business - Users can view information about the business on the home, services, and about page. They can see such information as where the business is located, the phone number of the business, reviews of the business, the services offered (including a price and description for those services), and the history of the business. 
+    - Create an Account - Customers/users can sign up for an account. After creating the account they can login and view their name and email, change their password, see past appointments, and make appointments.
+    - Reset Password - If a user forgets their password, the user can click on the “Forgot Password?” button on the Login page. This takes them to a new page that prompts them for their email. Upon the submission of their email, instructions are sent to their email on how to reset their password.
+    - Navigation Bar changes on Login  - When a user logs in, the “Login” button disappears, replaced with a “Logout” button and “Welcome [first name] [last name]”. On mobile, the “Welcome” button becomes “Profile”. When a user clicks on the personalized “Welcome” button, they can access their profile.
+    - Request an Appointment - Users can request an appointment on the appointments page only after creating an account as a customer. After filling out the necessary information, including choice of service, an email will be sent to the salon owner, who can confirm or contact the user as necessary. A confirmation by the salon owner will result in the user receiving an email informing them of the decision.
+    - See Appointments Information - When a user goes to their profile, they will be able to see all of the past appointments they made in a table. They can see the appointment number, their preferred stylist, the service requested and its price, the time of the appointments, whether or not the appointment is confirmed, and  whether or not payment has occurred.
+    - Option to Pay for Appointment after Confirmation - After an appointment has been confirmed by the admin, the user has the option to pay for the service before the appointment occurs. After the admin confirms an appointment, in the email that is sent to the user to notify them that their appointment has been confirmed, there is a link that directs them to a payments page on the website where the user can enter their payment information and pay through Square.
+    - Change User Password - After logging in, a user can hover over the profile picture which will display a change password option. Clicking on this will allow the user to change their password securely.
+- Salon Owner (Admin)
+    - Add Non-Service Images - Once logged in, the admin can add images to the web app through the admin dashboard.The types of images the admin can add are separated into different categories, which are the logo image, and images in the slideshow, which is located on the About Us page.
+    - Delete Non-Service Images - Once logged in, the admin can delete images from the web app through the Admin Dashboard.The types of images the admin can delete are separated into different categories, which are the logo images and the images in the slideshow, which is located on the About Us page.
+    - Add, Delete, and Edit Services Information and Images - Once logged in, the admin can change the information about the services through the Admin Dashboard, including the name, price, description, category, and image of a specific service. 
+    - Confirming, Denying, and Sending Additional Times for Appointments - An admin does not need to be logged in to access this feature. When a user requests an appointment, the admin is sent an email and text. Within the email and text body, the admin is sent two links, one to confirm the appointment and another to provide the client with a list of times for which they can reschedule their appointment. Once the client has chosen a time that works for the admin and the admin has clicked the confirm appointment link, the client is then sent an email that states that their appointment has been confirmed and within the body of that email is a link so that the client can pay online. Furthermore, in every email to the admin, the client’s contact information is sent, so if more detailed discussion should occur, the admin can feel free to contact the client by phone or email.
 
-This project contains an example project board meant to showcase how one can be used. The issues posted to it are not real issues.
+
+## APIs and Replacements Procedure
+To replace an API key, either go to its location in the code, or go to the heroku environment variables and change it there (see instructions under 9.4)
+
+- Payments (Square)
+    - website: [https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers](https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers)
+    - username: gary0422wu@yahoo.com
+	- password: Thunderbolt
+    - API Keys Locations: (applicationid and locationid) are under client/src/components/views/payments/PaymentPage.js on line 111 and 112
+- MongoDB
+	- website: [https://www.mongodb.com/](https://www.mongodb.com/)
+	- username: attractions.salon.noreply@gmail.com
+    - password:  M.vqYjFdJT!s";9tb
+    - API Key Location: heroku environment variable DB_URI
+- Standard Messaging Service
+	- API Key Location: heroku environment variable SMS_AUTH_TOKEN
+    - Phone Number Receiving Appointment Confirmation Texts Variable Location: heroku environment variable SMS_RX_PHONE_NUM
+- No Reply Email
+	- email: attractions.salon.noreply@gmail.com
+    - password: M.vqYjFdJT!s";9tb
+- Twilio
+	- website: https://www.twilio.com/
+	- email: attractions.salon.noreply@gmail.com
+    - password: M.vqYjFdJT!s";9tb
+- Heroku
+	- website: https://dashboard.heroku.com/apps
+	- email: biaggiaddison@ufl.edu
+	- password: Thunderbolt37
+- Google Review API
+    - Location: client > src > components > ReviewSection > Review.js
+    - Google Review API Key: line 6
+    - The place ID is located on line 7 of this file. It is a public place ID given by Google to access information about an address. If the business should ever move addresses, this ID should be replaced.
+- Firebase
+    - website: https://console.firebase.google.com/
+    - Navigate to Firebase console
+    - username: attractionssalonweb@gmail.com
+    - password: thunderboltTeam1
+    - Location: client > src > views > Login > config > Fire.js
+    - Firebase API key: line 16
+
 
 ## Getting Started
-This repository aims to assist you in beginning work on a MERN stack application for heroku deployment with a solid file structure as a foundation. To get started make a copy of this template repo for your project teams by clicking the green "Use this template" button above.
-
-Since this project will hold both the client application and the server application there will be node modules in two different places. First run `npm install` from the root. After this you will run `npm run-script install-all` from the root. From now on run this command anytime you want to install all modules again. This is a script we have defined in package.json. Alternatively your group may choose to simplify this process by using yarn workspaces as specified [here](https://yarnpkg.com/lang/en/docs/workspaces/).
-
-This app can be deployed directly to heroku since there is a script defined in package.json which will automatically handle building and deploying the app. For more information on deploying to heroku reference the extra resources at the bottom of this file. 
-
+To run the wep app locally run the following commands from the root to install the dependencies needed.
+1. `npm install`  
+2. `npm run-script install-all` 
 
 ## Available Scripts
+To run the app locally, the following scripts are avaliable: 
 
-Please note that any time the server is run in these scripts `nodemon` is used in place of `node` for easier development. If you are interested in how this works follow the nodemon In the project directory, you can run:
+To run both the client app and the server app in development mode, use `npm run-script dev`. To view the client in the browser, open [http://localhost:3000](http://localhost:3000).
 
-### `npm run-script dev`
+To run just the client app in development mode use `npm run-script client`. Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
 
-Runs both the client app and the server app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
+To run just the server in development mode use `npm run-script server`.
 
-### `npm run-script client`
+To build the app for production to the `build` folder use `npm run build`.
 
-Runs just the client app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view the client in the browser.
-
-
-### `npm run-script server`
-
-Runs just the server in development mode.<br>
-
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-If deploying to heroku this does not need to be run since it is handled by the heroku-postbuild script<br>
+This last command correctly bundles React in production mode and optimizes the build for the best performance. This does not need to be run since it is handled by the heroku-postbuild script, but if the app should be hosted anywhere else, it may need to be utilized.
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 
 ## File structure
-#### `client` - Holds the client application
-- #### `public` - This holds all of our static files
-- #### `src`
-    - #### `assets` - This folder holds assets such as images, docs, and fonts
-    - #### `components` - This folder holds all of the different components that will make up our views
-    - #### `views` - These represent a unique page on the website i.e. Home or About. These are still normal react components
-    - #### `App.js` - This is what renders all of our browser routes and different views
-    - #### `index.js` - This is what renders the react app by rendering App.js, should not change
-- #### `package.json` - Defines npm behaviors and packages for the client
-#### `server` - Holds the server application
-- #### `config` - This holds our configuration files, like mongoDB uri
-- #### `controllers` - These hold all of the callback functions that each route will call
-- #### `models` - This holds all of our data models
-- #### `routes` - This holds all of our HTTP to URL path associations for each unique url
-- #### `tests` - This holds all of our server tests that we have defined
-- #### `server.js` - Defines npm behaviors and packages for the client
-#### `package.json` - Defines npm behaviors like the scripts defined in the next section of the README
-#### `.gitignore` - Tells git which files to ignore
-#### `README` - This file!
-
-## Learn More
-To learn how to setup a local MongoDB instance for testing, check out how to [connect to MongoDB](https://docs.mongodb.com/guides/server/drivers/).
-
-To learn how to deploy a full-stack web app to heroku, check out [this great guide](https://daveceddia.com/deploy-react-express-app-heroku/).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+`client` - Holds the client application
+- `public` - This holds all of our static files
+- `src`
+    - `assets` - This folder holds assets such as images, docs, and fonts
+    - `components` - This folder holds all of the different components that will make up our views
+    - `views` - These represent a unique page on the website i.e. Home or About. These are still normal react components
+    - `App.js` - This is what renders all of our browser routes and different views
+    - `index.js` - This is what renders the react app by rendering App.js, should not change
+- `package.json` - Defines npm behaviors and packages for the client
+`server` - Holds the server application
+- `config` - This holds our configuration files, like mongoDB uri
+- `controllers` - These hold all of the callback functions that each route will call
+- `models` - This holds all of our data models
+- `routes` - This holds all of our HTTP to URL path associations for each unique url
+- `tests` - This holds all of our server tests that we have defined
+- `server.js` - Defines npm behaviors and packages for the client
+`package.json` - Defines npm behaviors like the scripts defined in the next section of the README
+`.gitignore` - Tells git which files to ignore
+`README` - This file!

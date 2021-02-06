@@ -12,3 +12,13 @@
     align-content: stretch;
     align-items: flex-start;
 }
+
+.cardMax {
+    max-width: 250px;
+    max-height: 250px;
+}
+
+img.card-img-top {
+    max-height: 250px;
+    max-width: 250px;
+}

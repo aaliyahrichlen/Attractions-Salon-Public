@@ -52,14 +52,14 @@ const PastAppointments = (props) => {
                 } else {
                     appointments.push(JSON.stringify(obj[i].stylist)); // stylist name
                     stylist = JSON.stringify(obj[i].stylist);
-                    stylist.replace(/\"/g, "")
+                    stylist = stylist.replace(/\"/g, "");
 
                 } appointments.push(date); // date of appointment
                 if(obj[i].hasOwnProperty('serviceName'))
                 {
 
                   service = JSON.stringify(obj[i].serviceName);
-                  service.replace(/\"/g, "");
+                  service = service.replace(/\"/g, "");
 
                 }
                 else
