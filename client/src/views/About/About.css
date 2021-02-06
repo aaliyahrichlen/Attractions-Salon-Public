@@ -68,3 +68,13 @@
           margin-top: 0px;
           margin: 20px;
   }
+  @media only screen and (max-width: 800px) {
+
+      .ui.fluid.card.carousel-container{
+             height: fit-content;
+      }
+      .textContainer{
+            margin-top: 5%;
+            width: 80%;
+      }
+      }

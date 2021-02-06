@@ -15,18 +15,49 @@ constructor(props)
         lastName: "",
         phoneNum: "",
         email : "",
-        password : ""
+        password : "",
+        validPhone : false
     }
 }
+
 signup(e){
+    if(!this.state.validPhone)
+    {
+        return alert("Please make sure your phone number is only numbers and between 10 and 13 digits");
+    }
+    if(!this.state.firstName)
+    {
+        return alert("Please fill out your First Name");
+    }
+    if(!this.state.lastName)
+    {
+        return alert("Please fill out your Last Name");
+    }
+    if(!this.state.email)
+    {
+        return alert("Please fill out your Email");
+    }
+    if(!this.state.password)
+    {
+        return alert("Please fill out your Password");
+    }
     e.preventDefault();
     fire.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then((u)=>{
+        // var db = fire.database();
+        // var ref = db.ref();
+        //     ref.on("value", function(userSnapshot) {
+        //     userSnapshot.forEach(function(snapshot) {
+        //         if(user.email.toLowerCase()  === snapshot.child("email").val().toLowerCase()){
+        //             setUserName(snapshot.child("firstName").val() + " " + snapshot.child("lastName").val());
+        //         }
+        //     });
+        // });
         var fireRef = fire.database().ref();
         fireRef.push().set({
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             phoneNum: this.state.phoneNum,
-            email: this.state.email,
+            email: this.state.email.toLowerCase(),
             password: this.state.password
         }).then((u)=>{
             window.location.href='/Login';
@@ -34,7 +65,7 @@ signup(e){
         console.log(u);
     }).catch((err)=>{
         if(err.message === "The email address is badly formatted."){
-            alert("Please fill in your details to Sign Up");
+            alert("Please fill in a valid email");
         }else {
             alert(err.message);
         }
@@ -42,10 +73,21 @@ signup(e){
     })
 }
 handleChange(e){
+    console.log(this)
     this.setState({
         [e.target.name] : e.target.value
     })
 }
+
+validatePhone(phoneNumber) {
+    const regex = /^\d{10,13}$/;
+    console.log(phoneNumber.target.value)
+    console.log(typeof phoneNumber.target.value)
+    this.setState({ phoneNum: phoneNumber.target.value })
+    return regex.test(phoneNumber.target.value)
+      ? this.setState({ validPhone: true })
+      : this.setState({ validPhone: false });
+  }
 
 render()
 {
@@ -65,7 +107,7 @@ render()
                
             </div>
             <div class="phone">
-                <input name="phoneNum" onChange={this.handleChange} value={this.state.phoneNum} id="phoneNum" type="text" placeholder="Phone Number" class="input"/>
+                <input name="phoneNum" onChange={(e) => this.validatePhone(e)} value={this.state.phoneNum} id="phoneNum" type="text" placeholder="Phone Number" class="input"/>
             </div>
             <div class="Email">
                 <input name="email" id="email" type="email" onChange={this.handleChange} value={this.state.email} placeholder="Email" class="input" />

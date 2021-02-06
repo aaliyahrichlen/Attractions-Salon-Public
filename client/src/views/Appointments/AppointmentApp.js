@@ -309,7 +309,7 @@ class AppointmentApp extends Component {
               >
                 <Step>
                   <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-                    Choose what service you will be recieving
+                    Choose what service you will be receiving
                   </StepButton>
                   <StepContent>
                     <SelectField

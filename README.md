@@ -1,5 +1,9 @@
 ## Project Overview
-A web app for the Attractions Salon in Gainesville, FL. It aims for users to be able to find the salon, see the services offered, make payments, and make appointments in an easy to use fashion.
+A web app for the Attractions Salon in Gainesville, FL. It aims for users to be able to find the salon, see the services offered, make payments, and make appointments in an easy to use fashion. The master branch automatically deploys to https://attractionssalont.herokuapp.com/ , to push to https://attractionssalon.herokuapp.com/ one must log on to heroku and push production from the test site.
+
+## Techincal Overview of:
+    - client : client/README.md
+    - server : server/README.md
 
 ## Features
 - Salon Client (User)
@@ -19,7 +23,7 @@ A web app for the Attractions Salon in Gainesville, FL. It aims for users to be 
 
 
 ## APIs and Replacements Procedure
-To replace an API key, either go to its location in the code, or go to the heroku environment variables and change it there (see instructions under 9.4)
+To replace an API key, either go to its location in the code, or go to the Heroku environment variables and change it there (see instructions under the SRS section 9.4)
 
 - Payments (Square)
     - website: [https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers](https://squareup.com/login?lang_code=en-US&return_to=%2Fsignup%2Fus%3Flang_code%3Den-US%26v%3Ddevelopers)
@@ -99,3 +103,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 `package.json` - Defines npm behaviors like the scripts defined in the next section of the README
 `.gitignore` - Tells git which files to ignore
 `README` - This file!
+
+`server` - Holds the server application
+- `config` - This holds all of the API keys for the database/email services as well as setup for the Express server
+- `controllers` - This holds definitions for various queryable Express routes as well as behavior for payments
+- `models` - This holds definitions and setup for appointment objects
+- `routes` - Holds more routing information
+	- `api` - This holds how each route should communicate with a HTTP request
+- `server.js` - Specifies on which port server should be hosted

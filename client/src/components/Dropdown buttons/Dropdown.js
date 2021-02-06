@@ -46,21 +46,4 @@ const Dropdown = (props) => {
 }
 export default Dropdown;
 
-// import React from 'react'
-// import { Dropdown, Button, Menu } from 'semantic-ui-react'
-// const fun = e => {
-//     console.log(e);
-// }
-// const options = [
-//   { key: 1, text: 'Logos', onClick: {fun}, value: 1 },
-//   { key: 2, text: 'Slideshow', value: 2 },
-//   { key: 3, text: 'Services', value: 3 },
-// ]
 
-// const DropdownMenu = () => (
-// //   <Menu compact="true">
-//     <Dropdown compact="true" onMouseDown={fun}text='Edit Images' options={options} simple item />
-// //   </Menu>
-// )
-
-// export default DropdownMenu;

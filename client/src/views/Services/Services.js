@@ -129,7 +129,8 @@ function Services() {
                 Haircuts
             </Divider>
             <CardGroupProps category={'Haircuts'} 
-            imagesArray = {passedImage} />
+            imagesArray = {newURLArray} />
+            
             <CardGroupProps category={'Hair'} 
             // imagesArray = {passedImage} 
             imagesArray = {newURLArray} 
